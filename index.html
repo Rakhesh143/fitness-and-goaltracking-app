@@ -3,14 +3,16 @@
 <html lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Cadence — Mindful Cadence</title>
+<title>Fitness and Goal Tracker — Namineni Rakhesh</title>
+<!-- Favicon: Athletic Bodybuilder Emblem -->
+<link rel="icon" type="image/png" href="favicon.png"/>
+<link rel="shortcut icon" href="favicon.ico"/>
 <!-- Material Symbols Outlined -->
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <!-- Typography: Plus Jakarta Sans -->
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <!-- Tailwind CSS CDN -->
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <script id="tailwind-config">
@@ -134,29 +136,30 @@
   </style>
 </head>
 <body class="bg-background text-on-surface antialiased min-h-screen flex flex-col font-body-md selection:bg-secondary-container selection:text-on-secondary-container">
-<!-- TopAppBar Component (from Shared Components JSON) -->
-<header class="w-full bg-surface dark:bg-inverse-surface sticky top-0 z-40 transition-colors duration-150">
+<!-- TopAppBar Component (Branded for Namineni Rakhesh) -->
+<header class="w-full bg-surface dark:bg-inverse-surface sticky top-0 z-40 transition-colors duration-150 shadow-sm border-b border-outline-variant/30">
 <div class="flex justify-between items-center w-full px-margin py-space-sm max-w-screen-md mx-auto">
 <!-- Leading: User Avatar -->
 <div class="flex items-center gap-space-sm">
-<button aria-label="User Profile Avatar" class="relative w-10 h-10 rounded-full overflow-hidden ring-2 ring-outline-variant hover:bg-surface-container dark:hover:bg-surface-container-high transition-colors duration-150 active:scale-95 transition-transform duration-150 flex items-center justify-center bg-primary-fixed">
-<span class="font-label-lg text-label-lg text-primary font-bold">AL</span>
+<button aria-label="User Profile Avatar" class="relative w-10 h-10 rounded-full overflow-hidden ring-2 ring-secondary/50 hover:bg-surface-container dark:hover:bg-surface-container-high transition-colors duration-150 active:scale-95 transition-transform duration-150 flex items-center justify-center bg-secondary/15">
+<span class="font-label-lg text-label-lg text-secondary font-bold">NR</span>
 <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-secondary rounded-full ring-2 ring-surface-container-lowest"></span>
 </button>
 <div class="hidden sm:flex flex-col">
-<span class="font-label-sm text-label-sm text-on-surface-variant leading-none">Cadence Member</span>
-<span class="font-label-md text-label-md text-on-surface font-semibold">Alexandre L.</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant leading-none">Fitness Athlete</span>
+<span class="font-label-md text-label-md text-on-surface font-bold">Namineni Rakhesh</span>
 </div>
 </div>
 <!-- Headline: Brand Logo Anchor -->
-<div class="flex items-center">
-<h1 class="text-headline-md font-headline-md text-on-surface dark:text-inverse-on-surface font-bold tracking-tight">Cadence</h1>
+<div class="flex items-center gap-2">
+<img src="favicon.png" alt="Bodybuilder Favicon Emblem" class="w-7 h-7 rounded-full shadow-sm ring-1 ring-secondary/40 object-cover"/>
+<h1 class="text-headline-md font-headline-md text-on-surface dark:text-inverse-on-surface font-bold tracking-tight text-base sm:text-xl">Fitness and Goal Tracker</h1>
 </div>
-<!-- Trailing: Streak Pill + Icon (trailing_icon: local_fire_department) -->
+<!-- Trailing: Streak Pill + Icon (Fresh Day 1) -->
 <div class="flex items-center gap-space-xs">
-<div class="flex items-center gap-1 bg-surface-container-low px-space-sm py-1 rounded-full border border-outline-variant hover:bg-surface-container transition-colors duration-150 active:scale-95 transition-transform duration-150">
+<div class="flex items-center gap-1 bg-surface-container-low px-space-sm py-1 rounded-full border border-outline-variant hover:bg-surface-container transition-colors duration-150 active:scale-95 transition-transform duration-150" title="Active Streak">
 <span class="material-symbols-outlined text-secondary fill text-[18px]" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
-<span class="font-label-md text-label-md text-secondary font-bold">14d</span>
+<span class="font-label-md text-label-md text-secondary font-bold">Day 1</span>
 </div>
 </div>
 </div>
@@ -177,11 +180,11 @@
 <p id="live-date-header" class="font-label-sm text-label-sm text-secondary uppercase tracking-widest font-semibold">Loading live date...</p>
 <div class="flex items-center gap-1.5 text-on-surface-variant font-label-sm text-label-sm">
 <span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span>
-<span id="live-flow-status">In Flow</span>
+<span id="live-flow-status">Day 1 Momentum</span>
 </div>
 </div>
-<h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight font-bold">Quiet Mastery.</h2>
-<p class="font-body-md text-body-md text-on-surface-variant">Mindful discipline over hurried momentum.</p>
+<h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight font-bold">Welcome, Namineni Rakhesh.</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Fresh slate initialized. Build lasting discipline and track your daily kilometers.</p>
 </section>
 <!-- FEATURE HIGHLIGHT: Daily Motivation & Dynamic Wisdom Card (1,000 Sparks Live Auto-Rotating) -->
 <section class="mb-space-lg">
@@ -238,7 +241,7 @@
 </div>
 </div>
 </section>
-<!-- Daily Balance Progress Bento Card -->
+<!-- Daily Balance Progress Bento Card (Fresh Clean Slate) -->
 <section class="mb-space-lg">
 <div class="bg-surface-container-lowest rounded-[20px] p-space-md border border-outline-variant/60 sanctuary-card flex items-center justify-between">
 <div class="flex items-center gap-space-md">
@@ -246,14 +249,14 @@
 <div class="relative w-14 h-14 flex items-center justify-center">
 <svg class="w-full h-full -rotate-90" viewbox="0 0 44 44">
 <circle cx="22" cy="22" fill="none" r="18" stroke="#EAECEF" stroke-width="4.5"></circle>
-<circle class="transition-all duration-1000 ease-out" cx="22" cy="22" fill="none" r="18" stroke="#006c4a" stroke-dasharray="113.1" stroke-dashoffset="22.6" stroke-linecap="round" stroke-width="4.5"></circle>
+<circle id="alignment-progress-ring" class="transition-all duration-700 ease-out" cx="22" cy="22" fill="none" r="18" stroke="#006c4a" stroke-dasharray="113.1" stroke-dashoffset="113.1" stroke-linecap="round" stroke-width="4.5"></circle>
 </svg>
-<span class="absolute font-stat-counter text-[14px] font-bold text-on-surface">80%</span>
+<span id="alignment-pct-label" class="absolute font-stat-counter text-[14px] font-bold text-on-surface">0%</span>
 </div>
 <div>
 <span class="font-label-sm text-label-sm text-secondary font-bold uppercase tracking-wider">Today's Alignment</span>
-<h3 class="font-headline-md text-headline-md text-on-surface font-semibold">4 of 5 practices sealed</h3>
-<p class="font-body-sm text-body-sm text-on-surface-variant">1 ritual remaining for full daily equilibrium.</p>
+<h3 id="alignment-status-title" class="font-headline-md text-headline-md text-on-surface font-semibold">0 of 5 practices sealed</h3>
+<p id="alignment-status-sub" class="font-body-sm text-body-sm text-on-surface-variant">5 rituals waiting to be sealed today.</p>
 </div>
 </div>
 <div class="hidden sm:flex flex-col items-end">
@@ -262,6 +265,7 @@
 </div>
 </div>
 </section>
+
 <!-- Rhythm & Week Strip (Horizontal Calendar Cadence) -->
 <section class="mb-space-lg">
 <div class="flex items-center justify-between mb-space-xs">
@@ -272,125 +276,118 @@
 <!-- Dynamically populated via initLiveDate() -->
 </div>
 </section>
+
+<!-- FEATURE: LIVE GPS DISTANCE & KILOMETER TRACKER (Real-Time Geolocation) -->
+<section class="mb-space-lg">
+  <div class="bg-surface-container-lowest rounded-[24px] p-space-md sm:p-space-lg border-2 border-secondary/30 sanctuary-card relative overflow-hidden shadow-sm">
+    <!-- Atmospheric subtle glow -->
+    <div class="absolute -right-10 -top-10 w-36 h-36 bg-secondary/10 rounded-full blur-2xl pointer-events-none"></div>
+
+    <!-- Header bar -->
+    <div class="flex items-center justify-between mb-space-md">
+      <div class="flex items-center gap-2.5">
+        <div class="w-10 h-10 rounded-full bg-secondary/15 text-secondary flex items-center justify-center shrink-0">
+          <span class="material-symbols-outlined text-[22px]">directions_run</span>
+        </div>
+        <div>
+          <span class="font-label-sm text-label-sm text-secondary font-bold uppercase tracking-wider">Live Activity Engine</span>
+          <h3 class="font-headline-md text-headline-md text-on-surface font-bold">GPS Distance Tracker</h3>
+        </div>
+      </div>
+      <div id="gps-status-badge" class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container-low border border-outline-variant/40 font-label-sm text-label-sm text-on-surface-variant font-medium">
+        <span id="gps-pulse-dot" class="w-2 h-2 rounded-full bg-outline-variant"></span>
+        <span id="gps-status-text">Standby</span>
+      </div>
+    </div>
+
+    <!-- Real-time Metrics 3-Col Bento -->
+    <div class="grid grid-cols-3 gap-2 sm:gap-3 mb-space-md">
+      <!-- KM Metric -->
+      <div class="bg-surface-container-low rounded-2xl p-3 border border-outline-variant/30 text-center flex flex-col justify-center">
+        <span class="font-label-sm text-label-sm text-outline uppercase font-semibold">Kilometers</span>
+        <div class="flex items-baseline justify-center gap-1 mt-0.5">
+          <span id="gps-km-val" class="font-stat-counter text-[26px] sm:text-[32px] font-extrabold text-secondary tracking-tight">0.00</span>
+          <span class="text-xs font-bold text-on-surface-variant">km</span>
+        </div>
+        <span class="font-label-sm text-[11px] text-on-surface-variant">Total Distance</span>
+      </div>
+      <!-- Pace Metric -->
+      <div class="bg-surface-container-low rounded-2xl p-3 border border-outline-variant/30 text-center flex flex-col justify-center">
+        <span class="font-label-sm text-label-sm text-outline uppercase font-semibold">Pace</span>
+        <div class="flex items-baseline justify-center gap-0.5 mt-0.5">
+          <span id="gps-pace-val" class="font-stat-counter text-[20px] sm:text-[24px] font-bold text-on-surface tracking-tight">--'--"</span>
+          <span class="text-xs font-medium text-on-surface-variant">/km</span>
+        </div>
+        <span class="font-label-sm text-[11px] text-on-surface-variant">Average Pace</span>
+      </div>
+      <!-- Time Duration Metric -->
+      <div class="bg-surface-container-low rounded-2xl p-3 border border-outline-variant/30 text-center flex flex-col justify-center">
+        <span class="font-label-sm text-label-sm text-outline uppercase font-semibold">Time</span>
+        <div class="mt-0.5">
+          <span id="gps-time-val" class="font-stat-counter text-[20px] sm:text-[24px] font-bold text-on-surface tracking-tight">00:00</span>
+        </div>
+        <span class="font-label-sm text-[11px] text-on-surface-variant">Elapsed</span>
+      </div>
+    </div>
+
+    <!-- Live GPS Coordinates & Satellite Precision Bar -->
+    <div class="flex items-center justify-between text-xs text-on-surface-variant px-1 mb-space-md">
+      <span id="gps-accuracy-info" class="flex items-center gap-1">
+        <span class="material-symbols-outlined text-[15px] text-secondary">my_location</span>
+        High-accuracy GPS sensor armed
+      </span>
+      <span id="gps-auto-track-toggle" onclick="toggleAutoKmStart()" class="text-secondary hover:underline cursor-pointer font-medium select-none">
+        Auto-track on app start: <span id="auto-start-label" class="font-bold">ON</span>
+      </span>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="flex flex-wrap items-center gap-2 pt-1 border-t border-outline-variant/30">
+      <button id="gps-start-btn" onclick="toggleGpsTracking()" class="flex-1 py-2.5 px-4 rounded-xl bg-secondary text-white font-label-md text-label-md font-bold hover:bg-secondary-container active:scale-95 transition-all cursor-pointer shadow-sm flex items-center justify-center gap-1.5">
+        <span id="gps-btn-icon" class="material-symbols-outlined text-[18px]">play_arrow</span>
+        <span id="gps-btn-label">Start KM Tracking</span>
+      </button>
+
+      <button id="gps-reset-btn" onclick="resetGpsTracking()" class="py-2.5 px-3.5 rounded-xl bg-surface-container-low hover:bg-surface-container border border-outline-variant/50 text-on-surface-variant active:scale-95 transition-all cursor-pointer flex items-center justify-center gap-1 font-label-md text-label-md" title="Reset distance">
+        <span class="material-symbols-outlined text-[18px]">restart_alt</span>
+        <span class="hidden sm:inline">Reset</span>
+      </button>
+
+      <button onclick="logKmToTrailRun()" class="py-2.5 px-4 rounded-xl bg-primary text-white font-label-md text-label-md font-semibold hover:bg-primary-container active:scale-95 transition-all cursor-pointer shadow-sm flex items-center justify-center gap-1.5">
+        <span class="material-symbols-outlined text-[18px] text-secondary-fixed">verified</span>
+        <span>Seal to Trail Run</span>
+      </button>
+
+      <button onclick="simulateWalkStep()" class="py-2 px-2.5 rounded-xl bg-surface-container-low hover:bg-surface-container border border-outline-variant/40 text-on-surface-variant active:scale-95 transition-all cursor-pointer text-xs font-medium" title="Add 0.5 km test step">
+        +0.5km Test
+      </button>
+    </div>
+  </div>
+</section>
+
 <!-- Daily Goals List & Filter Section -->
 <section class="space-y-space-md">
 <!-- Filter Chips Header -->
 <div class="flex items-center justify-between">
 <h4 class="font-headline-md text-headline-md text-on-surface font-bold">Daily Rituals</h4>
-<div class="flex items-center gap-1.5 bg-surface-container-low p-1 rounded-full border border-outline-variant/40">
-<button class="px-3 py-1 rounded-full bg-secondary text-on-secondary font-label-sm text-label-sm font-semibold transition-all">
-            All Goals (5)
-          </button>
-<button class="px-3 py-1 rounded-full text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm font-medium transition-all">
-            Active (1)
-          </button>
-<button class="px-3 py-1 rounded-full text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm font-medium transition-all">
-            Completed (4)
-          </button>
-</div>
-</div>
-<!-- Habit Cards Grid -->
-<div class="space-y-2.5">
-<!-- Habit Item 1: Morning Jog (Completed) -->
-<div class="bg-surface-container-lowest rounded-[20px] p-space-md border border-outline-variant/50 sanctuary-card flex items-center justify-between transition-all hover:border-outline-variant">
-<div class="flex items-center gap-space-md">
-<div class="w-8 h-8 rounded-full bg-secondary text-on-secondary flex items-center justify-center shrink-0">
-<span class="material-symbols-outlined text-[20px] fill" style="font-variation-settings: 'FILL' 1;">check</span>
-</div>
-<div>
-<h5 class="font-headline-md text-headline-md text-on-surface line-through decoration-outline decoration-1 text-opacity-70 font-semibold">Morning Trail Run</h5>
-<div class="flex items-center gap-2 text-on-surface-variant font-label-sm text-label-sm">
-<span class="flex items-center gap-0.5"><span class="material-symbols-outlined text-[13px]">directions_run</span> 5.2 km</span>
-<span>•</span>
-<span>Completed 7:15 AM</span>
-</div>
-</div>
-</div>
-<span class="font-label-sm text-label-sm bg-surface-container-low text-secondary font-bold px-2.5 py-1 rounded-full">
-            14d streak
-          </span>
-</div>
-<!-- Habit Item 2: Hydration (Completed) -->
-<div class="bg-surface-container-lowest rounded-[20px] p-space-md border border-outline-variant/50 sanctuary-card flex items-center justify-between transition-all hover:border-outline-variant">
-<div class="flex items-center gap-space-md">
-<div class="w-8 h-8 rounded-full bg-secondary text-on-secondary flex items-center justify-center shrink-0">
-<span class="material-symbols-outlined text-[20px] fill" style="font-variation-settings: 'FILL' 1;">check</span>
-</div>
-<div>
-<h5 class="font-headline-md text-headline-md text-on-surface line-through decoration-outline decoration-1 text-opacity-70 font-semibold">Hydration Sanctuary</h5>
-<div class="flex items-center gap-2 text-on-surface-variant font-label-sm text-label-sm">
-<span class="flex items-center gap-0.5"><span class="material-symbols-outlined text-[13px]">water_drop</span> 2.5 Liters</span>
-<span>•</span>
-<span>Target reached</span>
-</div>
-</div>
-</div>
-<span class="font-label-sm text-label-sm bg-surface-container-low text-secondary font-bold px-2.5 py-1 rounded-full">
-            28d streak
-          </span>
-</div>
-<!-- Habit Item 3: Core Mobility (Completed) -->
-<div class="bg-surface-container-lowest rounded-[20px] p-space-md border border-outline-variant/50 sanctuary-card flex items-center justify-between transition-all hover:border-outline-variant">
-<div class="flex items-center gap-space-md">
-<div class="w-8 h-8 rounded-full bg-secondary text-on-secondary flex items-center justify-center shrink-0">
-<span class="material-symbols-outlined text-[20px] fill" style="font-variation-settings: 'FILL' 1;">check</span>
-</div>
-<div>
-<h5 class="font-headline-md text-headline-md text-on-surface line-through decoration-outline decoration-1 text-opacity-70 font-semibold">Core Mobility &amp; Breathwork</h5>
-<div class="flex items-center gap-2 text-on-surface-variant font-label-sm text-label-sm">
-<span class="flex items-center gap-0.5"><span class="material-symbols-outlined text-[13px]">self_improvement</span> 20 min</span>
-<span>•</span>
-<span>Quiet session</span>
-</div>
-</div>
-</div>
-<span class="font-label-sm text-label-sm bg-surface-container-low text-secondary font-bold px-2.5 py-1 rounded-full">
-            9d streak
-          </span>
-</div>
-<!-- Habit Item 4: 30 Min Deep Study (Completed) -->
-<div class="bg-surface-container-lowest rounded-[20px] p-space-md border border-outline-variant/50 sanctuary-card flex items-center justify-between transition-all hover:border-outline-variant">
-<div class="flex items-center gap-space-md">
-<div class="w-8 h-8 rounded-full bg-secondary text-on-secondary flex items-center justify-center shrink-0">
-<span class="material-symbols-outlined text-[20px] fill" style="font-variation-settings: 'FILL' 1;">check</span>
-</div>
-<div>
-<h5 class="font-headline-md text-headline-md text-on-surface line-through decoration-outline decoration-1 text-opacity-70 font-semibold">30 Min Deep Study</h5>
-<div class="flex items-center gap-2 text-on-surface-variant font-label-sm text-label-sm">
-<span class="flex items-center gap-0.5"><span class="material-symbols-outlined text-[13px]">menu_book</span> Architecture notes</span>
-<span>•</span>
-<span>Focus locked</span>
-</div>
-</div>
-</div>
-<span class="font-label-sm text-label-sm bg-surface-container-low text-secondary font-bold px-2.5 py-1 rounded-full">
-            21d streak
-          </span>
-</div>
-<!-- Habit Item 5: Sleep Before 11:00 PM (Upcoming / Active) -->
-<div class="bg-surface-container-lowest rounded-[20px] p-space-md border-2 border-secondary/40 sanctuary-card flex items-center justify-between transition-all hover:shadow-md ring-4 ring-secondary/5">
-<div class="flex items-center gap-space-md">
-<div class="w-8 h-8 rounded-full border-2 border-outline-variant flex items-center justify-center shrink-0 bg-surface-container-lowest hover:border-secondary transition-colors cursor-pointer group">
-<span class="material-symbols-outlined text-transparent group-hover:text-secondary/50 text-[18px]">check</span>
-</div>
-<div>
-<div class="flex items-center gap-1.5">
-<h5 class="font-headline-md text-headline-md text-on-surface font-bold">Sleep Before 11:00 PM</h5>
-<span class="w-2 h-2 rounded-full bg-secondary animate-ping"></span>
-</div>
-<div class="flex items-center gap-2 text-on-surface-variant font-label-sm text-label-sm">
-<span class="flex items-center gap-0.5"><span class="material-symbols-outlined text-[13px]">bedtime</span> Bedtime target</span>
-<span>•</span>
-<span class="text-secondary font-medium">Upcoming tonight</span>
-</div>
-</div>
-</div>
-<button id="seal-practice-btn" class="px-space-md py-2 rounded-xl bg-primary text-white font-label-md text-label-md font-semibold hover:bg-primary-container active:scale-95 transition-all duration-150 shadow-sm flex items-center gap-1 cursor-pointer">
-<span>Seal Practice</span>
-<span class="material-symbols-outlined text-[16px]">done_all</span>
+<div class="flex items-center gap-1 bg-surface-container-low p-1 rounded-full border border-outline-variant/40">
+<button id="filter-all-btn" onclick="filterTodayHabits('all')" class="habit-filter-btn px-3 py-1 rounded-full bg-secondary text-on-secondary font-label-sm text-label-sm font-semibold transition-all cursor-pointer">
+  All Goals (5)
+</button>
+<button id="filter-active-btn" onclick="filterTodayHabits('active')" class="habit-filter-btn px-3 py-1 rounded-full text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm font-medium transition-all cursor-pointer">
+  Active (<span id="active-count-label">5</span>)
+</button>
+<button id="filter-completed-btn" onclick="filterTodayHabits('completed')" class="habit-filter-btn px-3 py-1 rounded-full text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm font-medium transition-all cursor-pointer">
+  Completed (<span id="completed-count-label">0</span>)
 </button>
 </div>
 </div>
+
+<!-- Habit Cards Interactive Container (Populated via renderTodayHabits) -->
+<div id="today-habits-container" class="space-y-2.5">
+  <!-- Populated dynamically with fresh interactive state -->
+</div>
+</section>
 </div> <!-- End of #tab-today -->
 
 <!-- TAB 2: CALENDAR & NIGHTLY CLOSEOUT -->
@@ -441,26 +438,26 @@
         <span class="w-2 h-2 rounded-full bg-secondary"></span>
         <span id="selected-day-label" class="font-label-md text-label-md font-semibold text-on-surface">September 27 (Today)</span>
       </div>
-      <span id="selected-day-status" class="font-label-sm text-label-sm text-secondary font-bold bg-secondary/15 px-2.5 py-0.5 rounded-full">4 of 5 Sealed (80%)</span>
+      <span id="selected-day-status" class="font-label-sm text-label-sm text-secondary font-bold bg-secondary/15 px-2.5 py-0.5 rounded-full">0 of 5 Sealed (0%)</span>
     </div>
   </section>
 
-  <!-- Monthly Rhythm Insights Bento -->
+  <!-- Monthly Rhythm Insights Bento (Fresh State) -->
   <section class="grid grid-cols-3 gap-3">
     <div class="bg-surface-container-lowest rounded-[20px] p-space-md border border-outline-variant/50 sanctuary-card text-center">
       <span class="font-label-sm text-label-sm text-secondary font-bold uppercase tracking-wider">Consistency</span>
-      <h4 class="font-stat-counter text-stat-counter text-on-surface mt-1">88%</h4>
-      <p class="font-label-sm text-label-sm text-on-surface-variant">24/27 sealed</p>
+      <h4 id="cal-consistency-val" class="font-stat-counter text-stat-counter text-on-surface mt-1">0%</h4>
+      <p id="cal-consistency-sub" class="font-label-sm text-label-sm text-on-surface-variant">0/5 sealed today</p>
     </div>
     <div class="bg-surface-container-lowest rounded-[20px] p-space-md border border-outline-variant/50 sanctuary-card text-center">
       <span class="font-label-sm text-label-sm text-secondary font-bold uppercase tracking-wider">Streak</span>
-      <h4 class="font-stat-counter text-stat-counter text-secondary mt-1">14d</h4>
-      <p class="font-label-sm text-label-sm text-on-surface-variant">Unbroken</p>
+      <h4 class="font-stat-counter text-stat-counter text-secondary mt-1">Day 1</h4>
+      <p class="font-label-sm text-label-sm text-on-surface-variant">Active</p>
     </div>
     <div class="bg-surface-container-lowest rounded-[20px] p-space-md border border-outline-variant/50 sanctuary-card text-center">
       <span class="font-label-sm text-label-sm text-secondary font-bold uppercase tracking-wider">Equilibrium</span>
-      <h4 class="font-stat-counter text-stat-counter text-primary mt-1">High</h4>
-      <p class="font-label-sm text-label-sm text-on-surface-variant">Optimal flow</p>
+      <h4 class="font-stat-counter text-stat-counter text-primary mt-1">Ready</h4>
+      <p class="font-label-sm text-label-sm text-on-surface-variant">Fresh slate</p>
     </div>
   </section>
 
@@ -474,13 +471,13 @@
       <span class="font-label-sm text-label-sm px-2.5 py-0.5 rounded-full bg-white/15 text-primary-fixed">Target 11:00 PM</span>
     </div>
     <h3 class="font-headline-lg text-headline-lg font-bold text-white tracking-tight">Seal the Day</h3>
-    <p class="font-body-md text-body-md text-on-primary-container mt-1">A quiet mindful check-in before sleep. Did you honor your daily standards?</p>
+    <p class="font-body-md text-body-md text-on-primary-container mt-1">A quiet mindful check-in before sleep. Honor your standards with quiet discipline.</p>
 
     <!-- Closeout Checklist Pill -->
     <div class="mt-4 p-3 rounded-xl bg-white/10 border border-white/15 flex items-center justify-between">
       <div class="flex items-center gap-2">
         <span class="material-symbols-outlined text-secondary-fixed text-[20px]">check_circle</span>
-        <span class="font-label-md text-label-md text-white font-medium">4 of 5 practices sealed today</span>
+        <span id="closeout-practices-pill" class="font-label-md text-label-md text-white font-medium">0 of 5 practices sealed today</span>
       </div>
       <button onclick="switchTab('today')" class="text-secondary-fixed font-label-sm text-label-sm font-bold hover:underline cursor-pointer">
         Review Practices →
@@ -490,7 +487,7 @@
     <!-- Reflection Note Form -->
     <div class="mt-4">
       <label class="block font-label-md text-label-md text-white/90 mb-1.5 font-semibold">Evening Reflection & Peace Journal</label>
-      <textarea id="evening-closeout-note" rows="3" placeholder="What gave you quiet peace or tested your discipline today?" class="w-full bg-white/10 rounded-xl p-3 text-white placeholder-white/50 border border-white/20 focus:outline-none focus:ring-2 focus:ring-secondary-fixed font-body-sm text-body-sm transition-all"></textarea>
+      <textarea id="evening-closeout-note" rows="3" placeholder="What gave you quiet peace or tested your discipline today, Namineni Rakhesh?" class="w-full bg-white/10 rounded-xl p-3 text-white placeholder-white/50 border border-white/20 focus:outline-none focus:ring-2 focus:ring-secondary-fixed font-body-sm text-body-sm transition-all"></textarea>
       <div class="flex justify-end mt-2">
         <button onclick="saveEveningCloseout()" class="inline-flex items-center gap-1.5 px-space-md py-2 rounded-xl bg-secondary text-white font-label-md text-label-md font-bold hover:bg-secondary-container active:scale-95 transition-all cursor-pointer shadow-sm">
           <span class="material-symbols-outlined text-[16px]">save</span>
@@ -507,32 +504,32 @@
   <section class="flex flex-col gap-0.5">
     <div class="flex items-center justify-between">
       <p class="font-label-sm text-label-sm text-secondary uppercase tracking-widest font-semibold">Sanctuary Log & Timeline</p>
-      <span id="history-total-count" class="font-label-sm text-label-sm text-secondary font-bold">142 Practices Sealed</span>
+      <span id="history-total-count" class="font-label-sm text-label-sm text-secondary font-bold">Fresh Slate • Day 1</span>
     </div>
     <h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight font-bold">Unbroken Discipline.</h2>
     <p class="font-body-md text-body-md text-on-surface-variant">Every completed practice and reflection preserved in your sanctuary.</p>
   </section>
 
-  <!-- Lifetime Summary Bento Cards -->
+  <!-- Lifetime Summary Bento Cards (Fresh Clean Slate) -->
   <section class="grid grid-cols-2 sm:grid-cols-4 gap-3">
     <div class="bg-surface-container-lowest rounded-[20px] p-space-md border border-outline-variant/50 sanctuary-card">
       <span class="font-label-sm text-label-sm text-outline">Total Sealed</span>
-      <h4 class="font-stat-counter text-stat-counter text-primary mt-1">142</h4>
+      <h4 id="history-total-sealed" class="font-stat-counter text-stat-counter text-primary mt-1">0</h4>
       <span class="font-label-sm text-label-sm text-secondary font-medium">Lifetime practices</span>
     </div>
     <div class="bg-surface-container-lowest rounded-[20px] p-space-md border border-outline-variant/50 sanctuary-card">
       <span class="font-label-sm text-label-sm text-outline">Active Streak</span>
-      <h4 class="font-stat-counter text-stat-counter text-secondary mt-1">14d</h4>
-      <span class="font-label-sm text-label-sm text-on-surface-variant">Unbroken</span>
+      <h4 class="font-stat-counter text-stat-counter text-secondary mt-1">Day 1</h4>
+      <span class="font-label-sm text-label-sm text-on-surface-variant">Active</span>
     </div>
     <div class="bg-surface-container-lowest rounded-[20px] p-space-md border border-outline-variant/50 sanctuary-card">
       <span class="font-label-sm text-label-sm text-outline">Deep Focus</span>
-      <h4 class="font-stat-counter text-stat-counter text-on-surface mt-1">32h</h4>
+      <h4 class="font-stat-counter text-stat-counter text-on-surface mt-1">0h</h4>
       <span class="font-label-sm text-label-sm text-secondary font-medium">Study logged</span>
     </div>
     <div class="bg-surface-container-lowest rounded-[20px] p-space-md border border-outline-variant/50 sanctuary-card">
       <span class="font-label-sm text-label-sm text-outline">Reflections</span>
-      <h4 id="history-reflections-badge" class="font-stat-counter text-stat-counter text-secondary mt-1">18</h4>
+      <h4 id="history-reflections-badge" class="font-stat-counter text-stat-counter text-secondary mt-1">0</h4>
       <span class="font-label-sm text-label-sm text-on-surface-variant">Saved thoughts</span>
     </div>
   </section>
@@ -778,6 +775,402 @@
         rhythmGrid.appendChild(dayCard);
       }
     }
+  }
+
+  // -------------------------------------------------------------
+  // 2.5. Today's Interactive Practices & Alignment Engine (Fresh Data)
+  // -------------------------------------------------------------
+  let currentHabitFilter = 'all';
+  let todayPractices = [
+    {
+      id: "run",
+      name: "Morning Trail Run",
+      metric: "5.2 km",
+      time: "07:00 AM",
+      category: "Fitness",
+      icon: "directions_run",
+      sealed: false,
+      streak: 1
+    },
+    {
+      id: "water",
+      name: "Hydration Sanctuary",
+      metric: "2.5 Liters",
+      time: "All Day",
+      category: "Wellness",
+      icon: "water_drop",
+      sealed: false,
+      streak: 1
+    },
+    {
+      id: "core",
+      name: "Core Mobility & Breathwork",
+      metric: "20 min",
+      time: "09:30 PM",
+      category: "Wellness",
+      icon: "self_improvement",
+      sealed: false,
+      streak: 1
+    },
+    {
+      id: "study",
+      name: "30 Min Deep Study",
+      metric: "Architecture notes",
+      time: "02:00 PM",
+      category: "Focus",
+      icon: "menu_book",
+      sealed: false,
+      streak: 1
+    },
+    {
+      id: "sleep",
+      name: "Sleep Before 11:00 PM",
+      metric: "Bedtime target",
+      time: "11:00 PM",
+      category: "Sleep",
+      icon: "bedtime",
+      sealed: false,
+      streak: 1
+    }
+  ];
+
+  try {
+    const saved = localStorage.getItem('today_practices_rakhesh_v2');
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      if (Array.isArray(parsed) && parsed.length === 5) {
+        todayPractices = parsed;
+      }
+    }
+  } catch (e) {}
+
+  function saveTodayPractices() {
+    try {
+      localStorage.setItem('today_practices_rakhesh_v2', JSON.stringify(todayPractices));
+    } catch (e) {}
+  }
+
+  function filterTodayHabits(filterType) {
+    currentHabitFilter = filterType;
+    document.querySelectorAll('.habit-filter-btn').forEach(btn => {
+      btn.className = "habit-filter-btn px-3 py-1 rounded-full text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm font-medium transition-all cursor-pointer";
+    });
+    const activeBtn = document.getElementById(`filter-${filterType}-btn`);
+    if (activeBtn) {
+      activeBtn.className = "habit-filter-btn px-3 py-1 rounded-full bg-secondary text-on-secondary font-label-sm text-label-sm font-semibold transition-all cursor-pointer";
+    }
+    renderTodayHabits();
+  }
+
+  function togglePractice(index) {
+    if (!todayPractices[index]) return;
+    todayPractices[index].sealed = !todayPractices[index].sealed;
+    saveTodayPractices();
+    renderTodayHabits();
+
+    const habit = todayPractices[index];
+    if (habit.sealed) {
+      showToast(`${habit.name} Sealed! ✨`, "verified");
+      if (sbClient) {
+        sbClient.from('daily_goal_records').insert([
+          {
+            goal_id: habit.id === 'run' ? '7089445f-ee2f-48a9-9b86-bfa708ee8bbc' : null,
+            record_date: new Date().toISOString().split('T')[0],
+            is_completed: true,
+            notes: `Sealed by Namineni Rakhesh: ${habit.metric}`
+          }
+        ]).then(() => console.log(`Sealed habit ${habit.name} logged to Supabase`))
+        .catch(err => console.warn(err));
+      }
+    } else {
+      showToast(`${habit.name} Unsealed`, "refresh");
+    }
+  }
+
+  function renderTodayHabits() {
+    const container = document.getElementById('today-habits-container');
+    if (!container) return;
+
+    const totalCount = todayPractices.length;
+    const sealedCount = todayPractices.filter(p => p.sealed).length;
+    const activeCount = totalCount - sealedCount;
+    const pct = Math.round((sealedCount / totalCount) * 100);
+
+    const ring = document.getElementById('alignment-progress-ring');
+    if (ring) {
+      const circumference = 113.1;
+      const offset = circumference * (1 - (sealedCount / totalCount));
+      ring.style.strokeDashoffset = offset;
+    }
+    const pctLabel = document.getElementById('alignment-pct-label');
+    if (pctLabel) pctLabel.innerText = `${pct}%`;
+
+    const titleEl = document.getElementById('alignment-status-title');
+    if (titleEl) titleEl.innerText = `${sealedCount} of ${totalCount} practices sealed`;
+
+    const subEl = document.getElementById('alignment-status-sub');
+    if (subEl) {
+      subEl.innerText = sealedCount === totalCount
+        ? "All rituals sealed! Complete daily balance achieved."
+        : `${activeCount} ritual${activeCount === 1 ? '' : 's'} waiting to be sealed today.`;
+    }
+
+    const activeLabel = document.getElementById('active-count-label');
+    if (activeLabel) activeLabel.innerText = activeCount;
+    const compLabel = document.getElementById('completed-count-label');
+    if (compLabel) compLabel.innerText = sealedCount;
+
+    const calDayStatus = document.getElementById('selected-day-status');
+    if (calDayStatus) calDayStatus.innerText = `${sealedCount} of ${totalCount} Sealed (${pct}%)`;
+    const closeoutPill = document.getElementById('closeout-practices-pill');
+    if (closeoutPill) closeoutPill.innerText = `${sealedCount} of ${totalCount} practices sealed today`;
+    const calConsistVal = document.getElementById('cal-consistency-val');
+    if (calConsistVal) calConsistVal.innerText = `${pct}%`;
+    const calConsistSub = document.getElementById('cal-consistency-sub');
+    if (calConsistSub) calConsistSub.innerText = `${sealedCount}/${totalCount} sealed today`;
+
+    container.innerHTML = '';
+    todayPractices.forEach((practice, idx) => {
+      if (currentHabitFilter === 'active' && practice.sealed) return;
+      if (currentHabitFilter === 'completed' && !practice.sealed) return;
+
+      const card = document.createElement('div');
+      card.className = practice.sealed
+        ? "bg-surface-container-lowest rounded-[20px] p-space-md border border-outline-variant/40 sanctuary-card flex items-center justify-between transition-all hover:border-outline-variant opacity-85"
+        : "bg-surface-container-lowest rounded-[20px] p-space-md border-2 border-secondary/30 sanctuary-card flex items-center justify-between transition-all hover:shadow-md ring-2 ring-secondary/5";
+
+      card.innerHTML = `
+        <div class="flex items-center gap-space-md cursor-pointer select-none" onclick="togglePractice(${idx})">
+          <div class="w-8 h-8 rounded-full ${practice.sealed ? 'bg-secondary text-white' : 'border-2 border-outline-variant bg-surface-container-lowest text-transparent hover:border-secondary'} flex items-center justify-center shrink-0 transition-colors">
+            <span class="material-symbols-outlined text-[20px] fill" style="font-variation-settings: 'FILL' 1;">check</span>
+          </div>
+          <div>
+            <h5 class="font-headline-md text-headline-md text-on-surface ${practice.sealed ? 'line-through decoration-outline decoration-1 text-opacity-70 font-semibold' : 'font-bold'}">${practice.name}</h5>
+            <div class="flex items-center gap-2 text-on-surface-variant font-label-sm text-label-sm mt-0.5">
+              <span class="flex items-center gap-0.5"><span class="material-symbols-outlined text-[13px] text-secondary">${practice.icon}</span> ${practice.metric}</span>
+              <span>•</span>
+              <span>${practice.sealed ? 'Sealed today' : practice.time}</span>
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="togglePractice(${idx})" class="px-3 py-1.5 rounded-xl ${practice.sealed ? 'bg-surface-container-low text-on-surface-variant hover:bg-surface-container' : 'bg-secondary text-white hover:bg-secondary-container'} font-label-sm text-label-sm font-semibold active:scale-95 transition-all cursor-pointer shadow-sm">
+            ${practice.sealed ? 'Unseal' : 'Seal'}
+          </button>
+          <span class="font-label-sm text-label-sm bg-surface-container-low text-secondary font-bold px-2 py-1 rounded-full hidden sm:inline-block">
+            Day 1
+          </span>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+  }
+
+  // -------------------------------------------------------------
+  // 2.6. Live GPS Distance & Kilometer Tracker Engine
+  // -------------------------------------------------------------
+  let gpsWatchId = null;
+  let isGpsTracking = false;
+  let totalDistanceKm = 0.0;
+  let lastGpsPosition = null;
+  let gpsStartTime = null;
+  let gpsTimerInterval = null;
+  let elapsedGpsSeconds = 0;
+  let autoTrackEnabled = true;
+
+  try {
+    const savedAuto = localStorage.getItem('gps_auto_track');
+    if (savedAuto !== null) autoTrackEnabled = savedAuto === 'true';
+  } catch (e) {}
+
+  function calculateHaversineDistance(lat1, lon1, lat2, lon2) {
+    const R = 6371;
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+      Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c;
+  }
+
+  function startGpsTracking() {
+    if (!('geolocation' in navigator)) {
+      showToast("GPS Geolocation not available on this browser/device", "warning");
+      return;
+    }
+
+    isGpsTracking = true;
+    gpsStartTime = Date.now() - (elapsedGpsSeconds * 1000);
+    updateGpsUiState(true);
+
+    gpsWatchId = navigator.geolocation.watchPosition(
+      (pos) => {
+        const { latitude, longitude, accuracy } = pos.coords;
+        const accuracyEl = document.getElementById('gps-accuracy-info');
+        if (accuracyEl) {
+          accuracyEl.innerHTML = `<span class="material-symbols-outlined text-[15px] text-secondary">my_location</span> Lat: ${latitude.toFixed(4)}, Lon: ${longitude.toFixed(4)} (±${Math.round(accuracy)}m)`;
+        }
+
+        if (lastGpsPosition) {
+          const deltaKm = calculateHaversineDistance(
+            lastGpsPosition.latitude,
+            lastGpsPosition.longitude,
+            latitude,
+            longitude
+          );
+
+          if (deltaKm >= 0.002 && accuracy < 60) {
+            totalDistanceKm += deltaKm;
+            updateGpsMetricsDisplay();
+          }
+        }
+        lastGpsPosition = { latitude, longitude };
+      },
+      (err) => {
+        console.warn("GPS tracking status:", err.message);
+        const statusText = document.getElementById('gps-status-text');
+        if (statusText) statusText.innerText = "GPS: " + (err.code === 1 ? "Permission Needed" : "Locating...");
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 0
+      }
+    );
+
+    if (gpsTimerInterval) clearInterval(gpsTimerInterval);
+    gpsTimerInterval = setInterval(() => {
+      elapsedGpsSeconds++;
+      updateGpsMetricsDisplay();
+    }, 1000);
+
+    showToast("Live GPS KM Tracking Started 🏃‍♂️", "directions_run");
+  }
+
+  function pauseGpsTracking() {
+    isGpsTracking = false;
+    if (gpsWatchId !== null) {
+      navigator.geolocation.clearWatch(gpsWatchId);
+      gpsWatchId = null;
+    }
+    if (gpsTimerInterval) {
+      clearInterval(gpsTimerInterval);
+      gpsTimerInterval = null;
+    }
+    lastGpsPosition = null;
+    updateGpsUiState(false);
+    showToast("GPS Tracking Paused ⏸️", "pause");
+  }
+
+  function toggleGpsTracking() {
+    if (isGpsTracking) {
+      pauseGpsTracking();
+    } else {
+      startGpsTracking();
+    }
+  }
+
+  function resetGpsTracking() {
+    pauseGpsTracking();
+    totalDistanceKm = 0.0;
+    elapsedGpsSeconds = 0;
+    updateGpsMetricsDisplay();
+    const kmVal = document.getElementById('gps-km-val');
+    if (kmVal) kmVal.innerText = "0.00";
+    const paceVal = document.getElementById('gps-pace-val');
+    if (paceVal) paceVal.innerText = "--'--\"";
+    const timeVal = document.getElementById('gps-time-val');
+    if (timeVal) timeVal.innerText = "00:00";
+    showToast("KM Tracker Reset to 0.00 km", "restart_alt");
+  }
+
+  function updateGpsMetricsDisplay() {
+    const kmVal = document.getElementById('gps-km-val');
+    if (kmVal) {
+      kmVal.innerText = totalDistanceKm.toFixed(2);
+    }
+
+    const timeVal = document.getElementById('gps-time-val');
+    if (timeVal) {
+      const mins = Math.floor(elapsedGpsSeconds / 60);
+      const secs = elapsedGpsSeconds % 60;
+      timeVal.innerText = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+    }
+
+    const paceVal = document.getElementById('gps-pace-val');
+    if (paceVal) {
+      if (totalDistanceKm > 0.01 && elapsedGpsSeconds > 5) {
+        const paceSecsPerKm = elapsedGpsSeconds / totalDistanceKm;
+        const pMins = Math.floor(paceSecsPerKm / 60);
+        const pSecs = Math.floor(paceSecsPerKm % 60);
+        if (pMins < 60) {
+          paceVal.innerText = `${pMins}'${String(pSecs).padStart(2, '0')}"`;
+        } else {
+          paceVal.innerText = `--'--"`;
+        }
+      } else {
+        paceVal.innerText = `--'--"`;
+      }
+    }
+  }
+
+  function updateGpsUiState(active) {
+    const startBtn = document.getElementById('gps-start-btn');
+    const btnIcon = document.getElementById('gps-btn-icon');
+    const btnLabel = document.getElementById('gps-btn-label');
+    const statusText = document.getElementById('gps-status-text');
+    const pulseDot = document.getElementById('gps-pulse-dot');
+    const statusBadge = document.getElementById('gps-status-badge');
+
+    if (active) {
+      if (startBtn) {
+        startBtn.classList.remove('bg-secondary', 'hover:bg-secondary-container');
+        startBtn.classList.add('bg-amber-600', 'hover:bg-amber-700');
+      }
+      if (btnIcon) btnIcon.innerText = "pause";
+      if (btnLabel) btnLabel.innerText = "Pause Tracking";
+      if (statusText) statusText.innerText = "Live Tracking";
+      if (pulseDot) pulseDot.className = "w-2 h-2 rounded-full bg-secondary-fixed animate-ping";
+      if (statusBadge) statusBadge.className = "flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary/15 border border-secondary/40 font-label-sm text-label-sm text-secondary font-bold";
+    } else {
+      if (startBtn) {
+        startBtn.classList.remove('bg-amber-600', 'hover:bg-amber-700');
+        startBtn.classList.add('bg-secondary', 'hover:bg-secondary-container');
+      }
+      if (btnIcon) btnIcon.innerText = "play_arrow";
+      if (btnLabel) btnLabel.innerText = "Start KM Tracking";
+      if (statusText) statusText.innerText = totalDistanceKm > 0 ? "Paused" : "Standby";
+      if (pulseDot) pulseDot.className = "w-2 h-2 rounded-full bg-outline-variant";
+      if (statusBadge) statusBadge.className = "flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container-low border border-outline-variant/40 font-label-sm text-label-sm text-on-surface-variant font-medium";
+    }
+  }
+
+  function simulateWalkStep() {
+    totalDistanceKm += 0.50;
+    elapsedGpsSeconds += 180;
+    updateGpsMetricsDisplay();
+    showToast(`Added +0.5 km test step! Total: ${totalDistanceKm.toFixed(2)} km 🏃`, "directions_run");
+  }
+
+  function logKmToTrailRun() {
+    const distText = totalDistanceKm > 0 ? `${totalDistanceKm.toFixed(2)} km` : "5.2 km";
+    todayPractices[0].metric = distText;
+    todayPractices[0].sealed = true;
+    saveTodayPractices();
+    renderTodayHabits();
+    showToast(`Logged ${distText} to Morning Trail Run & Sealed! 🏆`, "verified");
+  }
+
+  function toggleAutoKmStart() {
+    autoTrackEnabled = !autoTrackEnabled;
+    const label = document.getElementById('auto-start-label');
+    if (label) label.innerText = autoTrackEnabled ? "ON" : "OFF";
+    try {
+      localStorage.setItem('gps_auto_track', autoTrackEnabled ? 'true' : 'false');
+    } catch(e) {}
+    showToast(`Auto-track on app launch is now ${autoTrackEnabled ? 'ON' : 'OFF'}`);
   }
 
   // -------------------------------------------------------------
@@ -1365,35 +1758,19 @@
   const BASELINE_HISTORY_ITEMS = [
     {
       type: "closeout",
-      title: "Nightly Check-In: Day 14 Streak Sealed",
-      date: "September 26, 2026",
-      desc: "4 of 5 practices completed. Evening trail run, hydration sanctuary, core breathwork, and deep study sealed.",
-      tag: "Evening Wind Down",
-      icon: "dark_mode"
-    },
-    {
-      type: "reflection",
-      title: "Lincoln Wisdom Reflection",
-      date: "September 25, 2026",
-      desc: "“Discipline is choosing between what you want now and what you want most.” Preserved tranquil focus over hurried momentum.",
-      tag: "Wisdom Spark",
-      icon: "auto_awesome"
+      title: "Fitness & Goal Journey Commenced",
+      date: "September 27, 2026",
+      desc: "Fresh start initialized for Namineni Rakhesh. Clean slate ready for Day 1 habits, GPS kilometer runs, and unbroken discipline.",
+      tag: "Fresh Start",
+      icon: "flag"
     },
     {
       type: "practice",
-      title: "5.2 km Morning Trail Run",
-      date: "September 25, 2026",
-      desc: "Outdoor trail endurance sealed at 7:15 AM. 28 min quiet rhythm.",
-      tag: "Fitness Ritual",
+      title: "Live GPS Distance Tracking Calibrated",
+      date: "September 27, 2026",
+      desc: "Real-time outdoor GPS kilometer engine armed. Ready to record trail runs and walking milestones.",
+      tag: "GPS Fitness",
       icon: "directions_run"
-    },
-    {
-      type: "practice",
-      title: "Full Alignment Equilibrium (5/5)",
-      date: "September 24, 2026",
-      desc: "All five core standards completed before 10:30 PM. Complete daily balance achieved.",
-      tag: "100% Sealed",
-      icon: "verified"
     }
   ];
 
@@ -1419,7 +1796,7 @@
 
     const badge = document.getElementById('history-reflections-badge');
     if (badge) {
-      badge.innerText = BASELINE_HISTORY_ITEMS.length + dynamicNotes.length;
+      badge.innerText = dynamicNotes.length;
     }
 
     container.innerHTML = '';
@@ -1497,7 +1874,7 @@
       description: "5.2 km outdoor run at sunrise",
       scheduled_time: "07:00 AM",
       icon: "directions_run",
-      streak_count: 14,
+      streak_count: 0,
       is_active: true
     },
     {
@@ -1507,7 +1884,7 @@
       description: "Drink at least 2.5L clean water throughout the day",
       scheduled_time: "All Day",
       icon: "water_drop",
-      streak_count: 28,
+      streak_count: 0,
       is_active: true
     },
     {
@@ -1517,7 +1894,7 @@
       description: "20 min quiet recovery & diaphragmatic breathing",
       scheduled_time: "09:30 PM",
       icon: "self_improvement",
-      streak_count: 9,
+      streak_count: 0,
       is_active: true
     },
     {
@@ -1527,7 +1904,7 @@
       description: "Architecture and distributed systems focus",
       scheduled_time: "02:00 PM",
       icon: "menu_book",
-      streak_count: 21,
+      streak_count: 0,
       is_active: true
     },
     {
@@ -1537,7 +1914,7 @@
       description: "Screens dimmed at 10:30 PM, sleep by 11:00 PM",
       scheduled_time: "11:00 PM",
       icon: "bedtime",
-      streak_count: 7,
+      streak_count: 0,
       is_active: true
     }
   ];
@@ -1761,14 +2138,34 @@
   window.toggleFavoriteSpark = toggleFavoriteSpark;
   window.shareCurrentSpark = shareCurrentSpark;
 
+  // Expose Today Practices & GPS Distance Tracker functions
+  window.togglePractice = togglePractice;
+  window.filterTodayHabits = filterTodayHabits;
+  window.renderTodayHabits = renderTodayHabits;
+  window.toggleGpsTracking = toggleGpsTracking;
+  window.startGpsTracking = startGpsTracking;
+  window.pauseGpsTracking = pauseGpsTracking;
+  window.resetGpsTracking = resetGpsTracking;
+  window.simulateWalkStep = simulateWalkStep;
+  window.logKmToTrailRun = logKmToTrailRun;
+  window.toggleAutoKmStart = toggleAutoKmStart;
+
   // =============================================================
   // 11. Initial Startup Sequence & Hash Router
   // =============================================================
   function initializeApp() {
     initLiveDate();
+    renderTodayHabits(); // Initialize Today's practices & ring
     initAutoCycling();
     fetchSupabaseSparks();
     loadSupabaseGoals();
+
+    // Auto-arm or auto-start GPS if enabled
+    if (autoTrackEnabled && 'geolocation' in navigator) {
+      setTimeout(() => {
+        startGpsTracking();
+      }, 1000);
+    }
 
     // Check URL Hash routing (e.g. #calendar, #history, #goals)
     const currentHash = window.location.hash.replace('#', '') || 'today';

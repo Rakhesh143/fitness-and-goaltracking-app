@@ -1,10 +1,10 @@
 {
-  "name": "cadence-goal-tracker",
+  "name": "fitness-and-goal-tracker",
   "version": "1.0.0",
   "private": true,
-  "description": "Cadence - Personal Mindful Fitness & Daily Goal Tracking App",
+  "description": "Fitness and Goal Tracker - Personal App for Namineni Rakhesh",
   "scripts": {
-    "build": "node -e \"const fs = require('fs'); if (!fs.existsSync('dist')) fs.mkdirSync('dist', { recursive: true }); ['index.html', 'today.html', 'closeout.html', 'screen.png'].forEach(f => { if (fs.existsSync(f)) fs.copyFileSync(f, 'dist/' + f); }); if (fs.existsSync('public')) { if (!fs.existsSync('dist/public')) fs.mkdirSync('dist/public', { recursive: true }); fs.cpSync('public', 'dist/public', { recursive: true }); } console.log('Build completed: dist/ ready for Capacitor');\"",
+    "build": "node -e \"const fs = require('fs'); if (!fs.existsSync('dist')) fs.mkdirSync('dist', { recursive: true }); ['index.html', 'today.html', 'closeout.html', 'screen.png', 'favicon.png', 'favicon.ico'].forEach(f => { if (fs.existsSync(f)) fs.copyFileSync(f, 'dist/' + f); }); if (fs.existsSync('public')) { if (!fs.existsSync('dist/public')) fs.mkdirSync('dist/public', { recursive: true }); fs.cpSync('public', 'dist/public', { recursive: true }); } console.log('Build completed: dist/ ready for Capacitor');\"",
     "cap:sync": "cap sync",
     "cap:android": "cap run android"
   },
