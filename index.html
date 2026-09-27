@@ -195,9 +195,9 @@
 <div class="absolute inset-0 bg-gradient-to-r from-primary/45 to-transparent pointer-events-none"></div>
 <!-- Card Top Bar: Dynamic Sync Pill & Status -->
 <div class="relative z-10 flex items-center justify-between gap-2">
-<button id="spark-action-pill" onclick="nextSpark()" title="Tap to skip to next spark (Auto-cycling every 7s, pause on hover/touch)" class="inline-flex items-center gap-1.5 px-space-sm py-1 rounded-full bg-surface-container-lowest/20 hover:bg-surface-container-lowest/30 backdrop-blur-md border border-surface-container-lowest/30 text-surface-container-lowest font-label-sm text-label-sm active:scale-95 transition-all cursor-pointer">
-<span id="spark-spin-icon" class="material-symbols-outlined text-[15px] text-secondary-fixed animate-spin" style="animation-duration: 9s;">sync</span>
-<span id="spark-status-text" class="tracking-wide">Daily Spark • Auto-Cycling</span>
+<button id="spark-action-pill" onclick="nextSpark()" title="Tap for new spark from 1,000 collection" class="inline-flex items-center gap-1.5 px-space-sm py-1 rounded-full bg-surface-container-lowest/20 hover:bg-surface-container-lowest/30 backdrop-blur-md border border-surface-container-lowest/30 text-surface-container-lowest font-label-sm text-label-sm active:scale-95 transition-all cursor-pointer">
+<span id="spark-spin-icon" class="material-symbols-outlined text-[15px] text-secondary-fixed animate-spin" style="animation-duration: 18s;">sync</span>
+<span id="spark-status-text" class="tracking-wide">Daily Spark</span>
 </button>
 <div class="flex items-center gap-1 text-surface-variant/90 font-label-sm text-label-sm bg-primary/40 backdrop-blur-sm px-2.5 py-1 rounded-full border border-white/10">
 <span class="material-symbols-outlined text-[14px]">auto_awesome</span>
@@ -593,8 +593,8 @@
   let currentSpark = sparksPool[0];
   let isCyclingPaused = false;
   let cycleElapsedMs = 0;
-  const CYCLE_INTERVAL_MS = 7000; // Auto-changes every 7 seconds
-  const TICK_MS = 100;
+  const CYCLE_INTERVAL_MS = 30 * 60 * 1000; // Auto-changes every 30 minutes
+  const TICK_MS = 1000; // Update every second
   let sparkProgressTimer = null;
 
   // Favorites stored in localStorage
@@ -732,55 +732,71 @@
   function nextSpark() {
     // Manual skip
     advanceToNextSpark();
-    const progressLine = document.getElementById('spark-progress-line');
-    if (progressLine) progressLine.style.width = '0%';
+    showToast("Switched to next wisdom spark ✨", "auto_awesome");
   }
 
-  // Setup auto-cycling loop with progress indicator and hover/touch pause
+  // Setup auto-cycling loop with progress indicator and hover/touch pause (30m interval)
   function initAutoCycling() {
     const progressLine = document.getElementById('spark-progress-line');
     const sparkCard = document.getElementById('spark-hero-card');
     const statusText = document.getElementById('spark-status-text');
     const spinIcon = document.getElementById('spark-spin-icon');
+    const autoBadge = document.getElementById('spark-auto-badge');
 
     // Pause on Hover & Touch so user can read peacefully
     if (sparkCard) {
       sparkCard.addEventListener('mouseenter', () => {
         isCyclingPaused = true;
-        if (statusText) statusText.innerText = "Daily Spark • Paused (Reading)";
+        if (statusText) statusText.innerText = "Daily Spark • Paused";
         if (spinIcon) spinIcon.style.animationPlayState = 'paused';
       });
 
       sparkCard.addEventListener('mouseleave', () => {
         isCyclingPaused = false;
-        if (statusText) statusText.innerText = "Daily Spark • Auto-Cycling";
+        if (statusText) statusText.innerText = "Daily Spark";
         if (spinIcon) spinIcon.style.animationPlayState = 'running';
       });
 
       sparkCard.addEventListener('touchstart', () => {
         isCyclingPaused = true;
-        if (statusText) statusText.innerText = "Daily Spark • Paused (Reading)";
+        if (statusText) statusText.innerText = "Daily Spark • Paused";
       }, { passive: true });
 
       sparkCard.addEventListener('touchend', () => {
         isCyclingPaused = false;
-        if (statusText) statusText.innerText = "Daily Spark • Auto-Cycling";
+        if (statusText) statusText.innerText = "Daily Spark";
       });
     }
 
     if (sparkProgressTimer) clearInterval(sparkProgressTimer);
 
+    // Track 30-minute block aligned to the clock so it's consistent across reloads
+    let lastWindowIndex = Math.floor(Date.now() / CYCLE_INTERVAL_MS);
+
+    function updateCycleProgress() {
+      const now = Date.now();
+      const currentWindowIndex = Math.floor(now / CYCLE_INTERVAL_MS);
+      const elapsedInWindow = now % CYCLE_INTERVAL_MS;
+
+      const progressPct = Math.min(100, (elapsedInWindow / CYCLE_INTERVAL_MS) * 100);
+      if (progressLine) {
+        progressLine.style.width = `${progressPct.toFixed(2)}%`;
+      }
+
+      // Automatically advance when 30-minute mark is crossed
+      if (currentWindowIndex !== lastWindowIndex) {
+        lastWindowIndex = currentWindowIndex;
+        advanceToNextSpark();
+      }
+    }
+
+    // Run once immediately
+    updateCycleProgress();
+
+    // Check every second
     sparkProgressTimer = setInterval(() => {
       if (!isCyclingPaused) {
-        cycleElapsedMs += TICK_MS;
-        const progressPct = Math.min(100, (cycleElapsedMs / CYCLE_INTERVAL_MS) * 100);
-        if (progressLine) {
-          progressLine.style.width = `${progressPct}%`;
-        }
-
-        if (cycleElapsedMs >= CYCLE_INTERVAL_MS) {
-          advanceToNextSpark();
-        }
+        updateCycleProgress();
       }
     }, TICK_MS);
   }
