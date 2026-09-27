@@ -1,0 +1,98 @@
+workflows:
+  android-apk:
+    name: Build Android APK
+    max_build_duration: 60
+    instance_type: mac_mini_m2
+    environment:
+      node: 20
+      java: 17
+      vars:
+        PACKAGE_NAME: "com.cadence.goaltracker"
+        VITE_SUPABASE_PROJECT_ID: "ulpmuwcxcbrcmbkfmrvc"
+        VITE_SUPABASE_URL: "https://ulpmuwcxcbrcmbkfmrvc.supabase.co"
+        VITE_SUPABASE_PUBLISHABLE_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVscG11d2N4Y2JyY21ia2ZtcnZjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk1NDcyODksImV4cCI6MjEwNTEyMzI4OX0.mUFXYXCRQZII1h_8zNKafeWD5EqfC8BNsXMW8pACaYQ"
+    scripts:
+      - name: Install dependencies
+        script: |
+          echo "Installing dependencies..."
+          npm install --legacy-peer-deps
+      - name: Build web application
+        script: |
+          echo "Building web bundle for Capacitor..."
+          npm run build
+          echo "Verifying dist directory contents:"
+          ls -la dist
+      - name: Setup Capacitor Android
+        script: |
+          echo "Initializing Capacitor Android platform..."
+          npx cap add android || true
+          npx cap copy android
+          npx cap sync android
+      - name: Generate Native Android App Icons & Splash Screen
+        script: |
+          echo "Generating native Android launcher icons from custom artwork..."
+          RES_DIR="android/app/src/main/res"
+          if [ -d "$RES_DIR" ]; then
+            ICON_SOURCE="public/app-banner.png"
+            if [ ! -f "$ICON_SOURCE" ] && [ -f "screen.png" ]; then
+              ICON_SOURCE="screen.png"
+            fi
+            
+            # Use macOS built-in sips tool to resize icons accurately
+            sips -z 48 48 "$ICON_SOURCE" --out "$RES_DIR/mipmap-mdpi/ic_launcher.png" 2>/dev/null || true
+            sips -z 48 48 "$ICON_SOURCE" --out "$RES_DIR/mipmap-mdpi/ic_launcher_round.png" 2>/dev/null || true
+            sips -z 48 48 "$ICON_SOURCE" --out "$RES_DIR/mipmap-mdpi/ic_launcher_foreground.png" 2>/dev/null || true
+
+            sips -z 72 72 "$ICON_SOURCE" --out "$RES_DIR/mipmap-hdpi/ic_launcher.png" 2>/dev/null || true
+            sips -z 72 72 "$ICON_SOURCE" --out "$RES_DIR/mipmap-hdpi/ic_launcher_round.png" 2>/dev/null || true
+            sips -z 72 72 "$ICON_SOURCE" --out "$RES_DIR/mipmap-hdpi/ic_launcher_foreground.png" 2>/dev/null || true
+
+            sips -z 96 96 "$ICON_SOURCE" --out "$RES_DIR/mipmap-xhdpi/ic_launcher.png" 2>/dev/null || true
+            sips -z 96 96 "$ICON_SOURCE" --out "$RES_DIR/mipmap-xhdpi/ic_launcher_round.png" 2>/dev/null || true
+            sips -z 96 96 "$ICON_SOURCE" --out "$RES_DIR/mipmap-xhdpi/ic_launcher_foreground.png" 2>/dev/null || true
+
+            sips -z 144 144 "$ICON_SOURCE" --out "$RES_DIR/mipmap-xxhdpi/ic_launcher.png" 2>/dev/null || true
+            sips -z 144 144 "$ICON_SOURCE" --out "$RES_DIR/mipmap-xxhdpi/ic_launcher_round.png" 2>/dev/null || true
+            sips -z 144 144 "$ICON_SOURCE" --out "$RES_DIR/mipmap-xxhdpi/ic_launcher_foreground.png" 2>/dev/null || true
+
+            sips -z 192 192 "$ICON_SOURCE" --out "$RES_DIR/mipmap-xxxhdpi/ic_launcher.png" 2>/dev/null || true
+            sips -z 192 192 "$ICON_SOURCE" --out "$RES_DIR/mipmap-xxxhdpi/ic_launcher_round.png" 2>/dev/null || true
+            sips -z 192 192 "$ICON_SOURCE" --out "$RES_DIR/mipmap-xxxhdpi/ic_launcher_foreground.png" 2>/dev/null || true
+
+            # Replace splash screens across drawable folders
+            find "$RES_DIR" -name "splash.png" -exec cp "$ICON_SOURCE" {} \; 2>/dev/null || true
+            echo "Native Android launcher icons and splash screens successfully generated!"
+          fi
+      - name: Enable Android Permissions & Network Access
+        script: |
+          echo "Configuring Android permissions..."
+          node -e "
+            const fs = require('fs');
+            const path = 'android/app/src/main/AndroidManifest.xml';
+            if (fs.existsSync(path)) {
+              let c = fs.readFileSync(path, 'utf8');
+              if (!c.includes('android.permission.INTERNET')) {
+                c = c.replace(/<manifest[^>]*>/, '\$&\n    <uses-permission android:name=\"android.permission.INTERNET\" \/>\n    <uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" \/>');
+              }
+              if (!c.includes('usesCleartextTraffic')) {
+                c = c.replace(/<application/g, '<application android:usesCleartextTraffic=\"true\"');
+              }
+              fs.writeFileSync(path, c);
+              console.log('AndroidManifest updated successfully');
+            }
+          "
+      - name: Build Android APK with Gradle
+        script: |
+          cd android
+          chmod +x gradlew
+          echo "Building Debug APK..."
+          ./gradlew assembleDebug
+    artifacts:
+      - android/app/build/outputs/apk/**/*.apk
+    publishing:
+      email:
+        recipients:
+          - naminenirakesh@gmail.com
+        notify:
+          success: true
+          failure: true

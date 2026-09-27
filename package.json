@@ -1,0 +1,16 @@
+{
+  "name": "cadence-goal-tracker",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Cadence - Personal Mindful Fitness & Daily Goal Tracking App",
+  "scripts": {
+    "build": "node -e \"const fs = require('fs'); if (!fs.existsSync('dist')) fs.mkdirSync('dist', { recursive: true }); ['index.html', 'today.html', 'closeout.html', 'screen.png'].forEach(f => { if (fs.existsSync(f)) fs.copyFileSync(f, 'dist/' + f); }); if (fs.existsSync('public')) { if (!fs.existsSync('dist/public')) fs.mkdirSync('dist/public', { recursive: true }); fs.cpSync('public', 'dist/public', { recursive: true }); } console.log('Build completed: dist/ ready for Capacitor');\"",
+    "cap:sync": "cap sync",
+    "cap:android": "cap run android"
+  },
+  "dependencies": {
+    "@capacitor/android": "^6.1.2",
+    "@capacitor/cli": "^6.1.2",
+    "@capacitor/core": "^6.1.2"
+  }
+}

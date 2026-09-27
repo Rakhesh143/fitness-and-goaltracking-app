@@ -1,0 +1,9 @@
+{
+  "appId": "com.cadence.goaltracker",
+  "appName": "Cadence Goal Tracker",
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "https",
+    "cleartext": true
+  }
+}
