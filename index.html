@@ -169,6 +169,8 @@
 
 <!-- Main Content Canvas (Mobile Optimized Sanctuary Grid) -->
 <main class="flex-1 w-full max-w-screen-md mx-auto px-margin pt-space-md pb-28">
+<!-- TAB 1: TODAY (ACTIVE DEFAULT) -->
+<div id="tab-today" class="cadence-tab-content space-y-space-lg transition-opacity duration-200">
 <!-- Date, Salutation & Affirmation Strip -->
 <section class="mb-space-md flex flex-col gap-0.5">
 <div class="flex items-center justify-between">
@@ -389,30 +391,283 @@
 </button>
 </div>
 </div>
-</section>
+</div> <!-- End of #tab-today -->
+
+<!-- TAB 2: CALENDAR & NIGHTLY CLOSEOUT -->
+<div id="tab-calendar" class="cadence-tab-content hidden space-y-space-lg transition-opacity duration-200">
+  <!-- Calendar Header Strip -->
+  <section class="flex flex-col gap-0.5">
+    <div class="flex items-center justify-between">
+      <p class="font-label-sm text-label-sm text-secondary uppercase tracking-widest font-semibold">Monthly Cadence & Closeout</p>
+      <div class="flex items-center gap-1.5 text-on-surface-variant font-label-sm text-label-sm">
+        <span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span>
+        <span>Unbroken Momentum</span>
+      </div>
+    </div>
+    <h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight font-bold">Rhythm Sanctuary.</h2>
+    <p class="font-body-md text-body-md text-on-surface-variant">Measure your quiet discipline across every day of the month.</p>
+  </section>
+
+  <!-- Interactive Monthly Calendar Card -->
+  <section class="bg-surface-container-lowest rounded-[24px] p-space-md sm:p-space-lg border border-outline-variant/50 sanctuary-card">
+    <div class="flex items-center justify-between mb-space-md">
+      <div class="flex items-center gap-2">
+        <span class="material-symbols-outlined text-secondary text-[22px]">calendar_month</span>
+        <h3 id="cal-month-title" class="font-headline-md text-headline-md font-bold text-on-surface">September 2026</h3>
+      </div>
+      <div class="flex items-center gap-1">
+        <button onclick="prevCalendarMonth()" title="Previous Month" class="w-8 h-8 rounded-full border border-outline-variant/40 flex items-center justify-center hover:bg-surface-container active:scale-95 transition-all cursor-pointer">
+          <span class="material-symbols-outlined text-[18px]">chevron_left</span>
+        </button>
+        <button onclick="nextCalendarMonth()" title="Next Month" class="w-8 h-8 rounded-full border border-outline-variant/40 flex items-center justify-center hover:bg-surface-container active:scale-95 transition-all cursor-pointer">
+          <span class="material-symbols-outlined text-[18px]">chevron_right</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Calendar Weekday Headers -->
+    <div class="grid grid-cols-7 gap-1 text-center font-label-sm text-label-sm text-outline font-semibold mb-2">
+      <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+    </div>
+
+    <!-- Days Grid (Dynamically Populated via renderCalendarView) -->
+    <div id="full-calendar-grid" class="grid grid-cols-7 gap-1.5 sm:gap-2 text-center">
+      <!-- Generated via renderCalendarView() -->
+    </div>
+
+    <!-- Selected Date Summary Pill -->
+    <div id="calendar-day-detail" class="mt-4 p-3 rounded-xl bg-surface-container-low border border-outline-variant/40 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-secondary"></span>
+        <span id="selected-day-label" class="font-label-md text-label-md font-semibold text-on-surface">September 27 (Today)</span>
+      </div>
+      <span id="selected-day-status" class="font-label-sm text-label-sm text-secondary font-bold bg-secondary/15 px-2.5 py-0.5 rounded-full">4 of 5 Sealed (80%)</span>
+    </div>
+  </section>
+
+  <!-- Monthly Rhythm Insights Bento -->
+  <section class="grid grid-cols-3 gap-3">
+    <div class="bg-surface-container-lowest rounded-[20px] p-space-md border border-outline-variant/50 sanctuary-card text-center">
+      <span class="font-label-sm text-label-sm text-secondary font-bold uppercase tracking-wider">Consistency</span>
+      <h4 class="font-stat-counter text-stat-counter text-on-surface mt-1">88%</h4>
+      <p class="font-label-sm text-label-sm text-on-surface-variant">24/27 sealed</p>
+    </div>
+    <div class="bg-surface-container-lowest rounded-[20px] p-space-md border border-outline-variant/50 sanctuary-card text-center">
+      <span class="font-label-sm text-label-sm text-secondary font-bold uppercase tracking-wider">Streak</span>
+      <h4 class="font-stat-counter text-stat-counter text-secondary mt-1">14d</h4>
+      <p class="font-label-sm text-label-sm text-on-surface-variant">Unbroken</p>
+    </div>
+    <div class="bg-surface-container-lowest rounded-[20px] p-space-md border border-outline-variant/50 sanctuary-card text-center">
+      <span class="font-label-sm text-label-sm text-secondary font-bold uppercase tracking-wider">Equilibrium</span>
+      <h4 class="font-stat-counter text-stat-counter text-primary mt-1">High</h4>
+      <p class="font-label-sm text-label-sm text-on-surface-variant">Optimal flow</p>
+    </div>
+  </section>
+
+  <!-- Nightly Check-In & Bedtime Closeout Card (Stitch Architecture) -->
+  <section class="bg-primary-container text-on-primary rounded-[24px] p-space-lg relative overflow-hidden hero-glow">
+    <div class="flex items-center justify-between mb-2">
+      <div class="flex items-center gap-2">
+        <span class="material-symbols-outlined text-[20px] text-secondary-fixed">dark_mode</span>
+        <span class="font-label-md text-label-md text-secondary-fixed font-bold tracking-wide">Nightly Closeout • Evening Wind Down</span>
+      </div>
+      <span class="font-label-sm text-label-sm px-2.5 py-0.5 rounded-full bg-white/15 text-primary-fixed">Target 11:00 PM</span>
+    </div>
+    <h3 class="font-headline-lg text-headline-lg font-bold text-white tracking-tight">Seal the Day</h3>
+    <p class="font-body-md text-body-md text-on-primary-container mt-1">A quiet mindful check-in before sleep. Did you honor your daily standards?</p>
+
+    <!-- Closeout Checklist Pill -->
+    <div class="mt-4 p-3 rounded-xl bg-white/10 border border-white/15 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="material-symbols-outlined text-secondary-fixed text-[20px]">check_circle</span>
+        <span class="font-label-md text-label-md text-white font-medium">4 of 5 practices sealed today</span>
+      </div>
+      <button onclick="switchTab('today')" class="text-secondary-fixed font-label-sm text-label-sm font-bold hover:underline cursor-pointer">
+        Review Practices →
+      </button>
+    </div>
+
+    <!-- Reflection Note Form -->
+    <div class="mt-4">
+      <label class="block font-label-md text-label-md text-white/90 mb-1.5 font-semibold">Evening Reflection & Peace Journal</label>
+      <textarea id="evening-closeout-note" rows="3" placeholder="What gave you quiet peace or tested your discipline today?" class="w-full bg-white/10 rounded-xl p-3 text-white placeholder-white/50 border border-white/20 focus:outline-none focus:ring-2 focus:ring-secondary-fixed font-body-sm text-body-sm transition-all"></textarea>
+      <div class="flex justify-end mt-2">
+        <button onclick="saveEveningCloseout()" class="inline-flex items-center gap-1.5 px-space-md py-2 rounded-xl bg-secondary text-white font-label-md text-label-md font-bold hover:bg-secondary-container active:scale-95 transition-all cursor-pointer shadow-sm">
+          <span class="material-symbols-outlined text-[16px]">save</span>
+          <span>Record Evening Closeout</span>
+        </button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- TAB 3: HISTORY & SANCTUARY TIMELINE -->
+<div id="tab-history" class="cadence-tab-content hidden space-y-space-lg transition-opacity duration-200">
+  <!-- History Header -->
+  <section class="flex flex-col gap-0.5">
+    <div class="flex items-center justify-between">
+      <p class="font-label-sm text-label-sm text-secondary uppercase tracking-widest font-semibold">Sanctuary Log & Timeline</p>
+      <span id="history-total-count" class="font-label-sm text-label-sm text-secondary font-bold">142 Practices Sealed</span>
+    </div>
+    <h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight font-bold">Unbroken Discipline.</h2>
+    <p class="font-body-md text-body-md text-on-surface-variant">Every completed practice and reflection preserved in your sanctuary.</p>
+  </section>
+
+  <!-- Lifetime Summary Bento Cards -->
+  <section class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+    <div class="bg-surface-container-lowest rounded-[20px] p-space-md border border-outline-variant/50 sanctuary-card">
+      <span class="font-label-sm text-label-sm text-outline">Total Sealed</span>
+      <h4 class="font-stat-counter text-stat-counter text-primary mt-1">142</h4>
+      <span class="font-label-sm text-label-sm text-secondary font-medium">Lifetime practices</span>
+    </div>
+    <div class="bg-surface-container-lowest rounded-[20px] p-space-md border border-outline-variant/50 sanctuary-card">
+      <span class="font-label-sm text-label-sm text-outline">Active Streak</span>
+      <h4 class="font-stat-counter text-stat-counter text-secondary mt-1">14d</h4>
+      <span class="font-label-sm text-label-sm text-on-surface-variant">Unbroken</span>
+    </div>
+    <div class="bg-surface-container-lowest rounded-[20px] p-space-md border border-outline-variant/50 sanctuary-card">
+      <span class="font-label-sm text-label-sm text-outline">Deep Focus</span>
+      <h4 class="font-stat-counter text-stat-counter text-on-surface mt-1">32h</h4>
+      <span class="font-label-sm text-label-sm text-secondary font-medium">Study logged</span>
+    </div>
+    <div class="bg-surface-container-lowest rounded-[20px] p-space-md border border-outline-variant/50 sanctuary-card">
+      <span class="font-label-sm text-label-sm text-outline">Reflections</span>
+      <h4 id="history-reflections-badge" class="font-stat-counter text-stat-counter text-secondary mt-1">18</h4>
+      <span class="font-label-sm text-label-sm text-on-surface-variant">Saved thoughts</span>
+    </div>
+  </section>
+
+  <!-- History Timeline Stream -->
+  <section class="space-y-space-md">
+    <div class="flex items-center justify-between">
+      <h3 class="font-headline-md text-headline-md font-bold text-on-surface">Timeline Stream</h3>
+      <button onclick="refreshHistoryTimeline()" class="inline-flex items-center gap-1 text-secondary font-label-sm text-label-sm hover:underline cursor-pointer">
+        <span class="material-symbols-outlined text-[15px]">refresh</span>
+        <span>Refresh Stream</span>
+      </button>
+    </div>
+    <!-- Timeline Items Container (Populated via renderHistoryTimeline) -->
+    <div id="history-timeline-container" class="space-y-3">
+      <!-- Generated via JS -->
+    </div>
+  </section>
+</div>
+
+<!-- TAB 4: GOALS & RITUALS SANCTUARY -->
+<div id="tab-goals" class="cadence-tab-content hidden space-y-space-lg transition-opacity duration-200">
+  <!-- Goals Header Strip -->
+  <section class="flex flex-col gap-0.5">
+    <div class="flex items-center justify-between">
+      <p class="font-label-sm text-label-sm text-secondary uppercase tracking-widest font-semibold">Rituals & Core Goals</p>
+      <button onclick="openCreateGoalModal()" class="inline-flex items-center gap-1.5 px-space-md py-1.5 rounded-full bg-secondary text-white font-label-md text-label-md font-bold hover:bg-secondary-container active:scale-95 transition-all cursor-pointer shadow-sm">
+        <span class="material-symbols-outlined text-[16px]">add</span>
+        <span>New Ritual</span>
+      </button>
+    </div>
+    <h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight font-bold">Your Sanctuary Practices.</h2>
+    <p class="font-body-md text-body-md text-on-surface-variant">Configure non-negotiable standards for quiet equilibrium.</p>
+  </section>
+
+  <!-- Goal Filter Chips -->
+  <div class="flex items-center gap-1.5 overflow-x-auto pb-1">
+    <button onclick="filterGoalsManager('all', this)" class="goal-chip px-3 py-1 rounded-full bg-secondary text-on-secondary font-label-sm text-label-sm font-semibold transition-all cursor-pointer">
+      All Practices
+    </button>
+    <button onclick="filterGoalsManager('Routine', this)" class="goal-chip px-3 py-1 rounded-full bg-surface-container-low text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm font-medium transition-all cursor-pointer">
+      Daily Routines
+    </button>
+    <button onclick="filterGoalsManager('Fitness', this)" class="goal-chip px-3 py-1 rounded-full bg-surface-container-low text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm font-medium transition-all cursor-pointer">
+      Fitness & Run
+    </button>
+    <button onclick="filterGoalsManager('Wellness', this)" class="goal-chip px-3 py-1 rounded-full bg-surface-container-low text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm font-medium transition-all cursor-pointer">
+      Wellness & Sleep
+    </button>
+  </div>
+
+  <!-- Goals List Container (Populated via renderGoalsManager) -->
+  <div id="goals-management-list" class="space-y-3">
+    <!-- Populated from Supabase public.goals -->
+  </div>
+</div>
+
 </main>
-<!-- BottomNavBar Component (Exact literal transcription from JSON) -->
-<nav aria-label="Bottom Navigation" class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-gutter py-space-xs bg-surface dark:bg-inverse-surface shadow-[0_-4px_20px_rgba(26,46,43,0.05)]">
-<!-- Destination 1: Today (ACTIVE STATE) -->
-<a aria-current="page" class="flex flex-col items-center justify-center text-secondary dark:text-secondary-fixed font-label-sm text-label-sm py-1 px-3 rounded-xl transition-colors duration-150 active:scale-95 transition-transform duration-150" href="#today">
-<span class="material-symbols-outlined text-[24px] fill" style="font-variation-settings: 'FILL' 1;">check_circle</span>
-<span class="mt-0.5 font-bold">Today</span>
-</a>
-<!-- Destination 2: Calendar (INACTIVE) -->
-<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant font-label-sm text-label-sm py-1 px-3 rounded-xl hover:text-primary dark:hover:text-inverse-primary transition-colors duration-150 active:scale-95 transition-transform duration-150" href="#calendar">
-<span class="material-symbols-outlined text-[24px]">calendar_month</span>
-<span class="mt-0.5 font-medium">Calendar</span>
-</a>
-<!-- Destination 3: History (INACTIVE) -->
-<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant font-label-sm text-label-sm py-1 px-3 rounded-xl hover:text-primary dark:hover:text-inverse-primary transition-colors duration-150 active:scale-95 transition-transform duration-150" href="#history">
-<span class="material-symbols-outlined text-[24px]">history</span>
-<span class="mt-0.5 font-medium">History</span>
-</a>
-<!-- Destination 4: Goals (INACTIVE) -->
-<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant font-label-sm text-label-sm py-1 px-3 rounded-xl hover:text-primary dark:hover:text-inverse-primary transition-colors duration-150 active:scale-95 transition-transform duration-150" href="#goals">
-<span class="material-symbols-outlined text-[24px]">track_changes</span>
-<span class="mt-0.5 font-medium">Goals</span>
-</a>
+
+<!-- Create New Ritual / Goal Modal -->
+<div id="create-goal-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+  <div class="bg-surface-container-lowest w-full max-w-md rounded-[24px] p-space-lg border border-outline-variant/50 shadow-2xl relative">
+    <div class="flex items-center justify-between mb-4">
+      <div class="flex items-center gap-2">
+        <span class="material-symbols-outlined text-secondary text-[22px]">add_task</span>
+        <h3 class="font-headline-md text-headline-md font-bold text-on-surface">Create New Ritual</h3>
+      </div>
+      <button onclick="closeCreateGoalModal()" class="w-8 h-8 rounded-full hover:bg-surface-container flex items-center justify-center text-on-surface-variant cursor-pointer">
+        <span class="material-symbols-outlined text-[20px]">close</span>
+      </button>
+    </div>
+
+    <form onsubmit="handleCreateGoalSubmit(event)" class="space-y-3.5">
+      <div>
+        <label class="block font-label-md text-label-md font-semibold text-on-surface mb-1">Ritual Title</label>
+        <input id="new-goal-name" required placeholder="e.g. Cold Shower & Breathwork" class="w-full bg-surface-container-low rounded-xl px-3.5 py-2.5 text-on-surface font-body-md text-body-md border border-outline-variant/40 focus:outline-none focus:ring-2 focus:ring-secondary"/>
+      </div>
+
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="block font-label-md text-label-md font-semibold text-on-surface mb-1">Category</label>
+          <select id="new-goal-category" class="w-full bg-surface-container-low rounded-xl px-3 py-2 text-on-surface font-body-md text-body-md border border-outline-variant/40 focus:outline-none focus:ring-2 focus:ring-secondary">
+            <option value="Routine">Daily Routine</option>
+            <option value="Fitness">Fitness & Run</option>
+            <option value="Wellness">Wellness & Health</option>
+            <option value="Focus">Focus & Study</option>
+            <option value="Sleep">Sleep & Rest</option>
+          </select>
+        </div>
+        <div>
+          <label class="block font-label-md text-label-md font-semibold text-on-surface mb-1">Scheduled Time</label>
+          <input id="new-goal-time" type="time" value="07:00" class="w-full bg-surface-container-low rounded-xl px-3 py-2 text-on-surface font-body-md text-body-md border border-outline-variant/40 focus:outline-none focus:ring-2 focus:ring-secondary"/>
+        </div>
+      </div>
+
+      <div>
+        <label class="block font-label-md text-label-md font-semibold text-on-surface mb-1">Description / Target</label>
+        <input id="new-goal-desc" placeholder="e.g. 15 min tranquil breath meditation" class="w-full bg-surface-container-low rounded-xl px-3.5 py-2 text-on-surface font-body-md text-body-md border border-outline-variant/40 focus:outline-none focus:ring-2 focus:ring-secondary"/>
+      </div>
+
+      <div class="flex items-center justify-end gap-2 pt-2">
+        <button type="button" onclick="closeCreateGoalModal()" class="px-4 py-2 rounded-xl text-on-surface-variant font-label-md text-label-md hover:bg-surface-container transition-all cursor-pointer">
+          Cancel
+        </button>
+        <button type="submit" class="px-5 py-2 rounded-xl bg-secondary text-white font-label-md text-label-md font-bold hover:bg-secondary-container active:scale-95 transition-all cursor-pointer shadow-sm flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-[16px]">save</span>
+          <span>Save Ritual</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- BottomNavBar Component (Interactive Multi-Screen Navigation) -->
+<nav aria-label="Bottom Navigation" class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-gutter py-space-xs bg-surface dark:bg-inverse-surface shadow-[0_-4px_20px_rgba(26,46,43,0.08)] border-t border-outline-variant/30 backdrop-blur-lg">
+  <!-- Destination 1: Today (ACTIVE DEFAULT) -->
+  <button id="nav-btn-today" onclick="switchTab('today')" class="nav-tab-btn flex flex-col items-center justify-center text-secondary dark:text-secondary-fixed font-label-sm text-label-sm py-1 px-3 rounded-xl transition-all duration-200 active:scale-95 cursor-pointer">
+    <span class="material-symbols-outlined text-[24px] fill" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+    <span class="mt-0.5 font-bold">Today</span>
+  </button>
+  <!-- Destination 2: Calendar -->
+  <button id="nav-btn-calendar" onclick="switchTab('calendar')" class="nav-tab-btn flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant font-label-sm text-label-sm py-1 px-3 rounded-xl hover:text-primary dark:hover:text-inverse-primary transition-all duration-200 active:scale-95 cursor-pointer">
+    <span class="material-symbols-outlined text-[24px]">calendar_month</span>
+    <span class="mt-0.5 font-medium">Calendar</span>
+  </button>
+  <!-- Destination 3: History -->
+  <button id="nav-btn-history" onclick="switchTab('history')" class="nav-tab-btn flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant font-label-sm text-label-sm py-1 px-3 rounded-xl hover:text-primary dark:hover:text-inverse-primary transition-all duration-200 active:scale-95 cursor-pointer">
+    <span class="material-symbols-outlined text-[24px]">history</span>
+    <span class="mt-0.5 font-medium">History</span>
+  </button>
+  <!-- Destination 4: Goals -->
+  <button id="nav-btn-goals" onclick="switchTab('goals')" class="nav-tab-btn flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant font-label-sm text-label-sm py-1 px-3 rounded-xl hover:text-primary dark:hover:text-inverse-primary transition-all duration-200 active:scale-95 cursor-pointer">
+    <span class="material-symbols-outlined text-[24px]">track_changes</span>
+    <span class="mt-0.5 font-medium">Goals</span>
+  </button>
 </nav>
 <!-- Supabase Client Library -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -914,27 +1169,624 @@
     };
   }
 
-  // Expose global handlers
+  // =============================================================
+  // 7. MULTI-SCREEN TAB NAVIGATION (Today, Calendar, History, Goals)
+  // =============================================================
+  let currentActiveTab = 'today';
+
+  function switchTab(tabName) {
+    if (!['today', 'calendar', 'history', 'goals'].includes(tabName)) {
+      tabName = 'today';
+    }
+    currentActiveTab = tabName;
+
+    const tabs = ['today', 'calendar', 'history', 'goals'];
+    tabs.forEach(t => {
+      const content = document.getElementById(`tab-${t}`);
+      const btn = document.getElementById(`nav-btn-${t}`);
+
+      if (content) {
+        if (t === tabName) {
+          content.classList.remove('hidden');
+          setTimeout(() => content.classList.add('opacity-100'), 20);
+        } else {
+          content.classList.add('hidden');
+          content.classList.remove('opacity-100');
+        }
+      }
+
+      if (btn) {
+        const icon = btn.querySelector('.material-symbols-outlined');
+        const label = btn.querySelector('span:last-child');
+        if (t === tabName) {
+          btn.className = "nav-tab-btn flex flex-col items-center justify-center text-secondary dark:text-secondary-fixed font-label-sm text-label-sm py-1 px-3 rounded-xl transition-all duration-200 active:scale-95 cursor-pointer";
+          if (icon) {
+            icon.classList.add('fill');
+            icon.style.fontVariationSettings = "'FILL' 1";
+          }
+          if (label) label.className = "mt-0.5 font-bold";
+        } else {
+          btn.className = "nav-tab-btn flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant font-label-sm text-label-sm py-1 px-3 rounded-xl hover:text-primary dark:hover:text-inverse-primary transition-all duration-200 active:scale-95 cursor-pointer";
+          if (icon) {
+            icon.classList.remove('fill');
+            icon.style.fontVariationSettings = "'FILL' 0";
+          }
+          if (label) label.className = "mt-0.5 font-medium";
+        }
+      }
+    });
+
+    if (window.location.hash !== '#' + tabName) {
+      window.location.hash = '#' + tabName;
+    }
+
+    // Trigger tab specific data load
+    if (tabName === 'calendar') {
+      renderCalendarView();
+    } else if (tabName === 'history') {
+      renderHistoryTimeline();
+    } else if (tabName === 'goals') {
+      renderGoalsManager();
+    }
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // =============================================================
+  // 8. CALENDAR VIEW & NIGHTLY CLOSEOUT RITUAL
+  // =============================================================
+  let calDate = new Date(); // Defaults to current month
+  let selectedCalendarDay = new Date().getDate();
+
+  function renderCalendarView() {
+    const grid = document.getElementById('full-calendar-grid');
+    const title = document.getElementById('cal-month-title');
+    if (!grid || !title) return;
+
+    const monthNames = [
+      "January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
+
+    const year = calDate.getFullYear();
+    const month = calDate.getMonth();
+    title.innerText = `${monthNames[month]} ${year}`;
+
+    grid.innerHTML = '';
+
+    // First day of month (Monday-indexed: 0=Mon, 6=Sun)
+    const firstDayIndex = (new Date(year, month, 1).getDay() + 6) % 7;
+    // Days in current month
+    const totalDays = new Date(year, month + 1, 0).getDate();
+
+    // Render leading empty slots
+    for (let i = 0; i < firstDayIndex; i++) {
+      const blank = document.createElement('div');
+      blank.className = "h-11 sm:h-12";
+      grid.appendChild(blank);
+    }
+
+    const today = new Date();
+    const isCurrentRealMonth = today.getFullYear() === year && today.getMonth() === month;
+
+    // Render each day card
+    for (let d = 1; d <= totalDays; d++) {
+      const dayBtn = document.createElement('button');
+      const isToday = isCurrentRealMonth && d === today.getDate();
+      const isPast = isCurrentRealMonth ? d < today.getDate() : year < today.getFullYear() || (year === today.getFullYear() && month < today.getMonth());
+      const isSelected = d === selectedCalendarDay;
+
+      dayBtn.onclick = () => selectCalendarDay(d, monthNames[month], year, isToday, isPast);
+
+      if (isToday) {
+        dayBtn.className = "h-11 sm:h-12 rounded-xl bg-primary text-white font-label-md text-label-md font-bold ring-2 ring-secondary shadow-md scale-105 flex flex-col items-center justify-center relative cursor-pointer transition-all";
+        dayBtn.innerHTML = `
+          <span>${d}</span>
+          <span class="w-1.5 h-1.5 rounded-full bg-secondary-fixed mt-0.5"></span>
+        `;
+      } else if (isPast) {
+        dayBtn.className = "h-11 sm:h-12 rounded-xl bg-surface-container-lowest border border-outline-variant/50 hover:border-secondary flex flex-col items-center justify-center relative cursor-pointer transition-all";
+        dayBtn.innerHTML = `
+          <span class="font-label-md text-label-md font-semibold text-on-surface">${d}</span>
+          <span class="w-1.5 h-1.5 rounded-full bg-secondary mt-0.5"></span>
+        `;
+      } else {
+        dayBtn.className = "h-11 sm:h-12 rounded-xl bg-surface-container-lowest/60 border border-outline-variant/30 opacity-70 flex flex-col items-center justify-center cursor-pointer transition-all hover:opacity-100";
+        dayBtn.innerHTML = `
+          <span class="font-label-md text-label-md font-medium text-on-surface-variant">${d}</span>
+          <span class="w-1.5 h-1.5 rounded-full bg-outline-variant mt-0.5"></span>
+        `;
+      }
+      grid.appendChild(dayBtn);
+    }
+  }
+
+  function selectCalendarDay(d, monthName, year, isToday, isPast) {
+    selectedCalendarDay = d;
+    const label = document.getElementById('selected-day-label');
+    const status = document.getElementById('selected-day-status');
+    if (label) label.innerText = `${monthName} ${d}, ${year}${isToday ? ' (Today)' : ''}`;
+    if (status) {
+      if (isToday) {
+        status.innerText = "4 of 5 Sealed (80%)";
+        status.className = "font-label-sm text-label-sm text-secondary font-bold bg-secondary/15 px-2.5 py-0.5 rounded-full";
+      } else if (isPast) {
+        status.innerText = "5 of 5 Sealed (100% Equilibrium)";
+        status.className = "font-label-sm text-label-sm text-secondary font-bold bg-secondary/15 px-2.5 py-0.5 rounded-full";
+      } else {
+        status.innerText = "Upcoming Cadence";
+        status.className = "font-label-sm text-label-sm text-on-surface-variant font-medium bg-surface-container px-2.5 py-0.5 rounded-full";
+      }
+    }
+    showToast(`Loaded cadence record for ${monthName} ${d}`, "calendar_month");
+  }
+
+  function prevCalendarMonth() {
+    calDate.setMonth(calDate.getMonth() - 1);
+    renderCalendarView();
+  }
+
+  function nextCalendarMonth() {
+    calDate.setMonth(calDate.getMonth() + 1);
+    renderCalendarView();
+  }
+
+  async function saveEveningCloseout() {
+    const textarea = document.getElementById('evening-closeout-note');
+    if (!textarea) return;
+    const note = textarea.value.trim();
+    if (!note) {
+      showToast("Please enter an evening thought or reflection", "info");
+      return;
+    }
+
+    showToast("Evening closeout preserved in Sanctuary ✨", "bedtime");
+    textarea.value = '';
+
+    if (sbClient) {
+      try {
+        await sbClient.from('daily_notes').insert([
+          {
+            note_date: new Date().toISOString().split('T')[0],
+            note_text: note,
+            note_type: 'evening_reflection'
+          }
+        ]);
+        console.log("Evening closeout synced to Supabase");
+      } catch (e) {
+        console.warn("Evening closeout queued:", e.message);
+      }
+    }
+  }
+
+  // =============================================================
+  // 9. HISTORY VIEW & SANCTUARY TIMELINE
+  // =============================================================
+  const BASELINE_HISTORY_ITEMS = [
+    {
+      type: "closeout",
+      title: "Nightly Check-In: Day 14 Streak Sealed",
+      date: "September 26, 2026",
+      desc: "4 of 5 practices completed. Evening trail run, hydration sanctuary, core breathwork, and deep study sealed.",
+      tag: "Evening Wind Down",
+      icon: "dark_mode"
+    },
+    {
+      type: "reflection",
+      title: "Lincoln Wisdom Reflection",
+      date: "September 25, 2026",
+      desc: "“Discipline is choosing between what you want now and what you want most.” Preserved tranquil focus over hurried momentum.",
+      tag: "Wisdom Spark",
+      icon: "auto_awesome"
+    },
+    {
+      type: "practice",
+      title: "5.2 km Morning Trail Run",
+      date: "September 25, 2026",
+      desc: "Outdoor trail endurance sealed at 7:15 AM. 28 min quiet rhythm.",
+      tag: "Fitness Ritual",
+      icon: "directions_run"
+    },
+    {
+      type: "practice",
+      title: "Full Alignment Equilibrium (5/5)",
+      date: "September 24, 2026",
+      desc: "All five core standards completed before 10:30 PM. Complete daily balance achieved.",
+      tag: "100% Sealed",
+      icon: "verified"
+    }
+  ];
+
+  async function renderHistoryTimeline() {
+    const container = document.getElementById('history-timeline-container');
+    if (!container) return;
+
+    let dynamicNotes = [];
+    if (sbClient) {
+      try {
+        const { data, error } = await sbClient
+          .from('daily_notes')
+          .select('*')
+          .order('created_at', { ascending: false })
+          .limit(10);
+        if (data && !error) {
+          dynamicNotes = data;
+        }
+      } catch (e) {
+        console.warn("History fetch notice:", e.message);
+      }
+    }
+
+    const badge = document.getElementById('history-reflections-badge');
+    if (badge) {
+      badge.innerText = BASELINE_HISTORY_ITEMS.length + dynamicNotes.length;
+    }
+
+    container.innerHTML = '';
+
+    // Render Supabase Dynamic Notes first
+    dynamicNotes.forEach(item => {
+      const card = document.createElement('div');
+      card.className = "bg-surface-container-lowest rounded-[20px] p-space-md border border-secondary/40 sanctuary-card transition-all hover:border-secondary";
+      card.innerHTML = `
+        <div class="flex items-start justify-between gap-3">
+          <div class="flex items-start gap-3">
+            <div class="w-9 h-9 rounded-full bg-secondary/15 text-secondary flex items-center justify-center shrink-0 mt-0.5">
+              <span class="material-symbols-outlined text-[18px]">${item.note_type === 'evening_reflection' ? 'bedtime' : 'edit_note'}</span>
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <h4 class="font-headline-md text-headline-md font-bold text-on-surface">${item.note_type === 'evening_reflection' ? 'Evening Closeout Reflection' : 'Daily Spark Reflection'}</h4>
+                <span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-secondary-fixed/40 text-on-secondary-fixed-variant font-semibold">Supabase Synced</span>
+              </div>
+              <p class="font-body-md text-body-md text-on-surface mt-1 leading-relaxed">“${item.note_text}”</p>
+              <div class="flex items-center gap-2 text-on-surface-variant font-label-sm text-label-sm mt-2">
+                <span>${item.note_date || 'Recently'}</span>
+                <span>•</span>
+                <span class="text-secondary font-medium">Preserved in Sanctuary</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+
+    // Render baseline timeline entries
+    BASELINE_HISTORY_ITEMS.forEach(item => {
+      const card = document.createElement('div');
+      card.className = "bg-surface-container-lowest rounded-[20px] p-space-md border border-outline-variant/50 sanctuary-card transition-all hover:border-secondary";
+      card.innerHTML = `
+        <div class="flex items-start justify-between gap-3">
+          <div class="flex items-start gap-3">
+            <div class="w-9 h-9 rounded-full bg-surface-container text-primary flex items-center justify-center shrink-0 mt-0.5">
+              <span class="material-symbols-outlined text-[18px]">${item.icon}</span>
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <h4 class="font-headline-md text-headline-md font-bold text-on-surface">${item.title}</h4>
+                <span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-surface-container-low text-on-surface-variant font-semibold">${item.tag}</span>
+              </div>
+              <p class="font-body-md text-body-md text-on-surface-variant mt-1 leading-relaxed">${item.desc}</p>
+              <div class="flex items-center gap-2 text-on-surface-variant font-label-sm text-label-sm mt-2">
+                <span>${item.date}</span>
+                <span>•</span>
+                <span class="text-secondary font-medium">Verified Seal</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+  }
+
+  function refreshHistoryTimeline() {
+    renderHistoryTimeline();
+    showToast("History timeline refreshed ✨", "refresh");
+  }
+
+  // =============================================================
+  // 10. GOALS MANAGEMENT VIEW (Full CRUD with Supabase)
+  // =============================================================
+  let activeGoalsList = [
+    {
+      id: "7089445f-ee2f-48a9-9b86-bfa708ee8bbc",
+      name: "Morning Trail Run",
+      category: "Fitness",
+      description: "5.2 km outdoor run at sunrise",
+      scheduled_time: "07:00 AM",
+      icon: "directions_run",
+      streak_count: 14,
+      is_active: true
+    },
+    {
+      id: "9bf43665-5ab7-4d43-8dac-e1e19f8bac4d",
+      name: "Hydration Sanctuary",
+      category: "Wellness",
+      description: "Drink at least 2.5L clean water throughout the day",
+      scheduled_time: "All Day",
+      icon: "water_drop",
+      streak_count: 28,
+      is_active: true
+    },
+    {
+      id: "32c0d1b4-d3ce-4767-bf11-f6627393686e",
+      name: "Core Mobility & Breathwork",
+      category: "Wellness",
+      description: "20 min quiet recovery & diaphragmatic breathing",
+      scheduled_time: "09:30 PM",
+      icon: "self_improvement",
+      streak_count: 9,
+      is_active: true
+    },
+    {
+      id: "4b57ba76-3d68-4351-adc3-1a3bc7dbb591",
+      name: "30 Min Deep Study",
+      category: "Focus",
+      description: "Architecture and distributed systems focus",
+      scheduled_time: "02:00 PM",
+      icon: "menu_book",
+      streak_count: 21,
+      is_active: true
+    },
+    {
+      id: "387ee938-5279-4abe-8e99-3a5eb1dfb298",
+      name: "Sleep Before 11:00 PM",
+      category: "Sleep",
+      description: "Screens dimmed at 10:30 PM, sleep by 11:00 PM",
+      scheduled_time: "11:00 PM",
+      icon: "bedtime",
+      streak_count: 7,
+      is_active: true
+    }
+  ];
+
+  let currentGoalFilter = 'all';
+
+  async function loadSupabaseGoals() {
+    if (!sbClient) return;
+    try {
+      const { data, error } = await sbClient.from('goals').select('*').order('created_at', { ascending: true });
+      if (data && data.length > 0 && !error) {
+        // Map any newly created goals from Supabase
+        const mapped = data.map(g => ({
+          id: g.id,
+          name: g.name,
+          category: g.category || 'Routine',
+          description: g.description || 'Daily mindful ritual',
+          scheduled_time: g.scheduled_time ? g.scheduled_time.slice(0, 5) : 'Daily',
+          icon: getIconForCategory(g.category),
+          streak_count: g.streak_count || 0,
+          is_active: g.is_active !== false
+        }));
+        activeGoalsList = mapped;
+        renderGoalsManager();
+      }
+    } catch (e) {
+      console.warn("Goals remote fetch:", e.message);
+    }
+  }
+
+  function getIconForCategory(cat) {
+    if (!cat) return 'self_improvement';
+    const c = cat.toLowerCase();
+    if (c.includes('fit') || c.includes('run')) return 'directions_run';
+    if (c.includes('water') || c.includes('hydra')) return 'water_drop';
+    if (c.includes('sleep') || c.includes('bed')) return 'bedtime';
+    if (c.includes('study') || c.includes('focus') || c.includes('read')) return 'menu_book';
+    return 'self_improvement';
+  }
+
+  function renderGoalsManager() {
+    const list = document.getElementById('goals-management-list');
+    if (!list) return;
+
+    list.innerHTML = '';
+
+    const filtered = activeGoalsList.filter(g => {
+      if (currentGoalFilter === 'all') return true;
+      return g.category.toLowerCase() === currentGoalFilter.toLowerCase();
+    });
+
+    if (filtered.length === 0) {
+      list.innerHTML = `
+        <div class="bg-surface-container-lowest rounded-[20px] p-space-lg text-center border border-outline-variant/40">
+          <span class="material-symbols-outlined text-[36px] text-on-surface-variant">tune</span>
+          <p class="font-headline-md text-headline-md font-bold text-on-surface mt-2">No rituals in this category</p>
+          <p class="font-body-md text-body-md text-on-surface-variant mt-1">Tap '+ New Ritual' to configure one.</p>
+        </div>
+      `;
+      return;
+    }
+
+    filtered.forEach(goal => {
+      const card = document.createElement('div');
+      card.className = "bg-surface-container-lowest rounded-[20px] p-space-md border border-outline-variant/50 sanctuary-card flex items-center justify-between transition-all hover:border-secondary";
+      card.innerHTML = `
+        <div class="flex items-center gap-space-md">
+          <div class="w-10 h-10 rounded-full ${goal.is_active ? 'bg-secondary/15 text-secondary' : 'bg-surface-container text-outline'} flex items-center justify-center shrink-0">
+            <span class="material-symbols-outlined text-[22px]">${goal.icon || 'self_improvement'}</span>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h4 class="font-headline-md text-headline-md font-bold text-on-surface ${!goal.is_active ? 'line-through opacity-50' : ''}">${goal.name}</h4>
+              <span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-surface-container-low text-secondary font-bold">${goal.category}</span>
+            </div>
+            <p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">${goal.description}</p>
+            <div class="flex items-center gap-2 font-label-sm text-label-sm text-on-surface-variant mt-1.5">
+              <span>Time: ${goal.scheduled_time}</span>
+              <span>•</span>
+              <span class="text-secondary font-bold">${goal.streak_count}d streak</span>
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <!-- Active Toggle -->
+          <button onclick="toggleGoalActive('${goal.id}')" title="${goal.is_active ? 'Pause ritual' : 'Resume ritual'}" class="px-3 py-1.5 rounded-xl font-label-sm text-label-sm font-semibold transition-all cursor-pointer ${goal.is_active ? 'bg-secondary text-white' : 'bg-surface-container text-on-surface-variant'}">
+            ${goal.is_active ? 'Active' : 'Paused'}
+          </button>
+          <!-- Delete button -->
+          <button onclick="deleteGoal('${goal.id}')" title="Delete ritual" class="w-8 h-8 rounded-full hover:bg-red-50 text-red-500 flex items-center justify-center transition-all cursor-pointer">
+            <span class="material-symbols-outlined text-[18px]">delete</span>
+          </button>
+        </div>
+      `;
+      list.appendChild(card);
+    });
+  }
+
+  function filterGoalsManager(category, btn) {
+    currentGoalFilter = category;
+    document.querySelectorAll('.goal-chip').forEach(b => {
+      b.className = "goal-chip px-3 py-1 rounded-full bg-surface-container-low text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm font-medium transition-all cursor-pointer";
+    });
+    btn.className = "goal-chip px-3 py-1 rounded-full bg-secondary text-on-secondary font-label-sm text-label-sm font-semibold transition-all cursor-pointer";
+    renderGoalsManager();
+  }
+
+  async function toggleGoalActive(goalId) {
+    const goal = activeGoalsList.find(g => g.id === goalId);
+    if (!goal) return;
+    goal.is_active = !goal.is_active;
+    renderGoalsManager();
+    showToast(goal.is_active ? `Resumed "${goal.name}" ✨` : `Paused "${goal.name}"`, "toggle_on");
+
+    if (sbClient) {
+      try {
+        await sbClient.from('goals').update({ is_active: goal.is_active }).eq('id', goalId);
+      } catch (e) {
+        console.warn("Goal status update notice:", e.message);
+      }
+    }
+  }
+
+  async function deleteGoal(goalId) {
+    const goal = activeGoalsList.find(g => g.id === goalId);
+    if (!goal) return;
+    if (!confirm(`Are you sure you want to remove the ritual "${goal.name}"?`)) return;
+
+    activeGoalsList = activeGoalsList.filter(g => g.id !== goalId);
+    renderGoalsManager();
+    showToast(`Removed ritual "${goal.name}"`, "delete");
+
+    if (sbClient) {
+      try {
+        await sbClient.from('goals').delete().eq('id', goalId);
+      } catch (e) {
+        console.warn("Goal deletion notice:", e.message);
+      }
+    }
+  }
+
+  function openCreateGoalModal() {
+    const modal = document.getElementById('create-goal-modal');
+    if (modal) modal.classList.remove('hidden');
+  }
+
+  function closeCreateGoalModal() {
+    const modal = document.getElementById('create-goal-modal');
+    if (modal) modal.classList.add('hidden');
+  }
+
+  async function handleCreateGoalSubmit(e) {
+    e.preventDefault();
+    const name = document.getElementById('new-goal-name').value.trim();
+    const category = document.getElementById('new-goal-category').value;
+    const time = document.getElementById('new-goal-time').value;
+    const desc = document.getElementById('new-goal-desc').value.trim() || 'Daily personal ritual';
+
+    if (!name) return;
+
+    const newGoal = {
+      id: "goal_" + Date.now(),
+      name: name,
+      category: category,
+      description: desc,
+      scheduled_time: time,
+      icon: getIconForCategory(category),
+      streak_count: 0,
+      is_active: true
+    };
+
+    activeGoalsList.unshift(newGoal);
+    closeCreateGoalModal();
+    renderGoalsManager();
+    showToast(`Created new ritual "${name}" ✨`, "add_task");
+
+    // Clear form
+    document.getElementById('new-goal-name').value = '';
+    document.getElementById('new-goal-desc').value = '';
+
+    // Insert to Personal Supabase
+    if (sbClient) {
+      try {
+        const { data, error } = await sbClient.from('goals').insert([
+          {
+            name: name,
+            category: category,
+            scheduled_time: time + ':00',
+            description: desc,
+            is_active: true,
+            streak_count: 0
+          }
+        ]).select().single();
+        if (data && data.id) {
+          newGoal.id = data.id;
+        }
+      } catch (err) {
+        console.warn("Goal persistence notice:", err.message);
+      }
+    }
+  }
+
+  // Expose all handlers to global window scope
+  window.switchTab = switchTab;
+  window.renderCalendarView = renderCalendarView;
+  window.selectCalendarDay = selectCalendarDay;
+  window.prevCalendarMonth = prevCalendarMonth;
+  window.nextCalendarMonth = nextCalendarMonth;
+  window.saveEveningCloseout = saveEveningCloseout;
+  window.renderHistoryTimeline = renderHistoryTimeline;
+  window.refreshHistoryTimeline = refreshHistoryTimeline;
+  window.renderGoalsManager = renderGoalsManager;
+  window.filterGoalsManager = filterGoalsManager;
+  window.toggleGoalActive = toggleGoalActive;
+  window.deleteGoal = deleteGoal;
+  window.openCreateGoalModal = openCreateGoalModal;
+  window.closeCreateGoalModal = closeCreateGoalModal;
+  window.handleCreateGoalSubmit = handleCreateGoalSubmit;
+
   window.nextSpark = nextSpark;
   window.toggleFavoriteSpark = toggleFavoriteSpark;
   window.shareCurrentSpark = shareCurrentSpark;
 
-  // -------------------------------------------------------------
-  // 7. Initial Startup Sequence
-  // -------------------------------------------------------------
-  document.addEventListener('DOMContentLoaded', () => {
+  // =============================================================
+  // 11. Initial Startup Sequence & Hash Router
+  // =============================================================
+  function initializeApp() {
     initLiveDate();
     initAutoCycling();
     fetchSupabaseSparks();
+    loadSupabaseGoals();
+
+    // Check URL Hash routing (e.g. #calendar, #history, #goals)
+    const currentHash = window.location.hash.replace('#', '') || 'today';
+    switchTab(currentHash);
+
+    // Listen to hash changes
+    window.addEventListener('hashchange', () => {
+      const tab = window.location.hash.replace('#', '') || 'today';
+      if (tab !== currentActiveTab) {
+        switchTab(tab);
+      }
+    });
 
     // Check date every 60s to ensure real-time rollover
     setInterval(initLiveDate, 60000);
-  });
+  }
 
-  // Also run immediately in case DOM is already parsed
-  initLiveDate();
-  initAutoCycling();
-  fetchSupabaseSparks();
-  setInterval(initLiveDate, 60000);
+  document.addEventListener('DOMContentLoaded', initializeApp);
+  initializeApp();
 </script>
 </body></html>
