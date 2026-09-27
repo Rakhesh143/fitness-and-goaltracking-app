@@ -179,16 +179,16 @@
 <section class="mb-space-lg">
 <div class="relative w-full rounded-[24px] overflow-hidden hero-glow border border-outline-variant/30 min-h-[340px] flex flex-col justify-between p-space-lg group transition-all duration-300">
 <!-- Background Image Asset (Placeholder with strict DATA:IMAGE mapping) -->
-<img alt="Peaceful mist-covered alpine lake at sunrise with pine trees and serene water" class="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYParPGGRaj4CXu4jANLfi-C5LrMKlA5Z3hAbZjWrCwDtvRj_9OZCDpLJ1yQmRdyWJch550OPcPRnJdfWKgNRHJzcoJN-HM6dzisoHBwj2FRdnKWgtbDA73ZFn6RoTntboIEea1vaQaqV6EqK3BbeCH5dEGbAgIsmWz0NFCtV7agq_Zw4c-SlbhhdSfbQ-JV4ExzZ0W_AV8FZs9hWBKxq-X8XYu3RRllfEFzeQNTLE2dBm9tJmtpsNDA"/>
+<img id="daily-spark-img" alt="Peaceful mist-covered alpine lake at sunrise with pine trees and serene water" class="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out" src="https://images.unsplash.com/photo-1511497584788-87676104235f?auto=format&fit=crop&w=1200&q=80"/>
 <!-- Multi-layered Atmospheric Gradient for absolute typography legibility -->
 <div class="absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/55 to-primary/30"></div>
 <div class="absolute inset-0 bg-gradient-to-r from-primary/40 to-transparent"></div>
 <!-- Card Top Bar: Dynamic Sync Pill & Status -->
 <div class="relative z-10 flex items-center justify-between gap-2">
-<div class="inline-flex items-center gap-1.5 px-space-sm py-1 rounded-full bg-surface-container-lowest/20 backdrop-blur-md border border-surface-container-lowest/30 text-surface-container-lowest font-label-sm text-label-sm">
+<button onclick="nextSpark()" title="Tap for new spark from 1,000 collection" class="inline-flex items-center gap-1.5 px-space-sm py-1 rounded-full bg-surface-container-lowest/20 hover:bg-surface-container-lowest/30 backdrop-blur-md border border-surface-container-lowest/30 text-surface-container-lowest font-label-sm text-label-sm active:scale-95 transition-all">
 <span class="material-symbols-outlined text-[15px] text-secondary-fixed animate-spin" style="animation-duration: 9s;">sync</span>
 <span class="tracking-wide">Daily Spark • Supabase Sync</span>
-</div>
+</button>
 <div class="flex items-center gap-1 text-surface-variant/90 font-label-sm text-label-sm bg-primary/40 backdrop-blur-sm px-2.5 py-1 rounded-full border border-white/10">
 <span class="material-symbols-outlined text-[14px]">schedule</span>
 <span>Refreshes 5:00 AM</span>
@@ -197,12 +197,12 @@
 <!-- Card Body: Quotation & Lincoln Wisdom -->
 <div class="relative z-10 my-auto py- space-sm">
 <div class="inline-block mb-1.5">
-<span class="text-secondary-fixed font-label-sm text-label-sm bg-secondary/30 px-2 py-0.5 rounded tracking-wide border border-secondary/40">#Consistency</span>
+<span id="daily-spark-cat" class="text-secondary-fixed font-label-sm text-label-sm bg-secondary/30 px-2 py-0.5 rounded tracking-wide border border-secondary/40">#Consistency</span>
 </div>
-<blockquote class="font-headline-md sm:font-headline-lg text-headline-md sm:text-headline-lg text-surface-container-lowest font-semibold leading-relaxed tracking-tight mb-2">
+<blockquote id="daily-spark-quote" class="font-headline-md sm:font-headline-lg text-headline-md sm:text-headline-lg text-surface-container-lowest font-semibold leading-relaxed tracking-tight mb-2">
             “Discipline is choosing between what you want now and what you want most.”
           </blockquote>
-<p class="font-label-lg text-label-lg text-surface-variant font-medium tracking-wide">
+<p id="daily-spark-author" class="font-label-lg text-label-lg text-surface-variant font-medium tracking-wide">
             — Abraham Lincoln
           </p>
 </div>
@@ -558,5 +558,53 @@
       }
     };
   }
+
+  // Dynamic Spark Loader (from 1,000 Supabase sparks collection)
+  let currentSparkIndex = null;
+
+  async function loadDailySpark(sparkId = null) {
+    if (!supabase) return;
+    try {
+      if (!sparkId) {
+        const now = new Date();
+        const start = new Date(now.getFullYear(), 0, 0);
+        const dayOfYear = Math.floor((now - start) / (1000 * 60 * 60 * 24));
+        sparkId = (dayOfYear % 1000) + 1;
+      }
+      currentSparkIndex = sparkId;
+
+      const { data, error } = await supabase
+        .from('daily_sparks')
+        .select('*')
+        .eq('id', sparkId)
+        .single();
+
+      if (data && !error) {
+        applySparkToUI(data);
+      }
+    } catch (e) {
+      console.warn("Daily spark remote fetch:", e.message);
+    }
+  }
+
+  function applySparkToUI(spark) {
+    const img = document.getElementById('daily-spark-img');
+    const quote = document.getElementById('daily-spark-quote');
+    const author = document.getElementById('daily-spark-author');
+    const cat = document.getElementById('daily-spark-cat');
+
+    if (img && spark.image_url) img.src = spark.image_url;
+    if (quote && spark.quote) quote.innerText = `“${spark.quote}”`;
+    if (author && spark.author) author.innerText = `— ${spark.author}`;
+    if (cat && spark.category) cat.innerText = spark.category;
+  }
+
+  async function nextSpark() {
+    const randomId = Math.floor(Math.random() * 1000) + 1;
+    await loadDailySpark(randomId);
+  }
+
+  // Load today's spark on startup
+  loadDailySpark();
 </script>
 </body></html>

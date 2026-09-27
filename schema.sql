@@ -47,15 +47,28 @@ CREATE TABLE IF NOT EXISTS public.daily_notes (
     created_at TIMESTAMPTZ NOT NULL DEFAULT timezone('utc', now())
 );
 
+-- 4. DAILY SPARKS / MOTIVATION QUOTES & PHOTOS TABLE
+-- Holds 1,000 curated motivational quotes paired with high-resolution scenic photography
+CREATE TABLE IF NOT EXISTS public.daily_sparks (
+    id SERIAL PRIMARY KEY,
+    quote TEXT NOT NULL,
+    author TEXT NOT NULL,
+    category TEXT DEFAULT '#Consistency',
+    image_url TEXT NOT NULL,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT timezone('utc', now())
+);
+
 -- Indexes for high-speed calendar and date-wise queries
 CREATE INDEX IF NOT EXISTS idx_daily_records_date ON public.daily_goal_records(record_date);
 CREATE INDEX IF NOT EXISTS idx_daily_notes_date ON public.daily_notes(note_date);
 CREATE INDEX IF NOT EXISTS idx_goals_active ON public.goals(is_active);
+CREATE INDEX IF NOT EXISTS idx_daily_sparks_id ON public.daily_sparks(id);
 
 -- Enable Row Level Security (RLS)
 ALTER TABLE public.goals ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.daily_goal_records ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.daily_notes ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.daily_sparks ENABLE ROW LEVEL SECURITY;
 
 -- Allow full access for personal app (anon / authenticated)
 DROP POLICY IF EXISTS "Allow public all access on goals" ON public.goals;
@@ -68,6 +81,10 @@ CREATE POLICY "Allow public all access on daily_goal_records" ON public.daily_go
 
 DROP POLICY IF EXISTS "Allow public all access on daily_notes" ON public.daily_notes;
 CREATE POLICY "Allow public all access on daily_notes" ON public.daily_notes
+    FOR ALL USING (true) WITH CHECK (true);
+
+DROP POLICY IF EXISTS "Allow public all access on daily_sparks" ON public.daily_sparks;
+CREATE POLICY "Allow public all access on daily_sparks" ON public.daily_sparks
     FOR ALL USING (true) WITH CHECK (true);
 
 -- ========================================================
