@@ -367,12 +367,28 @@
 
 <!-- Daily Goals List & Filter Section -->
 <section class="space-y-space-md">
-<!-- Filter Chips Header -->
-<div class="flex items-center justify-between">
-<h4 class="font-headline-md text-headline-md text-on-surface font-bold">Daily Rituals</h4>
-<div class="flex items-center gap-1 bg-surface-container-low p-1 rounded-full border border-outline-variant/40">
+<!-- Header & Dynamic Manage Actions -->
+<div class="flex flex-wrap items-center justify-between gap-2">
+  <div>
+    <h4 class="font-headline-md text-headline-md text-on-surface font-bold">Daily Rituals & Rules</h4>
+    <p class="font-body-sm text-body-sm text-on-surface-variant">Tap checkmark to seal practice. Tap <span class="text-secondary font-semibold">Edit ✏️</span> to change rules & targets.</p>
+  </div>
+  <div class="flex items-center gap-2">
+    <button onclick="openCreateGoalModal()" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-secondary text-white font-label-sm text-label-sm font-semibold hover:bg-secondary-container active:scale-95 transition-all cursor-pointer shadow-sm">
+      <span class="material-symbols-outlined text-[16px]">add</span>
+      <span>Add Ritual</span>
+    </button>
+    <button onclick="switchTab('goals')" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-surface-container-low border border-outline-variant/50 text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm font-medium active:scale-95 transition-all cursor-pointer" title="Manage all goals and rules">
+      <span class="material-symbols-outlined text-[16px]">tune</span>
+      <span>Manage Rules</span>
+    </button>
+  </div>
+</div>
+
+<!-- Filter Chips -->
+<div class="flex items-center gap-1 bg-surface-container-low p-1 rounded-full border border-outline-variant/40 w-fit">
 <button id="filter-all-btn" onclick="filterTodayHabits('all')" class="habit-filter-btn px-3 py-1 rounded-full bg-secondary text-on-secondary font-label-sm text-label-sm font-semibold transition-all cursor-pointer">
-  All Goals (5)
+  All Goals (<span id="total-count-label">5</span>)
 </button>
 <button id="filter-active-btn" onclick="filterTodayHabits('active')" class="habit-filter-btn px-3 py-1 rounded-full text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm font-medium transition-all cursor-pointer">
   Active (<span id="active-count-label">5</span>)
@@ -380,7 +396,6 @@
 <button id="filter-completed-btn" onclick="filterTodayHabits('completed')" class="habit-filter-btn px-3 py-1 rounded-full text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm font-medium transition-all cursor-pointer">
   Completed (<span id="completed-count-label">0</span>)
 </button>
-</div>
 </div>
 
 <!-- Habit Cards Interactive Container (Populated via renderTodayHabits) -->
@@ -638,6 +653,69 @@
           <span class="material-symbols-outlined text-[16px]">save</span>
           <span>Save Ritual</span>
         </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Edit Ritual / Habit & Rule Modal -->
+<div id="edit-goal-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+  <div class="bg-surface-container-lowest w-full max-w-md rounded-[24px] p-space-lg border border-outline-variant/50 shadow-2xl relative">
+    <div class="flex items-center justify-between mb-4">
+      <div class="flex items-center gap-2">
+        <span class="material-symbols-outlined text-secondary text-[22px]">edit_note</span>
+        <h3 class="font-headline-md text-headline-md font-bold text-on-surface">Edit Ritual & Rule</h3>
+      </div>
+      <button onclick="closeEditGoalModal()" class="w-8 h-8 rounded-full hover:bg-surface-container flex items-center justify-center text-on-surface-variant cursor-pointer">
+        <span class="material-symbols-outlined text-[20px]">close</span>
+      </button>
+    </div>
+
+    <form onsubmit="handleEditGoalSubmit(event)" class="space-y-3.5">
+      <input type="hidden" id="edit-goal-id"/>
+
+      <div>
+        <label class="block font-label-md text-label-md font-semibold text-on-surface mb-1">Ritual Title / Habit</label>
+        <input id="edit-goal-name" required placeholder="e.g. Morning Trail Run" class="w-full bg-surface-container-low rounded-xl px-3.5 py-2.5 text-on-surface font-body-md text-body-md border border-outline-variant/40 focus:outline-none focus:ring-2 focus:ring-secondary"/>
+      </div>
+
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="block font-label-md text-label-md font-semibold text-on-surface mb-1">Category</label>
+          <select id="edit-goal-category" class="w-full bg-surface-container-low rounded-xl px-3 py-2 text-on-surface font-body-md text-body-md border border-outline-variant/40 focus:outline-none focus:ring-2 focus:ring-secondary">
+            <option value="Fitness">Fitness & Run</option>
+            <option value="Routine">Daily Routine</option>
+            <option value="Wellness">Wellness & Health</option>
+            <option value="Focus">Focus & Study</option>
+            <option value="Sleep">Sleep & Rest</option>
+          </select>
+        </div>
+        <div>
+          <label class="block font-label-md text-label-md font-semibold text-on-surface mb-1">Scheduled Time</label>
+          <input id="edit-goal-time" type="time" value="07:00" class="w-full bg-surface-container-low rounded-xl px-3 py-2 text-on-surface font-body-md text-body-md border border-outline-variant/40 focus:outline-none focus:ring-2 focus:ring-secondary"/>
+        </div>
+      </div>
+
+      <div>
+        <label class="block font-label-md text-label-md font-semibold text-on-surface mb-1">Target Rule & Metric</label>
+        <input id="edit-goal-desc" placeholder="e.g. 5.2 km outdoor run" class="w-full bg-surface-container-low rounded-xl px-3.5 py-2 text-on-surface font-body-md text-body-md border border-outline-variant/40 focus:outline-none focus:ring-2 focus:ring-secondary"/>
+        <p class="text-xs text-on-surface-variant mt-1">This rule is tracked daily on your Today dashboard.</p>
+      </div>
+
+      <div class="flex items-center justify-between pt-2">
+        <button type="button" onclick="handleDeleteFromEditModal()" class="px-3 py-2 rounded-xl text-red-500 hover:bg-red-50 font-label-md text-label-md flex items-center gap-1 cursor-pointer transition-all">
+          <span class="material-symbols-outlined text-[16px]">delete</span>
+          <span>Delete</span>
+        </button>
+        <div class="flex items-center gap-2">
+          <button type="button" onclick="closeEditGoalModal()" class="px-4 py-2 rounded-xl text-on-surface-variant font-label-md text-label-md hover:bg-surface-container transition-all cursor-pointer">
+            Cancel
+          </button>
+          <button type="submit" class="px-5 py-2 rounded-xl bg-secondary text-white font-label-md text-label-md font-bold hover:bg-secondary-container active:scale-95 transition-all cursor-pointer shadow-sm flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-[16px]">save</span>
+            <span>Update Rule</span>
+          </button>
+        </div>
       </div>
     </form>
   </div>
@@ -919,6 +997,8 @@
     if (activeLabel) activeLabel.innerText = activeCount;
     const compLabel = document.getElementById('completed-count-label');
     if (compLabel) compLabel.innerText = sealedCount;
+    const totalLabel = document.getElementById('total-count-label');
+    if (totalLabel) totalLabel.innerText = totalCount;
 
     const calDayStatus = document.getElementById('selected-day-status');
     if (calDayStatus) calDayStatus.innerText = `${sealedCount} of ${totalCount} Sealed (${pct}%)`;
@@ -953,7 +1033,12 @@
             </div>
           </div>
         </div>
-        <div class="flex items-center gap-2">
+        <div class="flex items-center gap-1.5 sm:gap-2">
+          <!-- Quick Edit Habit & Rule Button -->
+          <button onclick="openEditGoalModal('${practice.id}')" title="Edit habit rule & metric target" class="w-8 h-8 rounded-full hover:bg-surface-container border border-outline-variant/40 text-on-surface-variant hover:text-secondary flex items-center justify-center active:scale-95 transition-all cursor-pointer">
+            <span class="material-symbols-outlined text-[16px]">edit</span>
+          </button>
+          <!-- Seal / Unseal Button -->
           <button onclick="togglePractice(${idx})" class="px-3 py-1.5 rounded-xl ${practice.sealed ? 'bg-surface-container-low text-on-surface-variant hover:bg-surface-container' : 'bg-secondary text-white hover:bg-secondary-container'} font-label-sm text-label-sm font-semibold active:scale-95 transition-all cursor-pointer shadow-sm">
             ${practice.sealed ? 'Unseal' : 'Seal'}
           </button>
@@ -1939,10 +2024,38 @@
         }));
         activeGoalsList = mapped;
         renderGoalsManager();
+        syncGoalsToTodayPractices();
       }
     } catch (e) {
       console.warn("Goals remote fetch:", e.message);
     }
+  }
+
+  // Synchronize dynamic goals from Supabase / Goals Manager directly to Today's screen
+  function syncGoalsToTodayPractices() {
+    if (!activeGoalsList || activeGoalsList.length === 0) return;
+
+    const activeOnly = activeGoalsList.filter(g => g.is_active !== false);
+
+    // Preserve existing sealed state for today
+    const existingSealedMap = {};
+    todayPractices.forEach(p => {
+      existingSealedMap[p.id] = p.sealed;
+    });
+
+    todayPractices = activeOnly.map(g => ({
+      id: g.id,
+      name: g.name,
+      metric: g.description || 'Daily ritual',
+      time: g.scheduled_time || 'Daily',
+      category: g.category || 'Routine',
+      icon: g.icon || getIconForCategory(g.category),
+      sealed: existingSealedMap[g.id] || false,
+      streak: g.streak_count || 0
+    }));
+
+    saveTodayPractices();
+    renderTodayHabits();
   }
 
   function getIconForCategory(cat) {
@@ -1999,6 +2112,10 @@
           </div>
         </div>
         <div class="flex items-center gap-2">
+          <!-- Edit button -->
+          <button onclick="openEditGoalModal('${goal.id}')" title="Edit habit rule & target" class="w-8 h-8 rounded-full hover:bg-surface-container border border-outline-variant/40 text-on-surface-variant hover:text-secondary flex items-center justify-center transition-all cursor-pointer">
+            <span class="material-symbols-outlined text-[16px]">edit</span>
+          </button>
           <!-- Active Toggle -->
           <button onclick="toggleGoalActive('${goal.id}')" title="${goal.is_active ? 'Pause ritual' : 'Resume ritual'}" class="px-3 py-1.5 rounded-xl font-label-sm text-label-sm font-semibold transition-all cursor-pointer ${goal.is_active ? 'bg-secondary text-white' : 'bg-surface-container text-on-surface-variant'}">
             ${goal.is_active ? 'Active' : 'Paused'}
@@ -2027,6 +2144,7 @@
     if (!goal) return;
     goal.is_active = !goal.is_active;
     renderGoalsManager();
+    syncGoalsToTodayPractices();
     showToast(goal.is_active ? `Resumed "${goal.name}" ✨` : `Paused "${goal.name}"`, "toggle_on");
 
     if (sbClient) {
@@ -2044,6 +2162,7 @@
     if (!confirm(`Are you sure you want to remove the ritual "${goal.name}"?`)) return;
 
     activeGoalsList = activeGoalsList.filter(g => g.id !== goalId);
+    syncGoalsToTodayPractices();
     renderGoalsManager();
     showToast(`Removed ritual "${goal.name}"`, "delete");
 
@@ -2064,6 +2183,87 @@
   function closeCreateGoalModal() {
     const modal = document.getElementById('create-goal-modal');
     if (modal) modal.classList.add('hidden');
+  }
+
+  // Edit Habit & Rule Modal Handlers
+  function openEditGoalModal(goalId) {
+    const goal = activeGoalsList.find(g => g.id === goalId) || todayPractices.find(p => p.id === goalId);
+    if (!goal) return;
+
+    document.getElementById('edit-goal-id').value = goal.id;
+    document.getElementById('edit-goal-name').value = goal.name || '';
+    document.getElementById('edit-goal-category').value = goal.category || 'Routine';
+
+    let timeVal = goal.scheduled_time || goal.time || '07:00';
+    if (timeVal.length > 5) timeVal = timeVal.slice(0, 5);
+    document.getElementById('edit-goal-time').value = timeVal;
+
+    document.getElementById('edit-goal-desc').value = goal.description || goal.metric || '';
+
+    const modal = document.getElementById('edit-goal-modal');
+    if (modal) modal.classList.remove('hidden');
+  }
+
+  function closeEditGoalModal() {
+    const modal = document.getElementById('edit-goal-modal');
+    if (modal) modal.classList.add('hidden');
+  }
+
+  async function handleEditGoalSubmit(e) {
+    e.preventDefault();
+    const id = document.getElementById('edit-goal-id').value;
+    const name = document.getElementById('edit-goal-name').value.trim();
+    const category = document.getElementById('edit-goal-category').value;
+    const time = document.getElementById('edit-goal-time').value;
+    const desc = document.getElementById('edit-goal-desc').value.trim();
+
+    if (!name || !id) return;
+
+    let goal = activeGoalsList.find(g => g.id === id);
+    if (goal) {
+      goal.name = name;
+      goal.category = category;
+      goal.scheduled_time = time;
+      goal.description = desc;
+      goal.icon = getIconForCategory(category);
+    }
+
+    let practice = todayPractices.find(p => p.id === id);
+    if (practice) {
+      practice.name = name;
+      practice.metric = desc;
+      practice.time = time;
+      practice.category = category;
+      practice.icon = getIconForCategory(category);
+    }
+
+    closeEditGoalModal();
+    saveTodayPractices();
+    renderTodayHabits();
+    renderGoalsManager();
+    showToast(`Updated "${name}" ✨`, "edit");
+
+    if (sbClient) {
+      try {
+        await sbClient.from('goals').update({
+          name: name,
+          category: category,
+          scheduled_time: time + ':00',
+          description: desc,
+          updated_at: new Date().toISOString()
+        }).eq('id', id);
+        console.log(`Persisted changes to Supabase for ${name}`);
+      } catch (err) {
+        console.warn("Update persistence warning:", err.message);
+      }
+    }
+  }
+
+  function handleDeleteFromEditModal() {
+    const id = document.getElementById('edit-goal-id').value;
+    if (!id) return;
+    closeEditGoalModal();
+    deleteGoal(id);
   }
 
   async function handleCreateGoalSubmit(e) {
@@ -2088,6 +2288,7 @@
 
     activeGoalsList.unshift(newGoal);
     closeCreateGoalModal();
+    syncGoalsToTodayPractices();
     renderGoalsManager();
     showToast(`Created new ritual "${name}" ✨`, "add_task");
 
@@ -2110,6 +2311,7 @@
         ]).select().single();
         if (data && data.id) {
           newGoal.id = data.id;
+          syncGoalsToTodayPractices();
         }
       } catch (err) {
         console.warn("Goal persistence notice:", err.message);
@@ -2132,6 +2334,11 @@
   window.deleteGoal = deleteGoal;
   window.openCreateGoalModal = openCreateGoalModal;
   window.closeCreateGoalModal = closeCreateGoalModal;
+  window.openEditGoalModal = openEditGoalModal;
+  window.closeEditGoalModal = closeEditGoalModal;
+  window.handleEditGoalSubmit = handleEditGoalSubmit;
+  window.handleDeleteFromEditModal = handleDeleteFromEditModal;
+  window.syncGoalsToTodayPractices = syncGoalsToTodayPractices;
   window.handleCreateGoalSubmit = handleCreateGoalSubmit;
 
   window.nextSpark = nextSpark;
