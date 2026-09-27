@@ -161,65 +161,75 @@
 </div>
 </div>
 </header>
+<!-- Floating Sanctuary Toast Notification -->
+<div id="cadence-toast" class="fixed top-6 left-1/2 -translate-x-1/2 z-50 px-4 py-2 rounded-full bg-primary text-white font-label-md text-label-md shadow-xl border border-white/20 transition-all duration-300 opacity-0 pointer-events-none transform -translate-y-2 flex items-center gap-2">
+  <span class="material-symbols-outlined text-[18px] text-secondary-fixed">check_circle</span>
+  <span id="toast-message">Action completed</span>
+</div>
+
 <!-- Main Content Canvas (Mobile Optimized Sanctuary Grid) -->
 <main class="flex-1 w-full max-w-screen-md mx-auto px-margin pt-space-md pb-28">
 <!-- Date, Salutation & Affirmation Strip -->
 <section class="mb-space-md flex flex-col gap-0.5">
 <div class="flex items-center justify-between">
-<p class="font-label-sm text-label-sm text-secondary uppercase tracking-widest font-semibold">Sunday, September 27</p>
+<p id="live-date-header" class="font-label-sm text-label-sm text-secondary uppercase tracking-widest font-semibold">Loading live date...</p>
 <div class="flex items-center gap-1.5 text-on-surface-variant font-label-sm text-label-sm">
 <span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span>
-<span>In Flow</span>
+<span id="live-flow-status">In Flow</span>
 </div>
 </div>
 <h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight font-bold">Quiet Mastery.</h2>
 <p class="font-body-md text-body-md text-on-surface-variant">Mindful discipline over hurried momentum.</p>
 </section>
-<!-- FEATURE HIGHLIGHT: Daily Motivation & Dynamic Wisdom Card (Supabase Synced) -->
+<!-- FEATURE HIGHLIGHT: Daily Motivation & Dynamic Wisdom Card (1,000 Sparks Live Auto-Rotating) -->
 <section class="mb-space-lg">
-<div class="relative w-full rounded-[24px] overflow-hidden hero-glow border border-outline-variant/30 min-h-[340px] flex flex-col justify-between p-space-lg group transition-all duration-300">
-<!-- Background Image Asset (Placeholder with strict DATA:IMAGE mapping) -->
-<img id="daily-spark-img" alt="Peaceful mist-covered alpine lake at sunrise with pine trees and serene water" class="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out" src="https://images.unsplash.com/photo-1511497584788-87676104235f?auto=format&fit=crop&w=1200&q=80"/>
+<div id="spark-hero-card" class="relative w-full rounded-[24px] overflow-hidden hero-glow border border-outline-variant/30 min-h-[340px] flex flex-col justify-between p-space-lg group transition-all duration-300 select-none">
+<!-- Slim Cycling Progress Bar -->
+<div class="absolute top-0 left-0 right-0 h-1 bg-black/30 z-20 overflow-hidden">
+  <div id="spark-progress-line" class="h-full bg-secondary-fixed w-0 transition-all duration-100 ease-linear"></div>
+</div>
+<!-- Background Image Asset with smooth crossfade and zoom -->
+<img id="daily-spark-img" alt="Peaceful landscape motivation background" class="absolute inset-0 w-full h-full object-cover object-center transition-all duration-700 ease-out" src="https://images.unsplash.com/photo-1511497584788-87676104235f?auto=format&fit=crop&w=1200&q=80"/>
 <!-- Multi-layered Atmospheric Gradient for absolute typography legibility -->
-<div class="absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/55 to-primary/30"></div>
-<div class="absolute inset-0 bg-gradient-to-r from-primary/40 to-transparent"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/60 to-primary/30 pointer-events-none"></div>
+<div class="absolute inset-0 bg-gradient-to-r from-primary/45 to-transparent pointer-events-none"></div>
 <!-- Card Top Bar: Dynamic Sync Pill & Status -->
 <div class="relative z-10 flex items-center justify-between gap-2">
-<button onclick="nextSpark()" title="Tap for new spark from 1,000 collection" class="inline-flex items-center gap-1.5 px-space-sm py-1 rounded-full bg-surface-container-lowest/20 hover:bg-surface-container-lowest/30 backdrop-blur-md border border-surface-container-lowest/30 text-surface-container-lowest font-label-sm text-label-sm active:scale-95 transition-all">
-<span class="material-symbols-outlined text-[15px] text-secondary-fixed animate-spin" style="animation-duration: 9s;">sync</span>
-<span class="tracking-wide">Daily Spark • Supabase Sync</span>
+<button id="spark-action-pill" onclick="nextSpark()" title="Tap to skip to next spark (Auto-cycling every 7s, pause on hover/touch)" class="inline-flex items-center gap-1.5 px-space-sm py-1 rounded-full bg-surface-container-lowest/20 hover:bg-surface-container-lowest/30 backdrop-blur-md border border-surface-container-lowest/30 text-surface-container-lowest font-label-sm text-label-sm active:scale-95 transition-all cursor-pointer">
+<span id="spark-spin-icon" class="material-symbols-outlined text-[15px] text-secondary-fixed animate-spin" style="animation-duration: 9s;">sync</span>
+<span id="spark-status-text" class="tracking-wide">Daily Spark • Auto-Cycling</span>
 </button>
 <div class="flex items-center gap-1 text-surface-variant/90 font-label-sm text-label-sm bg-primary/40 backdrop-blur-sm px-2.5 py-1 rounded-full border border-white/10">
-<span class="material-symbols-outlined text-[14px]">schedule</span>
-<span>Refreshes 5:00 AM</span>
+<span class="material-symbols-outlined text-[14px]">auto_awesome</span>
+<span id="spark-auto-badge">1,000 Sparks Live</span>
 </div>
 </div>
 <!-- Card Body: Quotation & Lincoln Wisdom -->
-<div class="relative z-10 my-auto py- space-sm">
+<div id="spark-body-content" class="relative z-10 my-auto py-space-sm transition-all duration-400 ease-in-out">
 <div class="inline-block mb-1.5">
 <span id="daily-spark-cat" class="text-secondary-fixed font-label-sm text-label-sm bg-secondary/30 px-2 py-0.5 rounded tracking-wide border border-secondary/40">#Consistency</span>
 </div>
 <blockquote id="daily-spark-quote" class="font-headline-md sm:font-headline-lg text-headline-md sm:text-headline-lg text-surface-container-lowest font-semibold leading-relaxed tracking-tight mb-2">
-            “Discipline is choosing between what you want now and what you want most.”
-          </blockquote>
+  “Discipline is choosing between what you want now and what you want most.”
+</blockquote>
 <p id="daily-spark-author" class="font-label-lg text-label-lg text-surface-variant font-medium tracking-wide">
-            — Abraham Lincoln
-          </p>
+  — Abraham Lincoln
+</p>
 </div>
 <!-- Card Footer Actions: Micro-Interactions -->
 <div class="relative z-10 pt-space-xs flex items-center justify-between border-t border-white/15">
 <div class="flex items-center gap-2">
 <!-- Bookmark Button -->
-<button class="w-9 h-9 rounded-full bg-surface-container-lowest/20 hover:bg-surface-container-lowest/30 backdrop-blur-md border border-white/20 flex items-center justify-center text-surface-container-lowest active:scale-95 transition-all duration-150" title="Save spark">
-<span class="material-symbols-outlined text-[18px]">favorite</span>
+<button id="spark-fav-btn" onclick="toggleFavoriteSpark()" class="w-9 h-9 rounded-full bg-surface-container-lowest/20 hover:bg-surface-container-lowest/30 backdrop-blur-md border border-white/20 flex items-center justify-center text-surface-container-lowest active:scale-95 transition-all duration-150 cursor-pointer" title="Save spark">
+<span id="spark-fav-icon" class="material-symbols-outlined text-[18px]">favorite_border</span>
 </button>
 <!-- Share Button -->
-<button class="w-9 h-9 rounded-full bg-surface-container-lowest/20 hover:bg-surface-container-lowest/30 backdrop-blur-md border border-white/20 flex items-center justify-center text-surface-container-lowest active:scale-95 transition-all duration-150" title="Share spark">
+<button onclick="shareCurrentSpark()" class="w-9 h-9 rounded-full bg-surface-container-lowest/20 hover:bg-surface-container-lowest/30 backdrop-blur-md border border-white/20 flex items-center justify-center text-surface-container-lowest active:scale-95 transition-all duration-150 cursor-pointer" title="Share spark">
 <span class="material-symbols-outlined text-[18px]">share</span>
 </button>
 </div>
 <!-- Mindful Reflection CTA -->
-<button class="inline-flex items-center gap-1.5 px-space-md py-1.5 rounded-full bg-surface-container-lowest/90 hover:bg-surface-container-lowest text-primary font-label-md text-label-md active:scale-95 transition-all duration-150 font-bold shadow-sm">
+<button class="inline-flex items-center gap-1.5 px-space-md py-1.5 rounded-full bg-surface-container-lowest/90 hover:bg-surface-container-lowest text-primary font-label-md text-label-md active:scale-95 transition-all duration-150 font-bold shadow-sm cursor-pointer">
 <span class="material-symbols-outlined text-[16px] text-secondary">edit_note</span>
 <span>Reflect on this</span>
 </button>
@@ -254,51 +264,10 @@
 <section class="mb-space-lg">
 <div class="flex items-center justify-between mb-space-xs">
 <h4 class="font-label-lg text-label-lg text-on-surface font-semibold">Weekly Rhythm</h4>
-<span class="font-label-sm text-label-sm text-secondary font-medium">Week 39</span>
+<span id="live-week-number" class="font-label-sm text-label-sm text-secondary font-medium">Week 39</span>
 </div>
-<div class="grid grid-cols-7 gap-1.5 sm:gap-2 text-center">
-<!-- Mon -->
-<div class="flex flex-col items-center py-2 rounded-xl bg-surface-container-lowest border border-outline-variant/50">
-<span class="font-label-sm text-label-sm text-outline">M</span>
-<span class="font-label-md text-label-md font-semibold text-on-surface my-0.5">21</span>
-<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
-</div>
-<!-- Tue -->
-<div class="flex flex-col items-center py-2 rounded-xl bg-surface-container-lowest border border-outline-variant/50">
-<span class="font-label-sm text-label-sm text-outline">T</span>
-<span class="font-label-md text-label-md font-semibold text-on-surface my-0.5">22</span>
-<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
-</div>
-<!-- Wed -->
-<div class="flex flex-col items-center py-2 rounded-xl bg-surface-container-lowest border border-outline-variant/50">
-<span class="font-label-sm text-label-sm text-outline">W</span>
-<span class="font-label-md text-label-md font-semibold text-on-surface my-0.5">23</span>
-<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
-</div>
-<!-- Thu -->
-<div class="flex flex-col items-center py-2 rounded-xl bg-surface-container-lowest border border-outline-variant/50">
-<span class="font-label-sm text-label-sm text-outline">T</span>
-<span class="font-label-md text-label-md font-semibold text-on-surface my-0.5">24</span>
-<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
-</div>
-<!-- Fri -->
-<div class="flex flex-col items-center py-2 rounded-xl bg-surface-container-lowest border border-outline-variant/50">
-<span class="font-label-sm text-label-sm text-outline">F</span>
-<span class="font-label-md text-label-md font-semibold text-on-surface my-0.5">25</span>
-<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
-</div>
-<!-- Sat -->
-<div class="flex flex-col items-center py-2 rounded-xl bg-surface-container-lowest border border-outline-variant/50">
-<span class="font-label-sm text-label-sm text-outline">S</span>
-<span class="font-label-md text-label-md font-semibold text-on-surface my-0.5">26</span>
-<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
-</div>
-<!-- Sun (Active) -->
-<div class="flex flex-col items-center py-2 rounded-xl bg-primary-container text-white ring-2 ring-primary">
-<span class="font-label-sm text-label-sm text-primary-fixed">S</span>
-<span class="font-label-md text-label-md font-bold text-white my-0.5">27</span>
-<span class="w-1.5 h-1.5 rounded-full bg-secondary-fixed"></span>
-</div>
+<div id="weekly-rhythm-grid" class="grid grid-cols-7 gap-1.5 sm:gap-2 text-center">
+<!-- Dynamically populated via initLiveDate() -->
 </div>
 </section>
 <!-- Daily Goals List & Filter Section -->
@@ -414,7 +383,7 @@
 </div>
 </div>
 </div>
-<button class="px-space-md py-2 rounded-xl bg-primary text-white font-label-md text-label-md font-semibold hover:bg-primary-container active:scale-95 transition-all duration-150 shadow-sm flex items-center gap-1">
+<button id="seal-practice-btn" class="px-space-md py-2 rounded-xl bg-primary text-white font-label-md text-label-md font-semibold hover:bg-primary-container active:scale-95 transition-all duration-150 shadow-sm flex items-center gap-1 cursor-pointer">
 <span>Seal Practice</span>
 <span class="material-symbols-outlined text-[16px]">done_all</span>
 </button>
@@ -451,11 +420,374 @@
   // Personal Supabase Configuration (ulpmuwcxcbrcmbkfmrvc)
   const SUPABASE_URL = "https://ulpmuwcxcbrcmbkfmrvc.supabase.co";
   const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVscG11d2N4Y2JyY21ia2ZtcnZjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk1NDcyODksImV4cCI6MjEwNTEyMzI4OX0.mUFXYXCRQZII1h_8zNKafeWD5EqfC8BNsXMW8pACaYQ";
-  const supabase = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
+  const sbClient = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
   console.log("Connected to Personal Supabase Project:", SUPABASE_URL);
 
-  // Interactive Filter Chips
+  // -------------------------------------------------------------
+  // 1. Toast Notification System
+  // -------------------------------------------------------------
+  let toastTimer = null;
+  function showToast(message, icon = 'check_circle') {
+    const toast = document.getElementById('cadence-toast');
+    const msgEl = document.getElementById('toast-message');
+    if (!toast || !msgEl) return;
+    
+    msgEl.innerText = message;
+    const iconEl = toast.querySelector('.material-symbols-outlined');
+    if (iconEl) iconEl.innerText = icon;
+
+    toast.classList.remove('opacity-0', '-translate-y-2', 'pointer-events-none');
+    toast.classList.add('opacity-100', 'translate-y-0');
+
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => {
+      toast.classList.remove('opacity-100', 'translate-y-0');
+      toast.classList.add('opacity-0', '-translate-y-2', 'pointer-events-none');
+    }, 2800);
+  }
+
+  // -------------------------------------------------------------
+  // 2. Real-Time Live Date & Weekly Rhythm Grid
+  // -------------------------------------------------------------
+  function getISOWeekNumber(d) {
+    const date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+    date.setUTCDate(date.getUTCDate() + 4 - (date.getUTCDay() || 7));
+    const yearStart = new Date(Date.UTC(date.getUTCFullYear(), 0, 1));
+    return Math.ceil((((date - yearStart) / 86400000) + 1) / 7);
+  }
+
+  function initLiveDate() {
+    const now = new Date();
+
+    // 1. Update Date Header (e.g., "Sunday, September 27")
+    const dateHeader = document.getElementById('live-date-header');
+    if (dateHeader) {
+      const options = { weekday: 'long', month: 'long', day: 'numeric' };
+      dateHeader.innerText = now.toLocaleDateString('en-US', options);
+    }
+
+    // 2. Update Week Number
+    const weekNumberEl = document.getElementById('live-week-number');
+    if (weekNumberEl) {
+      weekNumberEl.innerText = `Week ${getISOWeekNumber(now)}`;
+    }
+
+    // 3. Populate 7-Day Rhythm Grid (Monday to Sunday)
+    const rhythmGrid = document.getElementById('weekly-rhythm-grid');
+    if (rhythmGrid) {
+      rhythmGrid.innerHTML = '';
+      const dayLabels = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+
+      // Find Monday of the current week (Sunday is 0, Monday is 1, ..., Saturday is 6)
+      const dayOfWeek = now.getDay();
+      const distanceToMonday = (dayOfWeek === 0 ? -6 : 1) - dayOfWeek;
+      const monday = new Date(now);
+      monday.setDate(now.getDate() + distanceToMonday);
+
+      for (let i = 0; i < 7; i++) {
+        const dayDate = new Date(monday);
+        dayDate.setDate(monday.getDate() + i);
+
+        const isToday = dayDate.toDateString() === now.toDateString();
+        const isPast = dayDate < now && !isToday;
+        const dayNum = dayDate.getDate();
+        const label = dayLabels[i];
+
+        const dayCard = document.createElement('div');
+        if (isToday) {
+          dayCard.className = "flex flex-col items-center py-2 rounded-xl bg-primary-container text-white ring-2 ring-primary shadow-sm scale-105 transition-all";
+          dayCard.title = "Today";
+          dayCard.innerHTML = `
+            <span class="font-label-sm text-label-sm text-primary-fixed font-bold">${label}</span>
+            <span class="font-label-md text-label-md font-bold text-white my-0.5">${dayNum}</span>
+            <span class="w-1.5 h-1.5 rounded-full bg-secondary-fixed"></span>
+          `;
+        } else if (isPast) {
+          dayCard.className = "flex flex-col items-center py-2 rounded-xl bg-surface-container-lowest border border-outline-variant/50 transition-all hover:border-secondary cursor-pointer";
+          dayCard.title = `${dayDate.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })} (Completed)`;
+          dayCard.innerHTML = `
+            <span class="font-label-sm text-label-sm text-outline">${label}</span>
+            <span class="font-label-md text-label-md font-semibold text-on-surface my-0.5">${dayNum}</span>
+            <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+          `;
+        } else {
+          dayCard.className = "flex flex-col items-center py-2 rounded-xl bg-surface-container-lowest/60 border border-outline-variant/30 opacity-70";
+          dayCard.title = `${dayDate.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })} (Upcoming)`;
+          dayCard.innerHTML = `
+            <span class="font-label-sm text-label-sm text-outline">${label}</span>
+            <span class="font-label-md text-label-md font-medium text-on-surface-variant my-0.5">${dayNum}</span>
+            <span class="w-1.5 h-1.5 rounded-full bg-outline-variant"></span>
+          `;
+        }
+        rhythmGrid.appendChild(dayCard);
+      }
+    }
+  }
+
+  // -------------------------------------------------------------
+  // 3. Auto-Rotating Motivational Quotes & Scenic Photos Engine
+  // -------------------------------------------------------------
+  // Fallback initial sparks so transitions are instantaneous even while Supabase loads
+  const FALLBACK_SPARKS = [
+    {
+      id: 1,
+      quote: "Discipline is choosing between what you want now and what you want most.",
+      author: "Abraham Lincoln",
+      category: "#Consistency",
+      image_url: "https://images.unsplash.com/photo-1511497584788-87676104235f?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+      id: 2,
+      quote: "We are what we repeatedly do. Excellence, then, is not an act, but a habit.",
+      author: "Aristotle",
+      category: "#QuietMastery",
+      image_url: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+      id: 3,
+      quote: "Small disciplines repeated with consistency every day lead to great achievements.",
+      author: "John C. Maxwell",
+      category: "#MindfulCadence",
+      image_url: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+      id: 4,
+      quote: "The secret of getting ahead is getting started with tranquil determination.",
+      author: "Mark Twain",
+      category: "#Momentum",
+      image_url: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+      id: 5,
+      quote: "Peace comes from within. Do not seek it without.",
+      author: "Buddha",
+      category: "#Sanctuary",
+      image_url: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+      id: 6,
+      quote: "Nature does not hurry, yet everything is accomplished.",
+      author: "Lao Tzu",
+      category: "#Equilibrium",
+      image_url: "https://images.unsplash.com/photo-1426604966848-d7adac402bff?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+      id: 7,
+      quote: "Energy and persistence conquer all things with silent grace.",
+      author: "Benjamin Franklin",
+      category: "#Endurance",
+      image_url: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+      id: 8,
+      quote: "The mind is everything. What you think you become.",
+      author: "Marcus Aurelius",
+      category: "#StoicFocus",
+      image_url: "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?auto=format&fit=crop&w=1200&q=80"
+    }
+  ];
+
+  let sparksPool = [...FALLBACK_SPARKS];
+  let currentSparkPoolIndex = 0;
+  let currentSpark = sparksPool[0];
+  let isCyclingPaused = false;
+  let cycleElapsedMs = 0;
+  const CYCLE_INTERVAL_MS = 7000; // Auto-changes every 7 seconds
+  const TICK_MS = 100;
+  let sparkProgressTimer = null;
+
+  // Favorites stored in localStorage
+  let favoriteSparkIds = JSON.parse(localStorage.getItem('cadence_favorite_sparks') || '[]');
+
+  function isSparkFavorited(id) {
+    return favoriteSparkIds.includes(id);
+  }
+
+  function updateFavoriteIconState(id) {
+    const icon = document.getElementById('spark-fav-icon');
+    if (!icon) return;
+    if (isSparkFavorited(id)) {
+      icon.innerText = 'favorite';
+      icon.className = 'material-symbols-outlined text-[18px] text-red-400 fill';
+      icon.style.fontVariationSettings = "'FILL' 1";
+    } else {
+      icon.innerText = 'favorite_border';
+      icon.className = 'material-symbols-outlined text-[18px] text-surface-container-lowest';
+      icon.style.fontVariationSettings = "'FILL' 0";
+    }
+  }
+
+  function toggleFavoriteSpark() {
+    if (!currentSpark) return;
+    const id = currentSpark.id;
+    if (isSparkFavorited(id)) {
+      favoriteSparkIds = favoriteSparkIds.filter(x => x !== id);
+      showToast("Removed from Sanctuary Favorites", "bookmark_remove");
+    } else {
+      favoriteSparkIds.push(id);
+      showToast("Saved to Sanctuary Favorites ✨", "favorite");
+    }
+    localStorage.setItem('cadence_favorite_sparks', JSON.stringify(favoriteSparkIds));
+    updateFavoriteIconState(id);
+  }
+
+  async function shareCurrentSpark() {
+    if (!currentSpark) return;
+    const shareText = `“${currentSpark.quote}” — ${currentSpark.author} (${currentSpark.category})\nCaptured on Cadence`;
+    
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: "Cadence Daily Wisdom",
+          text: shareText,
+          url: window.location.href
+        });
+        return;
+      } catch (err) {
+        // User cancelled or fallback
+      }
+    }
+
+    if (navigator.clipboard) {
+      try {
+        await navigator.clipboard.writeText(shareText);
+        showToast("Wisdom copied to clipboard 📋", "content_copy");
+        return;
+      } catch (err) {}
+    }
+    showToast("Wisdom spark ready to share", "share");
+  }
+
+  // Load a batch of sparks from Supabase personal database (ulpmuwcxcbrcmbkfmrvc)
+  async function fetchSupabaseSparks() {
+    if (!sbClient) return;
+    try {
+      // Pick a random offset between 1 and 950 to get a fresh slice of the 1,000 sparks
+      const randomOffset = Math.floor(Math.random() * 950);
+      const { data, error } = await sbClient
+        .from('daily_sparks')
+        .select('*')
+        .range(randomOffset, randomOffset + 30);
+
+      if (data && data.length > 0 && !error) {
+        // Shuffle the fetched sparks
+        const shuffled = data.sort(() => Math.random() - 0.5);
+        sparksPool = [...sparksPool, ...shuffled];
+        console.log(`Loaded ${data.length} fresh sparks from Supabase. Total in pool: ${sparksPool.length}`);
+        const badge = document.getElementById('spark-auto-badge');
+        if (badge) badge.innerText = "1,000 Sparks Live";
+      }
+    } catch (e) {
+      console.warn("Supabase sparks background sync:", e.message);
+    }
+  }
+
+  // Smoothly transition the card to a given spark
+  function transitionToSpark(spark) {
+    if (!spark) return;
+    currentSpark = spark;
+
+    const img = document.getElementById('daily-spark-img');
+    const quote = document.getElementById('daily-spark-quote');
+    const author = document.getElementById('daily-spark-author');
+    const cat = document.getElementById('daily-spark-cat');
+    const bodyContent = document.getElementById('spark-body-content');
+    const counterBadge = document.getElementById('spark-auto-badge');
+
+    // Preload the next image so there is no flash
+    const preloader = new Image();
+    preloader.src = spark.image_url;
+
+    // Smooth fade out
+    if (bodyContent) bodyContent.style.opacity = '0';
+    if (img) img.style.opacity = '0.35';
+
+    setTimeout(() => {
+      if (img && spark.image_url) img.src = spark.image_url;
+      if (quote && spark.quote) quote.innerText = `“${spark.quote}”`;
+      if (author && spark.author) author.innerText = `— ${spark.author}`;
+      if (cat && spark.category) cat.innerText = spark.category;
+      if (counterBadge && spark.id) counterBadge.innerText = `Spark #${spark.id} of 1,000`;
+
+      updateFavoriteIconState(spark.id);
+
+      // Smooth fade back in
+      if (bodyContent) bodyContent.style.opacity = '1';
+      if (img) img.style.opacity = '1';
+    }, 280);
+  }
+
+  function advanceToNextSpark() {
+    currentSparkPoolIndex = (currentSparkPoolIndex + 1) % sparksPool.length;
+    transitionToSpark(sparksPool[currentSparkPoolIndex]);
+    cycleElapsedMs = 0;
+
+    // When nearing end of pool, fetch more from Supabase
+    if (currentSparkPoolIndex >= sparksPool.length - 5) {
+      fetchSupabaseSparks();
+    }
+  }
+
+  function nextSpark() {
+    // Manual skip
+    advanceToNextSpark();
+    const progressLine = document.getElementById('spark-progress-line');
+    if (progressLine) progressLine.style.width = '0%';
+  }
+
+  // Setup auto-cycling loop with progress indicator and hover/touch pause
+  function initAutoCycling() {
+    const progressLine = document.getElementById('spark-progress-line');
+    const sparkCard = document.getElementById('spark-hero-card');
+    const statusText = document.getElementById('spark-status-text');
+    const spinIcon = document.getElementById('spark-spin-icon');
+
+    // Pause on Hover & Touch so user can read peacefully
+    if (sparkCard) {
+      sparkCard.addEventListener('mouseenter', () => {
+        isCyclingPaused = true;
+        if (statusText) statusText.innerText = "Daily Spark • Paused (Reading)";
+        if (spinIcon) spinIcon.style.animationPlayState = 'paused';
+      });
+
+      sparkCard.addEventListener('mouseleave', () => {
+        isCyclingPaused = false;
+        if (statusText) statusText.innerText = "Daily Spark • Auto-Cycling";
+        if (spinIcon) spinIcon.style.animationPlayState = 'running';
+      });
+
+      sparkCard.addEventListener('touchstart', () => {
+        isCyclingPaused = true;
+        if (statusText) statusText.innerText = "Daily Spark • Paused (Reading)";
+      }, { passive: true });
+
+      sparkCard.addEventListener('touchend', () => {
+        isCyclingPaused = false;
+        if (statusText) statusText.innerText = "Daily Spark • Auto-Cycling";
+      });
+    }
+
+    if (sparkProgressTimer) clearInterval(sparkProgressTimer);
+
+    sparkProgressTimer = setInterval(() => {
+      if (!isCyclingPaused) {
+        cycleElapsedMs += TICK_MS;
+        const progressPct = Math.min(100, (cycleElapsedMs / CYCLE_INTERVAL_MS) * 100);
+        if (progressLine) {
+          progressLine.style.width = `${progressPct}%`;
+        }
+
+        if (cycleElapsedMs >= CYCLE_INTERVAL_MS) {
+          advanceToNextSpark();
+        }
+      }
+    }, TICK_MS);
+  }
+
+  // -------------------------------------------------------------
+  // 4. Interactive Filter Chips
+  // -------------------------------------------------------------
   document.querySelectorAll('section button').forEach(btn => {
     const text = btn.innerText.trim();
     if (text.startsWith("All Goals")) {
@@ -471,10 +803,10 @@
     document.querySelectorAll('section button').forEach(b => {
       const t = b.innerText.trim();
       if (t.startsWith("All Goals") || t.startsWith("Active") || t.startsWith("Completed")) {
-        b.className = "px-3 py-1 rounded-full text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm font-medium transition-all";
+        b.className = "px-3 py-1 rounded-full text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm font-medium transition-all cursor-pointer";
       }
     });
-    activeBtn.className = "px-3 py-1 rounded-full bg-secondary text-on-secondary font-label-sm text-label-sm font-semibold transition-all";
+    activeBtn.className = "px-3 py-1 rounded-full bg-secondary text-on-secondary font-label-sm text-label-sm font-semibold transition-all cursor-pointer";
 
     const habitCards = document.querySelectorAll('.space-y-2\\.5 > div');
     habitCards.forEach((card, index) => {
@@ -489,8 +821,10 @@
     });
   }
 
-  // Interactive 'Seal Practice' button
-  const sealBtn = document.querySelector('button:has(.material-symbols-outlined:contains("done_all"))') || document.querySelectorAll('button')[document.querySelectorAll('button').length - 1];
+  // -------------------------------------------------------------
+  // 5. Interactive 'Seal Practice' & Habit Progress
+  // -------------------------------------------------------------
+  const sealBtn = document.getElementById('seal-practice-btn');
   if (sealBtn) {
     sealBtn.onclick = async () => {
       const activeCard = sealBtn.closest('.sanctuary-card');
@@ -498,7 +832,7 @@
 
       // Update UI visually
       sealBtn.innerHTML = `<span>Sealed</span> <span class="material-symbols-outlined text-[16px]">check_circle</span>`;
-      sealBtn.className = "px-space-md py-2 rounded-xl bg-secondary text-white font-label-md text-label-md font-semibold transition-all shadow-sm flex items-center gap-1";
+      sealBtn.className = "px-space-md py-2 rounded-xl bg-secondary text-white font-label-md text-label-md font-semibold transition-all shadow-sm flex items-center gap-1 cursor-default";
       
       // Update circle progress to 100%
       const progressCircle = document.querySelector('circle.transition-all');
@@ -514,10 +848,12 @@
       const alignmentSub = alignmentHeadline?.nextElementSibling;
       if (alignmentSub) alignmentSub.innerText = 'Complete daily equilibrium achieved! ✨';
 
-      // Log to Personal Supabase if table is ready
-      if (supabase) {
+      showToast("Practice sealed! Daily equilibrium complete ✨", "verified");
+
+      // Log to Personal Supabase
+      if (sbClient) {
         try {
-          const { error } = await supabase.from('daily_goal_records').insert([
+          const { error } = await sbClient.from('daily_goal_records').insert([
             {
               record_date: new Date().toISOString().split('T')[0],
               goal_title_snapshot: 'Sleep Before 11:00 PM',
@@ -535,16 +871,19 @@
     };
   }
 
-  // Interactive 'Reflect on this' button
+  // -------------------------------------------------------------
+  // 6. Interactive 'Reflect on this' button
+  // -------------------------------------------------------------
   const reflectBtn = Array.from(document.querySelectorAll('button')).find(b => b.innerText.includes('Reflect on this'));
   if (reflectBtn) {
     reflectBtn.onclick = async () => {
-      const thought = prompt("Daily Spark Reflection:\nWhat is one action of discipline you practiced today?");
+      const currentQuoteAuthor = currentSpark ? `${currentSpark.author}` : "Daily Spark";
+      const thought = prompt(`Daily Spark Reflection (${currentQuoteAuthor}):\nWhat is one action of discipline you practiced today?`);
       if (thought && thought.trim()) {
-        alert("Reflection saved: \"" + thought + "\"");
-        if (supabase) {
+        showToast("Reflection preserved in your Sanctuary ✨", "edit_note");
+        if (sbClient) {
           try {
-            await supabase.from('daily_notes').insert([
+            await sbClient.from('daily_notes').insert([
               {
                 note_date: new Date().toISOString().split('T')[0],
                 note_text: thought,
@@ -559,52 +898,27 @@
     };
   }
 
-  // Dynamic Spark Loader (from 1,000 Supabase sparks collection)
-  let currentSparkIndex = null;
+  // Expose global handlers
+  window.nextSpark = nextSpark;
+  window.toggleFavoriteSpark = toggleFavoriteSpark;
+  window.shareCurrentSpark = shareCurrentSpark;
 
-  async function loadDailySpark(sparkId = null) {
-    if (!supabase) return;
-    try {
-      if (!sparkId) {
-        const now = new Date();
-        const start = new Date(now.getFullYear(), 0, 0);
-        const dayOfYear = Math.floor((now - start) / (1000 * 60 * 60 * 24));
-        sparkId = (dayOfYear % 1000) + 1;
-      }
-      currentSparkIndex = sparkId;
+  // -------------------------------------------------------------
+  // 7. Initial Startup Sequence
+  // -------------------------------------------------------------
+  document.addEventListener('DOMContentLoaded', () => {
+    initLiveDate();
+    initAutoCycling();
+    fetchSupabaseSparks();
 
-      const { data, error } = await supabase
-        .from('daily_sparks')
-        .select('*')
-        .eq('id', sparkId)
-        .single();
+    // Check date every 60s to ensure real-time rollover
+    setInterval(initLiveDate, 60000);
+  });
 
-      if (data && !error) {
-        applySparkToUI(data);
-      }
-    } catch (e) {
-      console.warn("Daily spark remote fetch:", e.message);
-    }
-  }
-
-  function applySparkToUI(spark) {
-    const img = document.getElementById('daily-spark-img');
-    const quote = document.getElementById('daily-spark-quote');
-    const author = document.getElementById('daily-spark-author');
-    const cat = document.getElementById('daily-spark-cat');
-
-    if (img && spark.image_url) img.src = spark.image_url;
-    if (quote && spark.quote) quote.innerText = `“${spark.quote}”`;
-    if (author && spark.author) author.innerText = `— ${spark.author}`;
-    if (cat && spark.category) cat.innerText = spark.category;
-  }
-
-  async function nextSpark() {
-    const randomId = Math.floor(Math.random() * 1000) + 1;
-    await loadDailySpark(randomId);
-  }
-
-  // Load today's spark on startup
-  loadDailySpark();
+  // Also run immediately in case DOM is already parsed
+  initLiveDate();
+  initAutoCycling();
+  fetchSupabaseSparks();
+  setInterval(initLiveDate, 60000);
 </script>
 </body></html>
