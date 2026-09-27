@@ -330,35 +330,38 @@
       </div>
     </div>
 
-    <!-- Live GPS Coordinates & Satellite Precision Bar -->
+    <!-- Live GPS Coordinates & Status -->
     <div class="flex items-center justify-between text-xs text-on-surface-variant px-1 mb-space-md">
-      <span id="gps-accuracy-info" class="flex items-center gap-1">
-        <span class="material-symbols-outlined text-[15px] text-secondary">my_location</span>
-        High-accuracy GPS sensor armed
+      <span id="gps-accuracy-info" class="flex items-center gap-1 font-medium">
+        <span class="material-symbols-outlined text-[16px] text-secondary">my_location</span>
+        High-precision GPS armed • Ready for your run
       </span>
-      <span id="gps-auto-track-toggle" onclick="toggleAutoKmStart()" class="text-secondary hover:underline cursor-pointer font-medium select-none">
-        Auto-track on app start: <span id="auto-start-label" class="font-bold">ON</span>
+      <span class="text-xs text-secondary font-semibold hidden sm:inline">
+        Tap "START RUNNING" when you begin
       </span>
     </div>
 
-    <!-- Action Buttons -->
-    <div class="flex flex-wrap items-center gap-2 pt-1 border-t border-outline-variant/30">
-      <button id="gps-start-btn" onclick="toggleGpsTracking()" class="flex-1 py-2.5 px-4 rounded-xl bg-secondary text-white font-label-md text-label-md font-bold hover:bg-secondary-container active:scale-95 transition-all cursor-pointer shadow-sm flex items-center justify-center gap-1.5">
-        <span id="gps-btn-icon" class="material-symbols-outlined text-[18px]">play_arrow</span>
-        <span id="gps-btn-label">Start KM Tracking</span>
+    <!-- Prominent Workout Action Buttons -->
+    <div class="flex flex-wrap items-center gap-2 pt-2 border-t border-outline-variant/30">
+      <!-- Main Start / Pause Running Button -->
+      <button id="gps-start-btn" onclick="toggleGpsTracking()" class="flex-1 py-3.5 px-6 rounded-2xl bg-secondary text-white font-headline-md text-base sm:text-lg font-bold hover:bg-secondary-container active:scale-95 transition-all cursor-pointer shadow-lg flex items-center justify-center gap-2 ring-4 ring-secondary/20">
+        <span id="gps-btn-icon" class="material-symbols-outlined text-[24px]">play_circle</span>
+        <span id="gps-btn-label">START RUNNING</span>
       </button>
 
-      <button id="gps-reset-btn" onclick="resetGpsTracking()" class="py-2.5 px-3.5 rounded-xl bg-surface-container-low hover:bg-surface-container border border-outline-variant/50 text-on-surface-variant active:scale-95 transition-all cursor-pointer flex items-center justify-center gap-1 font-label-md text-label-md" title="Reset distance">
-        <span class="material-symbols-outlined text-[18px]">restart_alt</span>
-        <span class="hidden sm:inline">Reset</span>
+      <!-- Finish & Seal to Habit Button -->
+      <button id="gps-finish-btn" onclick="finishRunningWorkout()" class="py-3 px-4 rounded-2xl bg-primary text-white font-headline-md text-sm sm:text-base font-semibold hover:bg-primary-container active:scale-95 transition-all cursor-pointer shadow-md flex items-center justify-center gap-1.5" title="Finish run and seal into today's habits">
+        <span class="material-symbols-outlined text-[20px] text-secondary-fixed">flag</span>
+        <span>Finish &amp; Seal</span>
       </button>
 
-      <button onclick="logKmToTrailRun()" class="py-2.5 px-4 rounded-xl bg-primary text-white font-label-md text-label-md font-semibold hover:bg-primary-container active:scale-95 transition-all cursor-pointer shadow-sm flex items-center justify-center gap-1.5">
-        <span class="material-symbols-outlined text-[18px] text-secondary-fixed">verified</span>
-        <span>Seal to Trail Run</span>
+      <!-- Reset Button -->
+      <button id="gps-reset-btn" onclick="resetGpsTracking()" class="py-3 px-3.5 rounded-2xl bg-surface-container-low hover:bg-surface-container border border-outline-variant/50 text-on-surface-variant active:scale-95 transition-all cursor-pointer flex items-center justify-center gap-1" title="Reset distance">
+        <span class="material-symbols-outlined text-[20px]">restart_alt</span>
       </button>
 
-      <button onclick="simulateWalkStep()" class="py-2 px-2.5 rounded-xl bg-surface-container-low hover:bg-surface-container border border-outline-variant/40 text-on-surface-variant active:scale-95 transition-all cursor-pointer text-xs font-medium" title="Add 0.5 km test step">
+      <!-- Test Button for Desktop/Indoor verification -->
+      <button onclick="simulateWalkStep()" class="py-2.5 px-3 rounded-xl bg-surface-container-low hover:bg-surface-container border border-outline-variant/40 text-on-surface-variant active:scale-95 transition-all cursor-pointer text-xs font-medium" title="Simulate 0.5 km test step">
         +0.5km Test
       </button>
     </div>
@@ -719,6 +722,29 @@
       </div>
     </form>
   </div>
+<!-- Floating Live Workout Status Bar (Visible when running) -->
+<div id="floating-run-bar" class="fixed bottom-20 left-1/2 -translate-x-1/2 z-40 w-11/12 max-w-md bg-primary text-white px-4 py-3 rounded-2xl shadow-2xl border border-secondary/50 backdrop-blur-md flex items-center justify-between transition-all hidden">
+  <div class="flex items-center gap-2.5">
+    <div class="w-8 h-8 rounded-full bg-secondary/20 flex items-center justify-center text-secondary-fixed">
+      <span class="material-symbols-outlined text-[20px] animate-pulse">directions_run</span>
+    </div>
+    <div>
+      <div class="flex items-center gap-1.5">
+        <span class="w-2 h-2 rounded-full bg-secondary-fixed animate-ping"></span>
+        <span class="font-label-sm text-secondary-fixed font-bold tracking-wide">LIVE RUN IN PROGRESS</span>
+      </div>
+      <div class="text-xs text-white/90 font-mono mt-0.5"><span id="float-km" class="font-bold text-white text-sm">0.00</span> km • <span id="float-time">00:00</span> • Pace: <span id="float-pace">--'--"</span></div>
+    </div>
+  </div>
+  <div class="flex items-center gap-1.5">
+    <button onclick="toggleGpsTracking()" class="px-2.5 py-1.5 rounded-xl bg-white/15 hover:bg-white/25 text-white font-label-sm font-semibold cursor-pointer">
+      <span id="float-pause-label">Pause</span>
+    </button>
+    <button onclick="finishRunningWorkout()" class="px-3 py-1.5 rounded-xl bg-secondary text-white font-label-sm font-bold shadow-md cursor-pointer flex items-center gap-1">
+      <span class="material-symbols-outlined text-[15px]">flag</span>
+      <span>Finish</span>
+    </button>
+  </div>
 </div>
 
 <!-- BottomNavBar Component (Interactive Multi-Screen Navigation) -->
@@ -1014,6 +1040,8 @@
       if (currentHabitFilter === 'active' && practice.sealed) return;
       if (currentHabitFilter === 'completed' && !practice.sealed) return;
 
+      const isRunHabit = practice.id === 'run' || (practice.category && practice.category.toLowerCase().includes('fit')) || practice.name.toLowerCase().includes('run');
+
       const card = document.createElement('div');
       card.className = practice.sealed
         ? "bg-surface-container-lowest rounded-[20px] p-space-md border border-outline-variant/40 sanctuary-card flex items-center justify-between transition-all hover:border-outline-variant opacity-85"
@@ -1034,6 +1062,13 @@
           </div>
         </div>
         <div class="flex items-center gap-1.5 sm:gap-2">
+          ${isRunHabit && !practice.sealed ? `
+            <!-- Dedicated Button to start tracking when running starts -->
+            <button onclick="startRunningWorkout('${practice.id}')" title="Click to start tracking your run" class="px-2.5 sm:px-3 py-1.5 rounded-xl ${isGpsTracking ? 'bg-amber-600 text-white animate-pulse' : 'bg-secondary/15 hover:bg-secondary text-secondary hover:text-white border border-secondary/30'} font-label-sm text-label-sm font-bold active:scale-95 transition-all cursor-pointer flex items-center gap-1">
+              <span class="material-symbols-outlined text-[16px]">${isGpsTracking ? 'flag' : 'directions_run'}</span>
+              <span>${isGpsTracking ? 'Live Tracking...' : 'Start Run'}</span>
+            </button>
+          ` : ''}
           <!-- Quick Edit Habit & Rule Button -->
           <button onclick="openEditGoalModal('${practice.id}')" title="Edit habit rule & metric target" class="w-8 h-8 rounded-full hover:bg-surface-container border border-outline-variant/40 text-on-surface-variant hover:text-secondary flex items-center justify-center active:scale-95 transition-all cursor-pointer">
             <span class="material-symbols-outlined text-[16px]">edit</span>
@@ -1172,33 +1207,36 @@
   }
 
   function updateGpsMetricsDisplay() {
-    const kmVal = document.getElementById('gps-km-val');
-    if (kmVal) {
-      kmVal.innerText = totalDistanceKm.toFixed(2);
-    }
+    const kmStr = totalDistanceKm.toFixed(2);
+    const mins = Math.floor(elapsedGpsSeconds / 60);
+    const secs = elapsedGpsSeconds % 60;
+    const timeStr = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
 
-    const timeVal = document.getElementById('gps-time-val');
-    if (timeVal) {
-      const mins = Math.floor(elapsedGpsSeconds / 60);
-      const secs = elapsedGpsSeconds % 60;
-      timeVal.innerText = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
-    }
-
-    const paceVal = document.getElementById('gps-pace-val');
-    if (paceVal) {
-      if (totalDistanceKm > 0.01 && elapsedGpsSeconds > 5) {
-        const paceSecsPerKm = elapsedGpsSeconds / totalDistanceKm;
-        const pMins = Math.floor(paceSecsPerKm / 60);
-        const pSecs = Math.floor(paceSecsPerKm % 60);
-        if (pMins < 60) {
-          paceVal.innerText = `${pMins}'${String(pSecs).padStart(2, '0')}"`;
-        } else {
-          paceVal.innerText = `--'--"`;
-        }
-      } else {
-        paceVal.innerText = `--'--"`;
+    let paceStr = "--'--\"";
+    if (totalDistanceKm > 0.01 && elapsedGpsSeconds > 5) {
+      const paceSecsPerKm = elapsedGpsSeconds / totalDistanceKm;
+      const pMins = Math.floor(paceSecsPerKm / 60);
+      const pSecs = Math.floor(paceSecsPerKm % 60);
+      if (pMins < 60) {
+        paceStr = `${pMins}'${String(pSecs).padStart(2, '0')}"`;
       }
     }
+
+    // Main Card Elements
+    const kmVal = document.getElementById('gps-km-val');
+    if (kmVal) kmVal.innerText = kmStr;
+    const timeVal = document.getElementById('gps-time-val');
+    if (timeVal) timeVal.innerText = timeStr;
+    const paceVal = document.getElementById('gps-pace-val');
+    if (paceVal) paceVal.innerText = paceStr;
+
+    // Floating Bar Elements
+    const floatKm = document.getElementById('float-km');
+    if (floatKm) floatKm.innerText = kmStr;
+    const floatTime = document.getElementById('float-time');
+    if (floatTime) floatTime.innerText = timeStr;
+    const floatPace = document.getElementById('float-pace');
+    if (floatPace) floatPace.innerText = paceStr;
   }
 
   function updateGpsUiState(active) {
@@ -1208,28 +1246,78 @@
     const statusText = document.getElementById('gps-status-text');
     const pulseDot = document.getElementById('gps-pulse-dot');
     const statusBadge = document.getElementById('gps-status-badge');
+    const floatBar = document.getElementById('floating-run-bar');
+    const floatPauseLabel = document.getElementById('float-pause-label');
 
     if (active) {
       if (startBtn) {
-        startBtn.classList.remove('bg-secondary', 'hover:bg-secondary-container');
-        startBtn.classList.add('bg-amber-600', 'hover:bg-amber-700');
+        startBtn.classList.remove('bg-secondary', 'hover:bg-secondary-container', 'ring-secondary/20');
+        startBtn.classList.add('bg-amber-600', 'hover:bg-amber-700', 'ring-amber-500/30');
       }
-      if (btnIcon) btnIcon.innerText = "pause";
-      if (btnLabel) btnLabel.innerText = "Pause Tracking";
-      if (statusText) statusText.innerText = "Live Tracking";
+      if (btnIcon) btnIcon.innerText = "pause_circle";
+      if (btnLabel) btnLabel.innerText = "PAUSE RUN";
+      if (statusText) statusText.innerText = "Tracking Run Active";
       if (pulseDot) pulseDot.className = "w-2 h-2 rounded-full bg-secondary-fixed animate-ping";
       if (statusBadge) statusBadge.className = "flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary/15 border border-secondary/40 font-label-sm text-label-sm text-secondary font-bold";
+      if (floatBar) floatBar.classList.remove('hidden');
+      if (floatPauseLabel) floatPauseLabel.innerText = "Pause";
     } else {
       if (startBtn) {
-        startBtn.classList.remove('bg-amber-600', 'hover:bg-amber-700');
-        startBtn.classList.add('bg-secondary', 'hover:bg-secondary-container');
+        startBtn.classList.remove('bg-amber-600', 'hover:bg-amber-700', 'ring-amber-500/30');
+        startBtn.classList.add('bg-secondary', 'hover:bg-secondary-container', 'ring-secondary/20');
       }
-      if (btnIcon) btnIcon.innerText = "play_arrow";
-      if (btnLabel) btnLabel.innerText = "Start KM Tracking";
-      if (statusText) statusText.innerText = totalDistanceKm > 0 ? "Paused" : "Standby";
+      if (btnIcon) btnIcon.innerText = "play_circle";
+      if (btnLabel) btnLabel.innerText = totalDistanceKm > 0 ? "RESUME RUN" : "START RUNNING";
+      if (statusText) statusText.innerText = totalDistanceKm > 0 ? "Run Paused" : "GPS Standby";
       if (pulseDot) pulseDot.className = "w-2 h-2 rounded-full bg-outline-variant";
       if (statusBadge) statusBadge.className = "flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container-low border border-outline-variant/40 font-label-sm text-label-sm text-on-surface-variant font-medium";
+      if (floatPauseLabel) floatPauseLabel.innerText = "Resume";
+      if (totalDistanceKm === 0 && floatBar) floatBar.classList.add('hidden');
     }
+  }
+
+  function startRunningWorkout(goalId) {
+    if (currentActiveTab !== 'today') {
+      switchTab('today');
+    }
+
+    const gpsCard = document.getElementById('gps-km-val');
+    if (gpsCard) {
+      gpsCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    if (!isGpsTracking) {
+      startGpsTracking();
+    }
+    renderTodayHabits();
+    showToast("Workout started! Tracking your kilometers live 🏃‍♂️", "directions_run");
+  }
+
+  function finishRunningWorkout() {
+    if (totalDistanceKm === 0 && elapsedGpsSeconds === 0) {
+      showToast("Tap 'START RUNNING' first to begin your workout!", "info");
+      return;
+    }
+
+    pauseGpsTracking();
+
+    const distText = totalDistanceKm > 0 ? `${totalDistanceKm.toFixed(2)} km` : "5.2 km";
+    const mins = Math.max(1, Math.floor(elapsedGpsSeconds / 60));
+
+    // Find and seal the running habit
+    const runHabit = todayPractices.find(p => p.id === 'run' || (p.category && p.category.toLowerCase().includes('fit')) || p.name.toLowerCase().includes('run'));
+    if (runHabit) {
+      runHabit.metric = `${distText} (${mins} min)`;
+      runHabit.sealed = true;
+    }
+
+    saveTodayPractices();
+    renderTodayHabits();
+    showToast(`Great run! ${distText} logged and sealed into Daily Rituals! 🏆`, "verified");
+
+    // Hide floating bar
+    const floatBar = document.getElementById('floating-run-bar');
+    if (floatBar) floatBar.classList.add('hidden');
   }
 
   function simulateWalkStep() {
@@ -1240,22 +1328,7 @@
   }
 
   function logKmToTrailRun() {
-    const distText = totalDistanceKm > 0 ? `${totalDistanceKm.toFixed(2)} km` : "5.2 km";
-    todayPractices[0].metric = distText;
-    todayPractices[0].sealed = true;
-    saveTodayPractices();
-    renderTodayHabits();
-    showToast(`Logged ${distText} to Morning Trail Run & Sealed! 🏆`, "verified");
-  }
-
-  function toggleAutoKmStart() {
-    autoTrackEnabled = !autoTrackEnabled;
-    const label = document.getElementById('auto-start-label');
-    if (label) label.innerText = autoTrackEnabled ? "ON" : "OFF";
-    try {
-      localStorage.setItem('gps_auto_track', autoTrackEnabled ? 'true' : 'false');
-    } catch(e) {}
-    showToast(`Auto-track on app launch is now ${autoTrackEnabled ? 'ON' : 'OFF'}`);
+    finishRunningWorkout();
   }
 
   // -------------------------------------------------------------
@@ -2355,7 +2428,8 @@
   window.resetGpsTracking = resetGpsTracking;
   window.simulateWalkStep = simulateWalkStep;
   window.logKmToTrailRun = logKmToTrailRun;
-  window.toggleAutoKmStart = toggleAutoKmStart;
+  window.startRunningWorkout = startRunningWorkout;
+  window.finishRunningWorkout = finishRunningWorkout;
 
   // =============================================================
   // 11. Initial Startup Sequence & Hash Router
@@ -2367,12 +2441,8 @@
     fetchSupabaseSparks();
     loadSupabaseGoals();
 
-    // Auto-arm or auto-start GPS if enabled
-    if (autoTrackEnabled && 'geolocation' in navigator) {
-      setTimeout(() => {
-        startGpsTracking();
-      }, 1000);
-    }
+    // Ensure GPS stays in Standby mode until user clicks "START RUNNING"
+    updateGpsUiState(false);
 
     // Check URL Hash routing (e.g. #calendar, #history, #goals)
     const currentHash = window.location.hash.replace('#', '') || 'today';
