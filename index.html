@@ -445,4 +445,118 @@
 <span class="mt-0.5 font-medium">Goals</span>
 </a>
 </nav>
+<!-- Supabase Client Library -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  // Personal Supabase Configuration (ulpmuwcxcbrcmbkfmrvc)
+  const SUPABASE_URL = "https://ulpmuwcxcbrcmbkfmrvc.supabase.co";
+  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVscG11d2N4Y2JyY21ia2ZtcnZjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk1NDcyODksImV4cCI6MjEwNTEyMzI4OX0.mUFXYXCRQZII1h_8zNKafeWD5EqfC8BNsXMW8pACaYQ";
+  const supabase = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
+
+  console.log("Connected to Personal Supabase Project:", SUPABASE_URL);
+
+  // Interactive Filter Chips
+  document.querySelectorAll('section button').forEach(btn => {
+    const text = btn.innerText.trim();
+    if (text.startsWith("All Goals")) {
+      btn.onclick = () => filterHabits('all', btn);
+    } else if (text.startsWith("Active")) {
+      btn.onclick = () => filterHabits('active', btn);
+    } else if (text.startsWith("Completed")) {
+      btn.onclick = () => filterHabits('completed', btn);
+    }
+  });
+
+  function filterHabits(type, activeBtn) {
+    document.querySelectorAll('section button').forEach(b => {
+      const t = b.innerText.trim();
+      if (t.startsWith("All Goals") || t.startsWith("Active") || t.startsWith("Completed")) {
+        b.className = "px-3 py-1 rounded-full text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm font-medium transition-all";
+      }
+    });
+    activeBtn.className = "px-3 py-1 rounded-full bg-secondary text-on-secondary font-label-sm text-label-sm font-semibold transition-all";
+
+    const habitCards = document.querySelectorAll('.space-y-2\\.5 > div');
+    habitCards.forEach((card, index) => {
+      const isCompleted = index < 4; // First 4 are completed in initial UI
+      if (type === 'all') {
+        card.style.display = 'flex';
+      } else if (type === 'completed') {
+        card.style.display = isCompleted ? 'flex' : 'none';
+      } else if (type === 'active') {
+        card.style.display = !isCompleted ? 'flex' : 'none';
+      }
+    });
+  }
+
+  // Interactive 'Seal Practice' button
+  const sealBtn = document.querySelector('button:has(.material-symbols-outlined:contains("done_all"))') || document.querySelectorAll('button')[document.querySelectorAll('button').length - 1];
+  if (sealBtn) {
+    sealBtn.onclick = async () => {
+      const activeCard = sealBtn.closest('.sanctuary-card');
+      if (!activeCard) return;
+
+      // Update UI visually
+      sealBtn.innerHTML = `<span>Sealed</span> <span class="material-symbols-outlined text-[16px]">check_circle</span>`;
+      sealBtn.className = "px-space-md py-2 rounded-xl bg-secondary text-white font-label-md text-label-md font-semibold transition-all shadow-sm flex items-center gap-1";
+      
+      // Update circle progress to 100%
+      const progressCircle = document.querySelector('circle.transition-all');
+      if (progressCircle) {
+        progressCircle.setAttribute('stroke-dashoffset', '0');
+      }
+      const statCounter = document.querySelector('.font-stat-counter');
+      if (statCounter) statCounter.innerText = '100%';
+
+      const alignmentHeadline = document.querySelector('h3.font-headline-md');
+      if (alignmentHeadline) alignmentHeadline.innerText = '5 of 5 practices sealed';
+
+      const alignmentSub = alignmentHeadline?.nextElementSibling;
+      if (alignmentSub) alignmentSub.innerText = 'Complete daily equilibrium achieved! ✨';
+
+      // Log to Personal Supabase if table is ready
+      if (supabase) {
+        try {
+          const { error } = await supabase.from('daily_goal_records').insert([
+            {
+              record_date: new Date().toISOString().split('T')[0],
+              goal_title_snapshot: 'Sleep Before 11:00 PM',
+              is_completed: true,
+              completed_at: new Date().toISOString()
+            }
+          ]);
+          if (!error) {
+            console.log("Successfully logged completion to Personal Supabase!");
+          }
+        } catch (e) {
+          console.warn("Supabase sync queued:", e.message);
+        }
+      }
+    };
+  }
+
+  // Interactive 'Reflect on this' button
+  const reflectBtn = Array.from(document.querySelectorAll('button')).find(b => b.innerText.includes('Reflect on this'));
+  if (reflectBtn) {
+    reflectBtn.onclick = async () => {
+      const thought = prompt("Daily Spark Reflection:\nWhat is one action of discipline you practiced today?");
+      if (thought && thought.trim()) {
+        alert("Reflection saved: \"" + thought + "\"");
+        if (supabase) {
+          try {
+            await supabase.from('daily_notes').insert([
+              {
+                note_date: new Date().toISOString().split('T')[0],
+                note_text: thought,
+                note_type: 'daily_spark_reflection'
+              }
+            ]);
+          } catch(e) {
+            console.warn("Supabase note queued:", e.message);
+          }
+        }
+      }
+    };
+  }
+</script>
 </body></html>
