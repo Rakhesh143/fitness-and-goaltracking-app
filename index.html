@@ -1115,50 +1115,88 @@
     return R * c;
   }
 
-  function startGpsTracking() {
-    if (!('geolocation' in navigator)) {
-      showToast("GPS Geolocation not available on this browser/device", "warning");
-      return;
+  function handleLocationUpdate(pos) {
+    if (!pos || !pos.coords) return;
+    const { latitude, longitude, accuracy } = pos.coords;
+    const accuracyEl = document.getElementById('gps-accuracy-info');
+    if (accuracyEl) {
+      accuracyEl.innerHTML = `<span class="material-symbols-outlined text-[15px] text-secondary">my_location</span> Lat: ${latitude.toFixed(4)}, Lon: ${longitude.toFixed(4)} (±${Math.round(accuracy || 10)}m)`;
     }
 
+    if (lastGpsPosition) {
+      const deltaKm = calculateHaversineDistance(
+        lastGpsPosition.latitude,
+        lastGpsPosition.longitude,
+        latitude,
+        longitude
+      );
+
+      // Filter: ignore microscopic jitter < 2m (0.002 km) and discard low-accuracy readings (> 80m)
+      if (deltaKm >= 0.002 && (!accuracy || accuracy < 80)) {
+        totalDistanceKm += deltaKm;
+        updateGpsMetricsDisplay();
+      }
+    }
+    lastGpsPosition = { latitude, longitude };
+  }
+
+  function handleLocationError(err) {
+    console.warn("GPS tracking status:", err);
+    const statusText = document.getElementById('gps-status-text');
+    if (statusText) {
+      const msg = err && (err.code === 1 || err.message?.includes('denied')) 
+        ? "Permission Denied" 
+        : "Locating Satellites...";
+      statusText.innerText = "GPS: " + msg;
+    }
+  }
+
+  async function startGpsTracking() {
     isGpsTracking = true;
     gpsStartTime = Date.now() - (elapsedGpsSeconds * 1000);
     updateGpsUiState(true);
 
-    gpsWatchId = navigator.geolocation.watchPosition(
-      (pos) => {
-        const { latitude, longitude, accuracy } = pos.coords;
-        const accuracyEl = document.getElementById('gps-accuracy-info');
-        if (accuracyEl) {
-          accuracyEl.innerHTML = `<span class="material-symbols-outlined text-[15px] text-secondary">my_location</span> Lat: ${latitude.toFixed(4)}, Lon: ${longitude.toFixed(4)} (±${Math.round(accuracy)}m)`;
+    const hasCapacitorGeo = !!(window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.Geolocation);
+
+    if (hasCapacitorGeo) {
+      try {
+        const Geolocation = window.Capacitor.Plugins.Geolocation;
+        // Prompt native Android runtime permission modal on the phone
+        const perm = await Geolocation.requestPermissions();
+        if (perm && perm.location === 'denied') {
+          showToast("Location permission was denied. Please allow Location in Android Settings.", "warning");
+          handleLocationError({ code: 1, message: 'denied' });
+          pauseGpsTracking();
+          return;
         }
 
-        if (lastGpsPosition) {
-          const deltaKm = calculateHaversineDistance(
-            lastGpsPosition.latitude,
-            lastGpsPosition.longitude,
-            latitude,
-            longitude
-          );
-
-          if (deltaKm >= 0.002 && accuracy < 60) {
-            totalDistanceKm += deltaKm;
-            updateGpsMetricsDisplay();
+        gpsWatchId = await Geolocation.watchPosition(
+          {
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 0
+          },
+          (position, err) => {
+            if (err) {
+              handleLocationError(err);
+            } else if (position) {
+              handleLocationUpdate(position);
+            }
           }
-        }
-        lastGpsPosition = { latitude, longitude };
-      },
-      (err) => {
-        console.warn("GPS tracking status:", err.message);
-        const statusText = document.getElementById('gps-status-text');
-        if (statusText) statusText.innerText = "GPS: " + (err.code === 1 ? "Permission Needed" : "Locating...");
-      },
-      {
-        enableHighAccuracy: true,
-        timeout: 10000,
-        maximumAge: 0
+        );
+        console.log("Native Capacitor GPS watch active with ID:", gpsWatchId);
+      } catch (err) {
+        console.warn("Capacitor Geolocation exception, falling back to browser geolocation:", err);
+        startBrowserGpsWatch();
       }
-    );
+    } else if ('geolocation' in navigator) {
+      startBrowserGpsWatch();
+    } else {
+      showToast("GPS Geolocation is not available on this device", "warning");
+      isGpsTracking = false;
+      updateGpsUiState(false);
+      return;
+    }
 
     if (gpsTimerInterval) clearInterval(gpsTimerInterval);
     gpsTimerInterval = setInterval(() => {
@@ -1169,10 +1207,27 @@
     showToast("Live GPS KM Tracking Started 🏃‍♂️", "directions_run");
   }
 
+  function startBrowserGpsWatch() {
+    if (!('geolocation' in navigator)) return;
+    gpsWatchId = navigator.geolocation.watchPosition(
+      (pos) => handleLocationUpdate(pos),
+      (err) => handleLocationError(err),
+      {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 0
+      }
+    );
+  }
+
   function pauseGpsTracking() {
     isGpsTracking = false;
     if (gpsWatchId !== null) {
-      navigator.geolocation.clearWatch(gpsWatchId);
+      if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.Geolocation && typeof gpsWatchId === 'string') {
+        window.Capacitor.Plugins.Geolocation.clearWatch({ id: gpsWatchId }).catch(e => console.warn(e));
+      } else if (navigator.geolocation && typeof gpsWatchId === 'number') {
+        navigator.geolocation.clearWatch(gpsWatchId);
+      }
       gpsWatchId = null;
     }
     if (gpsTimerInterval) {

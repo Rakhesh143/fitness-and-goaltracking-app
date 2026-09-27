@@ -65,20 +65,34 @@ workflows:
           fi
       - name: Enable Android Permissions & Network Access
         script: |
-          echo "Configuring Android permissions..."
+          echo "Configuring Android permissions for GPS & Network..."
           node -e "
             const fs = require('fs');
             const path = 'android/app/src/main/AndroidManifest.xml';
             if (fs.existsSync(path)) {
               let c = fs.readFileSync(path, 'utf8');
-              if (!c.includes('android.permission.INTERNET')) {
-                c = c.replace(/<manifest[^>]*>/, '\$&\n    <uses-permission android:name=\"android.permission.INTERNET\" \/>\n    <uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" \/>');
+              const perms = [
+                'android.permission.INTERNET',
+                'android.permission.ACCESS_NETWORK_STATE',
+                'android.permission.ACCESS_COARSE_LOCATION',
+                'android.permission.ACCESS_FINE_LOCATION'
+              ];
+              let permTags = perms
+                .filter(p => !c.includes(p))
+                .map(p => '    <uses-permission android:name=\"' + p + '\" />')
+                .join('\n');
+              if (!c.includes('android.hardware.location.gps')) {
+                if (permTags) permTags += '\n';
+                permTags += '    <uses-feature android:name=\"android.hardware.location.gps\" android:required=\"false\" />';
+              }
+              if (permTags) {
+                c = c.replace(/<manifest[^>]*>/, '\$&\n' + permTags);
               }
               if (!c.includes('usesCleartextTraffic')) {
                 c = c.replace(/<application/g, '<application android:usesCleartextTraffic=\"true\"');
               }
               fs.writeFileSync(path, c);
-              console.log('AndroidManifest updated successfully');
+              console.log('AndroidManifest updated with GPS and Network permissions successfully');
             }
           "
       - name: Build Android APK with Gradle
