@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Cadence - Nightly Check-In &amp; Bedtime Closeout</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-secondary-fixed-variant": "#005137",
+            "on-primary-fixed": "#0a1f1c",
+            "outline": "#727877",
+            "secondary": "#006c4a",
+            "surface-container-lowest": "#ffffff",
+            "inverse-surface": "#293040",
+            "on-error-container": "#93000a",
+            "surface-tint": "#4e625f",
+            "on-tertiary-fixed-variant": "#6e3900",
+            "on-primary-container": "#809692",
+            "on-primary-fixed-variant": "#364b47",
+            "on-surface-variant": "#424847",
+            "inverse-on-surface": "#edf0ff",
+            "surface-variant": "#dce2f7",
+            "on-error": "#ffffff",
+            "primary-fixed": "#d0e7e2",
+            "inverse-primary": "#b5cbc6",
+            "primary-fixed-dim": "#b5cbc6",
+            "on-secondary-fixed": "#002114",
+            "on-background": "#141b2b",
+            "on-tertiary": "#ffffff",
+            "surface-dim": "#d3daef",
+            "on-tertiary-container": "#da7808",
+            "outline-variant": "#c2c8c6",
+            "tertiary-fixed": "#ffdcc3",
+            "surface": "#f9f9ff",
+            "tertiary-fixed-dim": "#ffb77d",
+            "surface-container": "#e9edff",
+            "primary": "#051917",
+            "surface-bright": "#f9f9ff",
+            "tertiary": "#261000",
+            "primary-container": "#1a2e2b",
+            "error": "#ba1a1a",
+            "background": "#f9f9ff",
+            "on-secondary": "#ffffff",
+            "on-surface": "#141b2b",
+            "secondary-fixed": "#85f8c4",
+            "secondary-container": "#82f5c1",
+            "on-primary": "#ffffff",
+            "surface-container-high": "#e1e8fd",
+            "surface-container-highest": "#dce2f7",
+            "error-container": "#ffdad6",
+            "surface-container-low": "#f1f3ff",
+            "secondary-fixed-dim": "#68dba9",
+            "on-tertiary-fixed": "#2f1500",
+            "on-secondary-container": "#00714e",
+            "tertiary-container": "#442100"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-md": "1rem",
+            "space-lg": "1.5rem",
+            "gutter": "1rem",
+            "space-sm": "0.5rem",
+            "margin": "1.25rem",
+            "space-xs": "0.25rem",
+            "space-xl": "2rem"
+          },
+          "fontFamily": {
+            "headline-xl": ["Plus Jakarta Sans"],
+            "body-md": ["Plus Jakarta Sans"],
+            "display-lg": ["Plus Jakarta Sans"],
+            "label-md": ["Plus Jakarta Sans"],
+            "display-lg-mobile": ["Plus Jakarta Sans"],
+            "headline-md": ["Plus Jakarta Sans"],
+            "headline-lg": ["Plus Jakarta Sans"],
+            "label-sm": ["Plus Jakarta Sans"],
+            "body-lg": ["Plus Jakarta Sans"],
+            "stat-counter": ["Plus Jakarta Sans"],
+            "label-lg": ["Plus Jakarta Sans"],
+            "body-sm": ["Plus Jakarta Sans"]
+          },
+          "fontSize": {
+            "headline-xl": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "body-md": ["14px", { "lineHeight": "21px", "fontWeight": "400" }],
+            "display-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.03em", "fontWeight": "700" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+            "display-lg-mobile": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.025em", "fontWeight": "700" }],
+            "headline-md": ["18px", { "lineHeight": "26px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "headline-lg": ["22px", { "lineHeight": "30px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "500" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.005em", "fontWeight": "400" }],
+            "stat-counter": ["26px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "body-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .elevation-tier-1 {
+      box-shadow: 0 2px 8px -2px rgba(26, 46, 43, 0.04), 0 8px 24px -4px rgba(26, 46, 43, 0.06);
+    }
+    .elevation-tier-2 {
+      box-shadow: 0 12px 32px -6px rgba(26, 46, 43, 0.12);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface antialiased min-h-screen flex flex-col font-body-md text-body-md">
+<!-- TopAppBar Component (from Shared Components JSON) -->
+<header class="bg-surface dark:bg-inverse-surface sticky top-0 z-40">
+<div class="flex justify-between items-center w-full px-margin py-space-sm max-w-screen-md mx-auto">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-full bg-primary-container text-on-primary flex items-center justify-center font-label-md text-label-md overflow-hidden">
+<span class="material-symbols-outlined text-[20px]" data-icon="account_circle">account_circle</span>
+</div>
+<span class="text-headline-md font-headline-md text-on-surface dark:text-inverse-on-surface tracking-tight">Cadence</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px] text-tertiary-container" data-icon="bedtime" style="font-variation-settings: 'FILL' 1;">bedtime</span>
+<span>Target 11:00 PM</span>
+</div>
+<button aria-label="Current Streak Status" class="p-2 rounded-full hover:bg-surface-container dark:hover:bg-surface-container-high transition-colors duration-150 active:scale-95 transition-transform duration-150 text-tertiary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-[22px]" data-icon="local_fire_department" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="flex-1 w-full max-w-screen-md mx-auto px-margin pt-space-md pb-28">
+<!-- Atmospheric Evening Status Banner -->
+<section class="mb-space-lg">
+<div class="bg-primary-container text-on-primary rounded-xl p-space-md elevation-tier-2 relative overflow-hidden">
+<div class="absolute -right-4 -bottom-4 w-32 h-32 rounded-full bg-secondary opacity-15 blur-2xl pointer-events-none"></div>
+<div class="flex items-center justify-between gap-space-sm mb-space-xs">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-secondary-fixed" data-icon="dark_mode" style="font-variation-settings: 'FILL' 1;">dark_mode</span>
+<span class="font-label-md text-label-md text-secondary-fixed tracking-wide">10:45 PM • Evening Wind Down</span>
+</div>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-surface-container-lowest/15 text-primary-fixed">Day 14 Streak</span>
+</div>
+<h1 class="font-headline-xl text-headline-xl text-on-primary tracking-tight mt-1">Seal the Day</h1>
+<p class="font-body-md text-body-md text-on-primary-container mt-1">A mindful moment before sleep. Did you follow through on today’s commitments?</p>
+<!-- Progress Mini-Bar -->
+<div class="mt-space-md pt-space-sm border-t border-surface-container-lowest/10 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="font-label-md text-label-md text-secondary-fixed">4 of 5 practices sealed</span>
+</div>
+<div class="w-36 h-2 rounded-full bg-surface-container-lowest/20 overflow-hidden">
+<div class="h-full bg-secondary-fixed rounded-full" style="width: 80%;"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Checklist / Review Practices Bento -->
+<section class="space-y-space-sm mb-space-lg">
+<div class="flex items-center justify-between px-1 mb-space-xs">
+<h2 class="font-headline-md text-headline-md text-on-surface">Review Today's Practices</h2>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Tap to update status</span>
+</div>
+<!-- Item 1: Morning Trail Run -->
+<article class="bg-surface-container-lowest rounded-xl p-space-md border border-outline-variant/40 elevation-tier-1 transition-all duration-150">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+<div class="flex items-start gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-primary-container mt-0.5">
+<span class="material-symbols-outlined text-[20px]" data-icon="directions_run">directions_run</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h3 class="font-headline-md text-headline-md text-on-surface">Morning Trail Run</h3>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-secondary-fixed/40 text-on-secondary-fixed-variant">Auto-logged</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">5.2 km • Pace 5'24" • Completed 7:15 AM</p>
+</div>
+</div>
+<!-- Segmented Toggle -->
+<div class="flex items-center p-1 rounded-full bg-surface-container-low self-end sm:self-center">
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-secondary text-on-secondary font-label-md text-label-md shadow-sm transition-all">
+<span class="material-symbols-outlined text-[16px]" data-icon="check" style="font-variation-settings: 'FILL' 1;">check</span>
+<span>Done</span>
+</button>
+<button class="px-3 py-1.5 rounded-full text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-colors">
+              Missed
+            </button>
+</div>
+</div>
+</article>
+<!-- Item 2: Hydration Sanctuary -->
+<article class="bg-surface-container-lowest rounded-xl p-space-md border border-outline-variant/40 elevation-tier-1 transition-all duration-150">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+<div class="flex items-start gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-primary-container mt-0.5">
+<span class="material-symbols-outlined text-[20px]" data-icon="water_drop">water_drop</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Hydration Sanctuary</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">2.5L Daily Goal • Reached 2.6L at 8:40 PM</p>
+</div>
+</div>
+<!-- Segmented Toggle -->
+<div class="flex items-center p-1 rounded-full bg-surface-container-low self-end sm:self-center">
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-secondary text-on-secondary font-label-md text-label-md shadow-sm transition-all">
+<span class="material-symbols-outlined text-[16px]" data-icon="check" style="font-variation-settings: 'FILL' 1;">check</span>
+<span>Done</span>
+</button>
+<button class="px-3 py-1.5 rounded-full text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-colors">
+              Missed
+            </button>
+</div>
+</div>
+</article>
+<!-- Item 3: Core Mobility & Breathwork (Missed with note) -->
+<article class="bg-surface-container-lowest rounded-xl p-space-md border border-outline-variant/40 elevation-tier-1 transition-all duration-150">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+<div class="flex items-start gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant mt-0.5">
+<span class="material-symbols-outlined text-[20px]" data-icon="self_improvement">self_improvement</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h3 class="font-headline-md text-headline-md text-on-surface">Core Mobility &amp; Breathwork</h3>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed-variant">Grace Day</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">20 min Target • Recovery scheduled</p>
+<div class="mt-1 flex items-center gap-1 text-on-surface-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]" data-icon="notes">notes</span>
+<span class="italic">Note: 'Tired after work, rest prioritized'</span>
+</div>
+</div>
+</div>
+<!-- Segmented Toggle -->
+<div class="flex items-center p-1 rounded-full bg-surface-container-low self-end sm:self-center">
+<button class="px-3 py-1.5 rounded-full text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-colors">
+              Done
+            </button>
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container-highest text-on-surface font-label-md text-label-md transition-all">
+<span class="material-symbols-outlined text-[16px] text-tertiary" data-icon="close">close</span>
+<span>Missed</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Item 4: 30 Min Deep Study -->
+<article class="bg-surface-container-lowest rounded-xl p-space-md border border-outline-variant/40 elevation-tier-1 transition-all duration-150">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+<div class="flex items-start gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-primary-container mt-0.5">
+<span class="material-symbols-outlined text-[20px]" data-icon="menu_book">menu_book</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface">30 Min Deep Study</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Focus: Architectural Systems • Completed 6:00 PM</p>
+</div>
+</div>
+<!-- Segmented Toggle -->
+<div class="flex items-center p-1 rounded-full bg-surface-container-low self-end sm:self-center">
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-secondary text-on-secondary font-label-md text-label-md shadow-sm transition-all">
+<span class="material-symbols-outlined text-[16px]" data-icon="check" style="font-variation-settings: 'FILL' 1;">check</span>
+<span>Done</span>
+</button>
+<button class="px-3 py-1.5 rounded-full text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-colors">
+              Missed
+            </button>
+</div>
+</div>
+</article>
+<!-- Item 5: Digital Sunset & Wind-Down -->
+<article class="bg-surface-container-lowest rounded-xl p-space-md border border-outline-variant/40 elevation-tier-1 transition-all duration-150">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+<div class="flex items-start gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-primary-container mt-0.5">
+<span class="material-symbols-outlined text-[20px]" data-icon="screen_lock_portrait">screen_lock_portrait</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Digital Sunset &amp; Wind-Down</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Screens dimmed 10:30 PM • Warm amber lighting</p>
+</div>
+</div>
+<!-- Segmented Toggle -->
+<div class="flex items-center p-1 rounded-full bg-surface-container-low self-end sm:self-center">
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-secondary text-on-secondary font-label-md text-label-md shadow-sm transition-all">
+<span class="material-symbols-outlined text-[16px]" data-icon="check" style="font-variation-settings: 'FILL' 1;">check</span>
+<span>Done</span>
+</button>
+<button class="px-3 py-1.5 rounded-full text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-colors">
+              Missed
+            </button>
+</div>
+</div>
+</article>
+</section>
+<!-- Nightly Reflection Micro-Note Box -->
+<section class="bg-surface-container-lowest rounded-xl p-space-md border border-outline-variant/40 elevation-tier-1 mb-space-lg">
+<div class="flex items-center gap-2 mb-space-xs">
+<span class="material-symbols-outlined text-[18px] text-secondary" data-icon="edit_note">edit_note</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">Daily Wind-down Reflection</h2>
+</div>
+<label class="block font-body-sm text-body-sm text-on-surface-variant mb-space-sm" for="nightly-thought">
+        What was your biggest win or stillness today? (Optional 1-sentence thought)
+      </label>
+<div class="relative">
+<textarea class="w-full bg-surface-container-low border border-outline-variant/30 rounded-lg p-3 text-on-surface font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-secondary/40 resize-none transition-all placeholder:text-outline/70" id="nightly-thought" placeholder="Kept calm through the evening deadline, stepped outside for the cold air..." rows="2"></textarea>
+</div>
+</section>
+<!-- Bedtime Actions Suite -->
+<section class="space-y-space-sm">
+<button class="w-full py-3.5 px-margin bg-primary-container text-on-primary rounded-xl font-headline-md text-headline-md flex items-center justify-center gap-2 elevation-tier-2 active:scale-[0.98] transition-all hover:bg-primary duration-150">
+<span class="material-symbols-outlined text-[20px]" data-icon="bedtime" style="font-variation-settings: 'FILL' 1;">bedtime</span>
+<span>Seal Day &amp; Activate Sleep Mode</span>
+<span class="material-symbols-outlined text-[20px]" data-icon="check">check</span>
+</button>
+<button class="w-full py-2.5 px-margin bg-surface-container-lowest border border-outline-variant/60 rounded-xl font-label-lg text-label-lg text-on-surface hover:bg-surface-container-low transition-colors duration-150 active:scale-[0.99] flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant" data-icon="snooze">snooze</span>
+<span>Remind me in 15 mins</span>
+</button>
+</section>
+</main>
+<!-- BottomNavBar Component (from Shared Components JSON) -->
+<nav aria-label="Bottom Navigation" class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-gutter py-space-xs bg-surface dark:bg-inverse-surface shadow-[0_-2px_12px_rgba(26,46,43,0.06)]">
+<!-- Item: Today (Active) -->
+<a aria-current="page" class="flex flex-col items-center justify-center text-secondary dark:text-secondary-fixed font-label-sm text-label-sm py-1 px-3 hover:text-primary dark:hover:text-inverse-primary transition-colors duration-150 active:scale-95 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined text-[24px] mb-0.5" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span>Today</span>
+</a>
+<!-- Item: Calendar -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant font-label-sm text-label-sm py-1 px-3 hover:text-primary dark:hover:text-inverse-primary transition-colors duration-150 active:scale-95 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined text-[24px] mb-0.5" data-icon="calendar_month">calendar_month</span>
+<span>Calendar</span>
+</a>
+<!-- Item: History -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant font-label-sm text-label-sm py-1 px-3 hover:text-primary dark:hover:text-inverse-primary transition-colors duration-150 active:scale-95 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined text-[24px] mb-0.5" data-icon="history">history</span>
+<span>History</span>
+</a>
+<!-- Item: Goals -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant font-label-sm text-label-sm py-1 px-3 hover:text-primary dark:hover:text-inverse-primary transition-colors duration-150 active:scale-95 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined text-[24px] mb-0.5" data-icon="track_changes">track_changes</span>
+<span>Goals</span>
+</a>
+</nav>
+</body></html>
